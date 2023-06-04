@@ -8,7 +8,6 @@ int main() {
     signal(SIGQUIT, SIG_IGN);
     //treat SIGINT Ctrl+C
     signal(SIGINT, &handler);
-    
     while (1)
     {
         line = readline("> "); // Prompt 
@@ -27,12 +26,10 @@ int main() {
         // include readline/history.h
         //access - arrow-up
         add_history(line);
-
         parser(line);
         
         //free user input
         free(line);
     }
-
     return 0;
 }

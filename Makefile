@@ -7,7 +7,7 @@ SRCS = main.c \
 
 OBJS = $(SRCS:.c=.o)
 
-CC = cc -Wall -Wextra -Werror
+CC = cc -g -Wall -Wextra -Werror
 
 all: $(NAME)
 
