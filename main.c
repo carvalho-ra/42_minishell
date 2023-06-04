@@ -2,33 +2,36 @@
 #include "minishell.h"
 
 int main() {
-    char* input;
+    char* line;
     
     //ignore SIGQUIT Ctrl+|
     signal(SIGQUIT, SIG_IGN);
     //treat SIGINT Ctrl+C
     signal(SIGINT, &handler);
     
-    while (1) {
-        input = readline("> "); // Prompt 
-        
+    while (1)
+    {
+        line = readline("> "); // Prompt 
         // Ctrl+D (EOF)
-        if (!input) {
-            printf("exit\n");
-            free(input);
-            break;
+        if (!line) {
+            write(2, "exit\n", 5);
+            free(line);
+            break ;
         }
         // cmd exit
-        if (strcmp(input, "exit") == 0)
+        if (strcmp(line, "exit") == 0)
         {
-            free(input);
+            free(line);
             break;
         }
         // include readline/history.h
         //access - arrow-up
-        add_history(input);
+        add_history(line);
+
+        parser(line);
         
-        free(input);
+        //free user input
+        free(line);
     }
 
     return 0;

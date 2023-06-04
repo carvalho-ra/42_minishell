@@ -32,7 +32,7 @@ int main() {
         
         // Ctrl+D (EOF)
         if (!input) {
-            printf("exit\n");
+            write (2, "exit\n", 5);
             free(input);
             break;
         }
