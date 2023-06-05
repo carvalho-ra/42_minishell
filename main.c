@@ -26,6 +26,7 @@ int main() {
         // include readline/history.h
         //access - arrow-up
         add_history(line);
+        
         parser(line);
         
         //free user input
