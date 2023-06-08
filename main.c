@@ -1,9 +1,10 @@
 
 #include "minishell.h"
 
-int main() {
-    char* line;
-    
+int main(void)
+{
+    char *line;
+
     //ignore SIGQUIT Ctrl+|
     signal(SIGQUIT, SIG_IGN);
     //treat SIGINT Ctrl+C
@@ -18,7 +19,7 @@ int main() {
             break ;
         }
         // cmd exit
-        if (strcmp(line, "exit") == 0)
+        if (ft_strcmp(line, "exit") == 0)
         {
             free(line);
             break;
@@ -26,9 +27,10 @@ int main() {
         // include readline/history.h
         //access - arrow-up
         add_history(line);
-        
+        //print_tokens(split(line));
         parser(line);
-        
+        //ft_split_to_array(line);
+        //ft_split_to_tokens(line);
         //free user input
         free(line);
     }

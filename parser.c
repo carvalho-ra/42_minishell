@@ -16,6 +16,7 @@ t_token *parser(char *line)
     substr = NULL;
     token = NULL;
     i = 0;
+    j = 0;
     token_start = 0;
     while (line[i])
     {
@@ -30,7 +31,6 @@ t_token *parser(char *line)
         //malloc space to copy str data?????
         substr = malloc(sizeof(char) * (token_len + 1));
         //strncpy(substr, line + token_start, token_len);
-        j = 0;
         while (token_start <= token_len)
         {
             substr[j] = line[token_start];
@@ -38,10 +38,7 @@ t_token *parser(char *line)
             j++;
         }
         substr[token_len] = '\0';
-        
-        
         token = create_token(substr);
-        printf("substr = %s\n", token->data);
         if (token_list == NULL)
         {
             token_list = token;
@@ -52,6 +49,7 @@ t_token *parser(char *line)
             curr_token->next = token;
             curr_token = token;
         }
+        printf("substr = %s\n", token_list->data);
     }
     return (token_list);
 }
