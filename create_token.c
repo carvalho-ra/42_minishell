@@ -9,4 +9,3 @@ t_token *create_token(char *data)
     token->next = NULL;
     return (token);
 }
-
