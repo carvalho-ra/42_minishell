@@ -4,7 +4,7 @@
 //structures
 typedef struct s_token
 {
-    int index;
+    int     index;
     char    *data;
     struct s_token  *next;
 }   t_token;
@@ -17,29 +17,29 @@ typedef struct s_token
 #include <readline/history.h>
 #include <signal.h>
 
-//prototypes
-void handler(int signal);
+//prototypes history
+void is_history(char *str);
 
-t_token *create_token(char *data);
-t_token *parser(char *line);
-
-int ft_isblank(char c);
-int ft_id_quotes(char *str, int i);
-char    **ft_split_to_array(char *str);
-void    print_arr_tokens(char **list_tokens);
-t_token *ft_split_to_tokens(char *str);
-
-
+//prototypes list
 t_token	*create_node(char *str);
 void	add_node_bottom(t_token **list, char *str);
-void    print_tokens(t_token *tokens_list);
-t_token	*split(char *str);
-
-//utils
-int ft_strcmp(char *s1, char *s2);
-t_token *tokenize(char *str);
 void	print_list(t_token *list);
 void	free_list(t_token **list);
 
+//prototypes prompt
+void check_history(char *str);
+
+//prototypes signal
+void handler(int signal);
+
+//prototypes tokenization
+int ft_isblank(char c);
+int is_pipe_redir(char c);
+int single_quote(char *str, int i);
+int double_quote(char *str, int i);
+t_token *tokenize(char *str);
+
+//utils
+int ft_strcmp(char *s1, char *s2);
 
 #endif

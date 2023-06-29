@@ -1,11 +1,12 @@
 NAME = minishell
 
 SRCS = main.c \
-		handler.c \
-		create_token.c \
+		history.c \
 		list.c \
-		utils.c \
+		prompt.c \
+		signal.c \
 		tokenization.c \
+		utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
