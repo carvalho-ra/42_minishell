@@ -3,10 +3,9 @@ NAME = minishell
 SRCS = main.c \
 		handler.c \
 		create_token.c \
-		parser.c \
-		split.c \
 		list.c \
 		utils.c \
+		tokenization.c \
 
 OBJS = $(SRCS:.c=.o)
 

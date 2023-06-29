@@ -44,7 +44,8 @@ t_token *parser(char *line)
         printf("Token substring: %s\n", substr);
         j = 0;
         token = create_token(substr);
-        if (token_list == NULL)
+/*
+	if (token_list == NULL)
         {
             token_list = token;
             curr_token = token;
@@ -60,7 +61,9 @@ t_token *parser(char *line)
             printf("substr = %s\n", curr_token->data);
             curr_token = curr_token->next;
         }
-        i++;
+*/
+	if (line[i])
+		i++;
     }
     return (token_list);
 }

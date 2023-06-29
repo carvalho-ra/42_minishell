@@ -37,7 +37,9 @@ t_token	*split(char *str);
 
 //utils
 int ft_strcmp(char *s1, char *s2);
-
+t_token *tokenize(char *str);
+void	print_list(t_token *list);
+void	free_list(t_token **list);
 
 
 #endif
