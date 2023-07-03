@@ -5,6 +5,7 @@
 typedef struct s_token
 {
     int     index;
+    int     error;
     char    *data;
     struct s_token  *next;
 }   t_token;
@@ -32,12 +33,16 @@ void check_history(char *str);
 //prototypes signal
 void handler(int signal);
 
-//prototypes tokenization
+//prototypes lexer
 int ft_isblank(char c);
 int is_pipe_redir(char c);
 int single_quote(char *str, int i);
 int double_quote(char *str, int i);
 t_token *lexer(char *str);
+
+//prototypes parser
+int count_pipes(t_token **list);
+int confirm_pipe(t_token **list);
 
 //utils
 int ft_strcmp(char *s1, char *s2);

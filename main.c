@@ -30,6 +30,8 @@ int main(void) //(int argc, char **argv, char **envp)
 		list = lexer(line);
 		//table = parser(list);
 		print_list(list);
+		printf("count pipes: %i\n", count_pipes(&list));
+		printf("confirm pipes: %i\n", confirm_pipe(&list));
 
         //free user input
 		free(line);

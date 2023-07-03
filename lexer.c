@@ -42,8 +42,6 @@ int double_quote(char *str, int i)
 
 t_token *lexer(char *str)
 {
-    //incluir checagem de pipe e redirect e heredock
-    //pode não haver espaço entre as palavras/comandos
     unsigned int i;
     unsigned int start;
     t_token *list;
@@ -55,10 +53,10 @@ t_token *lexer(char *str)
         return (NULL);
     while (str[i])
     {
-        while (str[i] && is_blank(str[i]))//is_pipe_redir
+        while (str[i] && is_blank(str[i]))
             i++;
         start = i;
-        while (str[i] && !(is_blank(str[i])))//is_pipe_redir
+        while (str[i] && !(is_blank(str[i])))
         {
             i = double_quote(str, i);
             i = single_quote(str, i);

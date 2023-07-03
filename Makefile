@@ -6,6 +6,7 @@ SRCS = main.c \
 		prompt.c \
 		signal.c \
 		lexer.c \
+		parser.c \
 		utils.c \
 
 OBJS = $(SRCS:.c=.o)
