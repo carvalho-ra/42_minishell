@@ -1,6 +1,6 @@
-//here we classify tokens and treat errors
 #include "minishell.h"
 
+//here we classify tokens and treat errors
 int count_pipes(t_token **list)
 {
     t_token *aux;
@@ -16,6 +16,11 @@ int count_pipes(t_token **list)
     }
     return (i);
 }
+
+// não pode iniciar com pipe e está iniciando
+// como resolver? alterar a lista para duplamente encadeada? 
+// para isso precisa alterar como criar os tokens
+// 
 
 int confirm_pipe(t_token **list)
 {
@@ -35,10 +40,11 @@ int confirm_pipe(t_token **list)
                 {
                     aux->error = 1;
                     printf("minishell: syntax error near unexpected token `|'\n");
+                    break ;
                 }
             }
         }
-        if ((aux->data[0] == '|') && (aux->next->data[0] != '|'))
+        if (aux->data[0] == '|')
         {
             if (aux->next)
             {
@@ -48,6 +54,12 @@ int confirm_pipe(t_token **list)
                     aux->error = 0;
                     aux->index = 1;
                 }
+            }
+            else
+            {
+                aux->error = 1;
+                printf("minishell: syntax error near unexpected token `|'\n");
+                break ;
             }
         }
         aux = aux->next;
