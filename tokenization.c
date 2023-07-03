@@ -63,6 +63,8 @@ t_token *tokenize(char *str)
             i = double_quote(str, i);
             i = single_quote(str, i);
             i++;
+            if (is_pipe_redir(str[i - 1]) || is_pipe_redir(str[i]))
+                break ;
         }
         if (start != i)
             add_node_bottom(&list, ft_substr(str, start, i - start));
