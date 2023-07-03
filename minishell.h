@@ -37,7 +37,7 @@ int ft_isblank(char c);
 int is_pipe_redir(char c);
 int single_quote(char *str, int i);
 int double_quote(char *str, int i);
-t_token *tokenize(char *str);
+t_token *lexer(char *str);
 
 //utils
 int ft_strcmp(char *s1, char *s2);

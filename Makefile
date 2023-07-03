@@ -5,7 +5,7 @@ SRCS = main.c \
 		list.c \
 		prompt.c \
 		signal.c \
-		tokenization.c \
+		lexer.c \
 		utils.c \
 
 OBJS = $(SRCS:.c=.o)

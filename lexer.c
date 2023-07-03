@@ -40,7 +40,7 @@ int double_quote(char *str, int i)
     return (i);
 }
 
-t_token *tokenize(char *str)
+t_token *lexer(char *str)
 {
     //incluir checagem de pipe e redirect e heredock
     //pode não haver espaço entre as palavras/comandos

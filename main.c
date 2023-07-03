@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 int main(void) //(int argc, char **argv, char **envp)
@@ -28,8 +27,8 @@ int main(void) //(int argc, char **argv, char **envp)
         // include readline/history.h
 		is_history(line);
 
-		list = tokenize(line);
-		
+		list = lexer(line);
+		//table = parser(list);
 		print_list(list);
 
         //free user input
