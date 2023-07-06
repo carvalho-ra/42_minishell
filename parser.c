@@ -55,6 +55,7 @@ int	confirm_pipe(t_token **list)
 		if (aux->data[0] == '|' && aux->next && aux->next->data[0] != '|')
 		{
 			i++;
+			printf("is pipe\n");
 			aux->error = 0;
 			aux->index = 1;
 		}
