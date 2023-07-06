@@ -7,4 +7,5 @@ void is_history(char *str)
     tmp = ft_strtrim(str, " ");
     if (ft_strlen(tmp) != 0 || ft_strlen(str) != 0)
         add_history(str);
+    free(tmp);
 }
