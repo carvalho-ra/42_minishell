@@ -32,6 +32,9 @@ int main(void) //(int argc, char **argv, char **envp)
 		print_list(list);
 		printf("count pipes: %i\n", count_pipes(&list));
 		printf("confirm pipes: %i\n", confirm_pipe(&list));
+		printf("count redirects: %i\n", count_redirs(&list));
+		printf("confirm redirects: %i\n", confirm_redir(&list));
+		is_builtin(&list);
 
         //free user input
 		free(line);

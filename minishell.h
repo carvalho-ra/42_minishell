@@ -18,6 +18,16 @@ typedef struct s_token
 #include <readline/history.h>
 #include <signal.h>
 
+enum token_class 
+{
+    PIPE,
+    REDIRECT,
+    APPEND,
+    CMD,
+    BUILTIN,
+    WORD
+};
+
 //prototypes history
 void is_history(char *str);
 
@@ -43,6 +53,9 @@ t_token *lexer(char *str);
 //prototypes parser
 int count_pipes(t_token **list);
 int confirm_pipe(t_token **list);
+int	count_redirs(t_token **list);
+int	confirm_redir(t_token **list);
+int is_builtin(t_token **list);
 
 //utils
 int ft_strcmp(char *s1, char *s2);
