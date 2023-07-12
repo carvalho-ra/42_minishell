@@ -30,9 +30,9 @@ int main(void) //(int argc, char **argv, char **envp)
 		list = lexer(line);
 		//table = parser(list);
 		print_list(list);
-		printf("count pipes: %i\n", count_pipes(&list));
+		//printf("count pipes: %i\n", count_pipes(&list));
 		confirm_pipe(&list);
-		printf("count redirects: %i\n", count_redirs(&list));
+		//printf("count redirects: %i\n", count_redirs(&list));
 		confirm_redir(&list);
 		is_builtin(&list);
 
