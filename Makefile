@@ -1,7 +1,6 @@
 NAME = minishell
 
 SRCS = main.c \
-		history.c \
 		list.c \
 		prompt.c \
 		signal.c \

@@ -28,8 +28,6 @@ enum token_class
     WORD
 };
 
-//prototypes history
-void is_history(char *str);
 
 //prototypes list
 t_token	*create_node(char *str);
@@ -38,7 +36,7 @@ void	print_list(t_token *list);
 void	free_list(t_token **list);
 
 //prototypes prompt
-void check_history(char *str);
+void ft_is_history(char *str);
 
 //prototypes signal
 void handler(int signal);

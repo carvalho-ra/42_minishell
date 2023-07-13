@@ -25,7 +25,7 @@ int main(void) //(int argc, char **argv, char **envp)
 			break;
 		}
         // include readline/history.h
-		is_history(line);
+		ft_is_history(line);
 
 		list = lexer(line);
 		//table = parser(list);

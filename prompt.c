@@ -1,20 +1,26 @@
 #include "minishell.h"
 
-void check_history(char *str)
+void ft_is_history(char *str)
 {
     char    *tmp;
 
     tmp = ft_strtrim(str, " ");
-    if (ft_strlen(tmp) == 0)
+    if (ft_strlen(tmp) != 0 || ft_strlen(str) != 0)
         add_history(str);
+    free(tmp);
 }
-
 
 //include modifications in add_history
 //add_history cannot take "nothing", just "enter"
 //recheck with Will Branner
 
 
+// not all of the code bellow will fit in main
+// got to think how to fit the norm
+
+//TODO
+
+//copy of main->
 /*
 int main(int argc, char **argv, char **envp)
 {
