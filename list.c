@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_token	*create_node(char *str)
+t_token	*ft_create_node(char *str)
 {
 	t_token	*new_node;
 
@@ -12,22 +12,22 @@ t_token	*create_node(char *str)
 	return (new_node);
 }
 
-void	add_node_bottom(t_token **list, char *str)
+void	ft_add_node_bottom(t_token **list, char *str)
 {
 	t_token *aux;
 
 	if (*list == NULL)
-		*list = create_node(str);
+		*list = ft_create_node(str);
 	else
 	{
 		aux = *list;
 		while (aux->next != NULL)
 			aux = aux->next;
-		aux->next = create_node(str);
+		aux->next = ft_create_node(str);
 	}
 }
 
-void	print_list(t_token *list)
+void	ft_print_list(t_token *list)
 {
 	while (list)
 	{
@@ -36,7 +36,7 @@ void	print_list(t_token *list)
 	}
 }
 
-void	free_list(t_token **list)
+void	ft_free_list(t_token **list)
 {
 	t_token *aux;
 	

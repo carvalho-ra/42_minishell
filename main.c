@@ -8,7 +8,7 @@ int main(void) //(int argc, char **argv, char **envp)
     //ignore SIGQUIT Ctrl+'\'
     signal(SIGQUIT, SIG_IGN);
     //treat SIGINT Ctrl+C
-    signal(SIGINT, &handler);
+    signal(SIGINT, &ft_handler);
     while (1)
     {
         line = readline("minishell> "); // Prompt 
@@ -27,19 +27,19 @@ int main(void) //(int argc, char **argv, char **envp)
         // include readline/history.h
 		ft_is_history(line);
 
-		list = lexer(line);
+		list = ft_lexer(line);
 		//table = parser(list);
-		print_list(list);
+		ft_print_list(list);
 		//printf("count pipes: %i\n", count_pipes(&list));
-		confirm_pipe(&list);
+		ft_confirm_pipe(&list);
 		//printf("count redirects: %i\n", count_redirs(&list));
-		confirm_redir(&list);
-		is_builtin(&list);
+		ft_confirm_redir(&list);
+		ft_is_builtin(&list);
 
         //free user input
 		free(line);
 		//free list
-		free_list(&list);
+		ft_free_list(&list);
 	}
     return (0);
 }

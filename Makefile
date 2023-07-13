@@ -4,6 +4,7 @@ SRCS = main.c \
 		list.c \
 		prompt.c \
 		signal.c \
+		lexer_utils.c \
 		lexer.c \
 		parser.c \
 		utils.c \

@@ -30,30 +30,32 @@ enum token_class
 
 
 //prototypes list
-t_token	*create_node(char *str);
-void	add_node_bottom(t_token **list, char *str);
-void	print_list(t_token *list);
-void	free_list(t_token **list);
+t_token	*ft_create_node(char *str);
+void	ft_add_node_bottom(t_token **list, char *str);
+void	ft_print_list(t_token *list);
+void	ft_free_list(t_token **list);
 
 //prototypes prompt
 void ft_is_history(char *str);
 
 //prototypes signal
-void handler(int signal);
+void ft_handler(int signal);
 
 //prototypes lexer
-int ft_isblank(char c);
-int is_pipe_redir(char c);
-int single_quote(char *str, int i);
-int double_quote(char *str, int i);
-t_token *lexer(char *str);
+t_token *ft_lexer(char *str);
+
+//prototypes lexer utils
+int ft_is_blank(char c);
+int ft_is_pipe_redir(char c);
+int ft_single_quote(char *str, int i);
+int ft_double_quote(char *str, int i);
 
 //prototypes parser
-int count_pipes(t_token **list);
-int confirm_pipe(t_token **list);
-int	count_redirs(t_token **list);
-int	confirm_redir(t_token **list);
-int is_builtin(t_token **list);
+int ft_count_pipes(t_token **list);
+int ft_confirm_pipe(t_token **list);
+int	ft_count_redirs(t_token **list);
+int	ft_confirm_redir(t_token **list);
+int ft_is_builtin(t_token **list);
 
 //utils
 int ft_strcmp(char *s1, char *s2);

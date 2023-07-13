@@ -2,7 +2,7 @@
 
 //here we classify tokens and treat errors
 
-int	count_pipes(t_token **list)
+int	ft_count_pipes(t_token **list)
 {
 	t_token	*aux;
 	int		i;
@@ -18,7 +18,7 @@ int	count_pipes(t_token **list)
 	return (i);
 }
 
-int	count_redirs(t_token **list)
+int	ft_count_redirs(t_token **list)
 {
 	t_token	*aux;
 	int		i;
@@ -34,7 +34,7 @@ int	count_redirs(t_token **list)
 	return (i);
 }
 
-int	confirm_pipe(t_token **list)
+int	ft_confirm_pipe(t_token **list)
 {
 	t_token	*aux;
 	int		i;
@@ -64,7 +64,7 @@ int	confirm_pipe(t_token **list)
 	return (i);
 }
 
-int	confirm_redir(t_token **list)
+int	ft_confirm_redir(t_token **list)
 {
 	t_token	*aux;
 	int		i;
@@ -104,7 +104,7 @@ int	confirm_redir(t_token **list)
 	return (i);
 }
 
-int is_builtin(t_token **list)
+int ft_is_builtin(t_token **list)
 {
 	t_token *aux;
 

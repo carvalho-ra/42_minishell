@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void handler(int signal)
+void ft_handler(int signal)
 {
     //use write on fd = 2?
     write(2, "\n", 1);
