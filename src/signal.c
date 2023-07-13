@@ -14,3 +14,9 @@ void ft_handler(int signal)
 		rl_redisplay ();
 	}
 }
+
+
+//apagar historico no processo filho!!!
+
+//chamar função especifica da readline
+

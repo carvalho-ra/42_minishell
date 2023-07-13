@@ -34,6 +34,17 @@ int	ft_count_redirs(t_token **list)
 	return (i);
 }
 
+//when string initiates with | (a pipe) - ERROR
+// bash: syntax error near unexpected token `|'
+// error code: 2
+
+//when string ends with | (a pipe) - ERROR
+// bash: syntax error near unexpected token `newline'
+// error code: 2
+
+// redirect + PIPE é erro? ver com mais pessoas!!!!
+
+
 int	ft_confirm_pipe(t_token **list)
 {
 	t_token	*aux;
@@ -43,11 +54,10 @@ int	ft_confirm_pipe(t_token **list)
 	i = 0;
 	while (aux)
 	{
-		if (aux->data[0] == '|' && (!aux->next || aux == *list ||
-		 aux->next->data[0] == '|'))
+		if (aux->data[0] == '|' && (!aux->next ||aux == *list ||
+			aux->next->data[0] == '|'))
 		{
-			//set error variable in token???
-			aux->error = 1;
+			aux->error_code = 2;
 			//take thar error print to another place???
 			printf("minishell: syntax error near unexpected token `|'\n");
 			break ;
@@ -56,7 +66,7 @@ int	ft_confirm_pipe(t_token **list)
 		{
 			i++;
 			printf("is pipe\n");
-			aux->error = 0;
+			aux->error_code = 0;
 			aux->index = 1;
 		}
 		aux = aux->next;
@@ -64,9 +74,37 @@ int	ft_confirm_pipe(t_token **list)
 	return (i);
 }
 
+//when string initiates with <> next word is the name of a file to open/create
+//is opened (created) and restart the prompt
+//exit status 0
+
+//when string initiates with > next word is the name of a file to open/create
+//is opened (created) and restart the prompt
+//exit status 0
+
+//when string starts with >>> 
+// bash: syntax error near unexpected token `>'
+//exit error: 2
+
+
+//when string initiates with >> (append) the file (named - next word)
+//is opened (created) and restart the prompt
+
+//when string initiates with >> (append) and the next char is | (a pipe) - ERROR
+// bash: syntax error near unexpected token `|'
+// error code: 2
+
+// when string it ends with an append (>>) - ERROR
+// bash: syntax error near unexpected token `newline'
+// error code: 2
+
+
+
 int	ft_confirm_redir(t_token **list)
 {
 	t_token	*aux;
+	//make a new list????
+	//t_token	*new_list;
 	int		i;
 
 	aux = *list;
@@ -76,25 +114,51 @@ int	ft_confirm_redir(t_token **list)
 		if (aux->data[0] == '>' && aux->next && aux->next->data[0] != '>')
 		{
 			i++;
-			aux->error = 0;
+			aux->error_code = 0;
+			aux->type = REDIRECT;
+			printf("is redirect\n");
+		}
+		else if (aux->data[0] == '<' && aux->next && aux->next->data[0] != '<')
+		{
+			i++;
+			aux->error_code = 0;
 			aux->index = REDIRECT;
 			printf("is redirect\n");
+		}
+		else if (aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
+			aux->next->next && aux->next->next->data[0] != '<')
+		{
+			i++;
+			aux->error_code = 0;
+			aux->index = HEREDOC;
+			aux = aux->next;
+			printf("is heredoc\n");
 		}
 		else if (aux->data[0] == '>' && aux->next && aux->next->data[0] == '>' &&
 			aux->next->next && aux->next->next->data[0] != '>')
 		{
 			i++;
-			aux->error = 0;
+			aux->error_code = 0;
 			aux->index = APPEND;
 			aux = aux->next;
 			printf("is append\n");
+		}
+		else if ((aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
+			aux->next->next && aux->next->next->data[0] == '<') ||
+			(aux->data[0] == '<' && !aux->next))
+		{
+			//set error variable in token???
+			aux->error_code = 2;
+			//take thar error print to another place???
+			printf("minishell: syntax error near unexpected token `<'\n");
+			break ;
 		}
 		else if ((aux->data[0] == '>' && aux->next && aux->next->data[0] == '>' &&
 			aux->next->next && aux->next->next->data[0] == '>') ||
 			(aux->data[0] == '>' && !aux->next))
 		{
 			//set error variable in token???
-			aux->error = 1;
+			aux->error_code = 1;
 			//take thar error print to another place???
 			printf("minishell: syntax error near unexpected token `>'\n");
 			break ;
