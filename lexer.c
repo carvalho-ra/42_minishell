@@ -15,9 +15,9 @@ static int	ft_aux_lexer(char *str, int i)
 
 t_token	*ft_lexer(char *str)
 {
-	unsigned int i;
-	unsigned int start;
-	t_token *list;
+	unsigned int	i;
+	unsigned int	start;
+	t_token			*list;
 
 	list = NULL;
 	i = 0;

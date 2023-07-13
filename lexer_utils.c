@@ -21,7 +21,7 @@ int	ft_single_quote(char *str, int i)
 	if (str[i] == 39)
 	{
 		i++;
-		while(str[i] && str[i] != 39)
+		while (str[i] && str[i] != 39)
 			i++;
 		return (i);
 	}
