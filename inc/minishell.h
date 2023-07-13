@@ -5,7 +5,8 @@
 typedef struct s_token
 {
     int     index;
-    int     error;
+    int     type;
+    int     error_code;
     char    *data;
     struct s_token  *next;
 }   t_token;
@@ -23,6 +24,7 @@ enum token_class
     PIPE,
     REDIRECT,
     APPEND,
+    HEREDOC,
     CMD,
     BUILTIN,
     WORD
