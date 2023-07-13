@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 int main(void) //(int argc, char **argv, char **envp)
 {

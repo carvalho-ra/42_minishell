@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 t_token	*ft_create_node(char *str)
 {

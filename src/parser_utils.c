@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 int	ft_is_expand(char *str, unsigned int i)
 {

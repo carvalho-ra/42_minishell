@@ -1,26 +1,26 @@
 NAME = minishell
 
-SRCS = main.c \
-		list.c \
-		prompt.c \
-		signal.c \
-		lexer_utils.c \
-		lexer.c \
-		parser.c \
-		utils.c \
+SRCS = ./src/main.c \
+		./src/list.c \
+		./src/prompt.c \
+		./src/signal.c \
+		./src/lexer_utils.c \
+		./src/lexer.c \
+		./src/parser.c \
+		./src/utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
-INC = -Ilibft -Llibft -lft 
+INC = -Iinc/libft -Linc/libft -lft 
 
-LIBFT = libft/libft.a
+LIBFT = inc/libft/libft.a
 
 CC = cc -g -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(LIBFT):
-	cd libft && $(MAKE)
+	cd inc/libft && $(MAKE)
 
 %.o: %.c
 	$(CC) -c $< -o $@
@@ -30,7 +30,7 @@ $(NAME): $(LIBFT) $(OBJS)
 
 clean:
 	rm -f $(OBJS)
-	cd libft && $(MAKE) clean
+	cd inc/libft && $(MAKE) clean
 	
 fclean: clean
 	$(RM) $(NAME) $(LIBFT)
