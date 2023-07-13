@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 static int	ft_aux_lexer(char *str, int i)
 {
