@@ -57,12 +57,17 @@ int ft_count_pipes(t_token **list);
 int	ft_count_redirs(t_token **list);
 int	ft_count_expand(char *str);
 
+//prototypes builtins - env
+void ft_builtin_env(t_token *new_env);
 
 //prototypes parser
 int ft_confirm_pipe(t_token **list);
 int ft_confirm_expand(t_token **list);
 int	ft_confirm_redir(t_token **list);
 int ft_is_builtin(t_token **list);
+
+//prototypes expand
+t_token *ft_copy_env(char **envp);
 
 //utils
 int ft_strcmp(char *s1, char *s2);
