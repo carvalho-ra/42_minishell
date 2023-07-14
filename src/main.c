@@ -30,11 +30,12 @@ int main(void) //(int argc, char **argv, char **envp)
 		list = ft_lexer(line);
 		//table = parser(list);
 		ft_print_list(list);
-		//printf("count pipes: %i\n", count_pipes(&list));
+
 		ft_confirm_pipe(&list);
-		//printf("count redirects: %i\n", count_redirs(&list));
 		ft_confirm_redir(&list);
+		ft_confirm_expand(&list);
 		ft_is_builtin(&list);
+		printf("\n");
 
         //free user input
 		free(line);

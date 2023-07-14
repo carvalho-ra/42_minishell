@@ -7,6 +7,7 @@ SRCS = ./src/main.c \
 		./src/lexer_utils.c \
 		./src/lexer.c \
 		./src/parser.c \
+		./src/parser_utils.c \
 		./src/utils.c \
 
 OBJS = $(SRCS:.c=.o)
