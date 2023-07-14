@@ -2,38 +2,6 @@
 
 //here we classify tokens and treat errors
 
-int	ft_count_pipes(t_token **list)
-{
-	t_token	*aux;
-	int		i;
-
-	aux = *list;
-	i = 0;
-	while (aux)
-	{
-		if (aux->data[0] == '|')
-			i++;
-		aux = aux->next;
-	}
-	return (i);
-}
-
-int	ft_count_redirs(t_token **list)
-{
-	t_token	*aux;
-	int		i;
-
-	aux = *list;
-	i = 0;
-	while (aux)
-	{
-		if (aux->data[0] == '>')
-			i++;
-		aux = aux->next;
-	}
-	return (i);
-}
-
 //when string initiates with | (a pipe) - ERROR
 // bash: syntax error near unexpected token `|'
 // error code: 2
@@ -44,34 +12,79 @@ int	ft_count_redirs(t_token **list)
 
 // redirect + PIPE é erro? ver com mais pessoas!!!!
 
-
 int	ft_confirm_pipe(t_token **list)
 {
 	t_token	*aux;
-	int		i;
 
 	aux = *list;
-	i = 0;
 	while (aux)
 	{
-		if (aux->data[0] == '|' && (!aux->next ||aux == *list ||
-			aux->next->data[0] == '|'))
+		if (!ft_strcmp("|", aux->data) && (!aux->next || aux == *list
+			|| !ft_strcmp("|", aux->next->data)))
 		{
 			aux->error_code = 2;
-			//take thar error print to another place???
+			//take thar error message to another place!!!
+			//flag? EXIT_ERROR?
 			printf("minishell: syntax error near unexpected token `|'\n");
 			break ;
 		}
-		if (aux->data[0] == '|' && aux->next && aux->next->data[0] != '|')
+		if (!ft_strcmp("|", aux->data) && aux->next 
+			&& ft_strcmp("|", aux->next->data))
 		{
-			i++;
-			printf("is pipe\n");
+			//set no error
 			aux->error_code = 0;
-			aux->index = 1;
+			//set token type in it's structure
+			aux->type = PIPE;
+			printf("is pipe\n");
 		}
 		aux = aux->next;
 	}
-	return (i);
+	return (0);
+}
+
+// pseudocode
+
+// look for expand ($)
+// - function to iterate through strings
+// of each node looking for $ (ISSUE! consider $$???)
+
+int ft_confirm_expand(t_token **list)
+{
+	t_token *aux;
+	int	i;
+	int	flag;
+
+	aux = *list;
+	
+	while (aux)
+	{
+		i = 0;
+		flag = 0;
+		while (aux->data[i])
+		{
+			//TODO
+			//ISSUE!! if there's more than one expands in the word must expand
+			// preciso dormir .....
+			if (aux->data[i] == '$' && aux->data[i + 1])
+			{
+				flag = 1;
+				i++;
+				while (aux->data[i++] == '$')
+					flag++;
+				if (flag <= 2)
+				{
+					//set no error
+					aux->error_code = 0;
+					//set token type in it's structure
+					aux->type = EXPAND;
+					printf("is expand %i\n", flag);
+				}
+			}
+			i++;
+		}
+		aux = aux->next;
+	}
+	return (0);
 }
 
 //when string initiates with <> next word is the name of a file to open/create

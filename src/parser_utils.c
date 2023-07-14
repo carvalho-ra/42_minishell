@@ -1,43 +1,52 @@
 #include "../inc/minishell.h"
 
-int	ft_is_expand(char *str, unsigned int i)
+int	ft_count_pipes(t_token **list)
 {
-	if(!str[i])
-		return (i);
-	while(str[i])
+	t_token	*aux;
+	int		i;
+
+	aux = *list;
+	i = 0;
+	while (aux)
 	{
-		if (str[i] == '$')
-		{
+		if (aux->data[0] == '|')
 			i++;
-			//should consider $$???
-			// what is it?!
-			//Sergio recomends we to talk to Bruno, he got it in a recent evaluation 
-			if (str[i + 1] == '$' && str[i] == '$')
-				i++;
-		}
-		printf("is expand");
-		return (i);
-	}
-}
-
-//after $ (or $$??) what shoud exactly happen???
-//try to pseudocode
-
-//TODO
-
-// test in bash
-
-//TODO
-
-char	*ft_while_word(char *str, unsigned int i)
-{
-	if(!str[i])
-		return (i);
-	while (str[i])
-	{
-		if (ft_isascii(str[i]))
-			i++;
+		aux = aux->next;
 	}
 	return (i);
 }
 
+// pseudocode
+
+// look for expand ($)
+// - function to iterate through strings looking for $ (ISSUE! consider $$???)
+// - iterate and do it in each node  
+
+int ft_is_expand(char *str)
+{
+	int	i;
+	int	flag;
+
+	while (str[i])
+	{
+		i = 0;
+		flag = 0;
+		while (str[i])
+		{
+			//TODO
+			//ISSUE!! if there's more than one expands in the word must expand
+			// preciso dormir .....
+			if (str[i] == '$' && str[i + 1])
+			{
+				flag = 1;
+				i++;
+				while (str[i++] == '$')
+					flag++;
+				if (flag <= 2)
+					printf("is expand %i\n", flag);
+			}
+			i++;
+		}
+	}
+	return (0);
+}
