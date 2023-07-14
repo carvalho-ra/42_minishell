@@ -33,14 +33,16 @@ void	ft_add_node_bottom(t_token **list, char *str, int index)
 
 void	ft_print_list(t_token *list)
 {
-	printf("\n");
-	while (list)
-	{
+	t_token *aux;
 
-		printf("token %i =  %s\n", list->index, list->data);
-		list = list->next;
+	aux = list;
+	printf("\n");
+	while (aux)
+	{
+		printf("token %i =  %s\n", aux->index, aux->data);
+		aux = aux->next;
 	}
-		printf("\n");
+	printf("\n");
 }
 
 void	ft_free_list(t_token **list)
