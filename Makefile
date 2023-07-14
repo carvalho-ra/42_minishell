@@ -1,13 +1,15 @@
 NAME = minishell
 
 SRCS = ./src/main.c \
+		./src/builtins/env.c \
+		./src/expand.c \
 		./src/list.c \
-		./src/prompt.c \
-		./src/signal.c \
 		./src/lexer_utils.c \
 		./src/lexer.c \
-		./src/parser.c \
 		./src/parser_utils.c \
+		./src/parser.c \
+		./src/prompt.c \
+		./src/signal.c \
 		./src/utils.c \
 
 OBJS = $(SRCS:.c=.o)
