@@ -6,7 +6,9 @@ int main(int argc, char **argv, char **envp)
 	t_token	*list;
 	t_token *new_env;
 
-	//new_env = malloc(sizeof(t_token*));
+	new_env = malloc(sizeof(t_token*));
+	if (!new_env)
+		return (1);
 	new_env = ft_copy_env(envp);
 
 	(void)argv;
@@ -58,7 +60,7 @@ int main(int argc, char **argv, char **envp)
 
 		ft_free_list(&list);
 	}
-	//free(new_env);
 	ft_free_list(&new_env);
+	free(new_env);
     return (0);
 }
