@@ -31,12 +31,11 @@ int main(void) //(int argc, char **argv, char **envp)
 		//table = parser(list);
 		ft_print_list(list);
 
-		printf("\n");
-
 		ft_confirm_pipe(&list);
 		ft_confirm_redir(&list);
 		ft_confirm_expand(&list);
 		ft_is_builtin(&list);
+		printf("\n");
 
         //free user input
 		free(line);

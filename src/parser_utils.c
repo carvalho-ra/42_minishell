@@ -16,16 +16,33 @@ int	ft_count_pipes(t_token **list)
 	return (i);
 }
 
+int	ft_count_redirs(t_token **list)
+{
+	t_token	*aux;
+	int		i;
+
+	aux = *list;
+	i = 0;
+	while (aux)
+	{
+		if (aux->data[0] == '>' || aux->data[0] == '<')
+			i++;
+		aux = aux->next;
+	}
+	return (i);
+}
+
 // pseudocode
 
 // look for expand ($)
 // - function to iterate through strings looking for $ (ISSUE! consider $$???)
 // - iterate and do it in each node  
 
-int ft_is_expand(char *str)
+int ft_count_expands(char *str)
 {
 	int	i;
 	int	flag;
+	int	count;
 
 	while (str[i])
 	{
@@ -43,10 +60,13 @@ int ft_is_expand(char *str)
 				while (str[i++] == '$')
 					flag++;
 				if (flag <= 2)
+				{
+					count++;
 					printf("is expand %i\n", flag);
+				}
 			}
 			i++;
 		}
 	}
-	return (0);
+	return (count);
 }

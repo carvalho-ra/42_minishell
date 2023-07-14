@@ -35,7 +35,7 @@ int	ft_confirm_pipe(t_token **list)
 			aux->error_code = 0;
 			//set token type in it's structure
 			aux->type = PIPE;
-			printf("is pipe\n");
+			printf("token %i is pipe\n", aux->index);
 		}
 		aux = aux->next;
 	}
@@ -55,7 +55,6 @@ int ft_confirm_expand(t_token **list)
 	int	flag;
 
 	aux = *list;
-	
 	while (aux)
 	{
 		i = 0;
@@ -77,7 +76,7 @@ int ft_confirm_expand(t_token **list)
 					aux->error_code = 0;
 					//set token type in it's structure
 					aux->type = EXPAND;
-					printf("is expand %i\n", flag);
+					printf("token %i is expand\n", aux->index);
 				}
 			}
 			i++;
@@ -111,8 +110,6 @@ int ft_confirm_expand(t_token **list)
 // bash: syntax error near unexpected token `newline'
 // error code: 2
 
-
-
 int	ft_confirm_redir(t_token **list)
 {
 	t_token	*aux;
@@ -129,14 +126,14 @@ int	ft_confirm_redir(t_token **list)
 			i++;
 			aux->error_code = 0;
 			aux->type = REDIRECT;
-			printf("is redirect\n");
+			printf("token %i is redirect\n", aux->index);
 		}
 		else if (aux->data[0] == '<' && aux->next && aux->next->data[0] != '<')
 		{
 			i++;
 			aux->error_code = 0;
 			aux->index = REDIRECT;
-			printf("is redirect\n");
+			printf("token %i is redirect\n", aux->index);
 		}
 		else if (aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
 			aux->next->next && aux->next->next->data[0] != '<')
@@ -145,7 +142,7 @@ int	ft_confirm_redir(t_token **list)
 			aux->error_code = 0;
 			aux->index = HEREDOC;
 			aux = aux->next;
-			printf("is heredoc\n");
+			printf("token %i is heredoc\n", aux->index);
 		}
 		else if (aux->data[0] == '>' && aux->next && aux->next->data[0] == '>' &&
 			aux->next->next && aux->next->next->data[0] != '>')
@@ -154,7 +151,7 @@ int	ft_confirm_redir(t_token **list)
 			aux->error_code = 0;
 			aux->index = APPEND;
 			aux = aux->next;
-			printf("is append\n");
+			printf("token %i is append\n", aux->index);
 		}
 		else if ((aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
 			aux->next->next && aux->next->next->data[0] == '<') ||
@@ -191,44 +188,44 @@ int ft_is_builtin(t_token **list)
 		//echo
 		if (ft_strcmp(aux->data, "echo") == 0)
 		{
-			aux->index = 2;
-			printf("is builtin echo\n");
+			aux->type = BUILTIN;
+			printf("token %i is builtin echo\n", aux->index);
 		}
 		//cd
 		if (ft_strcmp(aux->data, "cd") == 0)
 		{
-			aux->index = 3;
-			printf("is builtin cd\n");
+			aux->type = BUILTIN;
+			printf("token %i is builtin cd\n", aux->index);
 		}
 		//pwd
 		if (ft_strcmp(aux->data, "pwd") == 0)
 		{
-			aux->index = 4;
-			printf("is builtin pwd\n");
+			aux->type = BUILTIN;
+			printf("token %i is builtin pwd\n", aux->index);
 		}
 		//export
 		if (ft_strcmp(aux->data, "export") == 0)
 		{
-			aux->index = 5;
-			printf("is builtin export\n");
+			aux->type = BUILTIN;
+			printf("token %i is builtin export\n", aux->index);
 		}
 		//unset
 		if (ft_strcmp(aux->data, "unset") == 0)
 		{
-			aux->index = 6;
-			printf("is builtin unset\n");
+			aux->type = BUILTIN;
+			printf("token %i is builtin unset\n", aux->index);
 		}
 		//env
 		if (ft_strcmp(aux->data, "env") == 0)
 		{
-			aux->index = 7;
-			printf("is builtin env\n");
+			aux->type = BUILTIN;
+			printf("token %i is builtin env\n", aux->index);
 		}
 		//exit
 		if (ft_strcmp(aux->data, "exit") == 0)
 		{
-			aux->index = 8;
-			printf("is builtin exit");
+			aux->type = BUILTIN;
+			printf("token %i is builtin exit\n", aux->index);
 		}
 		aux = aux->next;
 	}

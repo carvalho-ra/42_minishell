@@ -32,8 +32,8 @@ enum token_class
 };
 
 //prototypes list
-t_token	*ft_create_node(char *str);
-void	ft_add_node_bottom(t_token **list, char *str);
+t_token	*ft_create_node(char *str, int index);
+void	ft_add_node_bottom(t_token **list, char *str, int index);
 void	ft_print_list(t_token *list);
 void	ft_free_list(t_token **list);
 
@@ -55,7 +55,7 @@ int ft_double_quote(char *str, int i);
 //prototypes parser utils
 int ft_count_pipes(t_token **list);
 int	ft_count_redirs(t_token **list);
-int	ft_count_expands(char *str);
+int	ft_count_expand(char *str);
 
 
 //prototypes parser
