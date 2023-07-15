@@ -13,6 +13,7 @@ t_token *ft_copy_env(char **envp)
 	t_token	*new_env;
 	int		i;
 	
+	new_env = NULL;
 	i = 0;
 	while (envp[i] != NULL)
 	{

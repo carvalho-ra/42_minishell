@@ -20,7 +20,6 @@ t_token	*ft_lexer(char *str)
 	unsigned int 	id;
 	t_token			*list;
 
-
 	list = NULL;
 	i = 0;
 	start = 0;
