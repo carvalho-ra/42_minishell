@@ -6,14 +6,11 @@ int main(int argc, char **argv, char **envp)
 	t_token	*list;
 	t_token *new_env;
 
-	new_env = malloc(sizeof(t_token*));
-	if (!new_env)
-		return (1);
+	list = NULL;
 	new_env = ft_copy_env(envp);
 
 	(void)argv;
 	(void)argc;
-
     //ignore SIGQUIT Ctrl+'\'
     signal(SIGQUIT, SIG_IGN);
     //treat SIGINT Ctrl+C
@@ -47,20 +44,18 @@ int main(int argc, char **argv, char **envp)
 		}
         // include readline/history.h
 		ft_is_history(line);
-
 		list = ft_lexer(line);
-		//table = parser(list);
-		ft_print_list(list);
-
-		ft_confirm_pipe(&list);
-		ft_confirm_redir(&list);
-		ft_confirm_expand(&list);
-		ft_is_builtin(&list);
-		printf("\n");
-
-		ft_free_list(&list);
+		if (list)
+		{
+			ft_print_list(list);
+			printf("\n");
+			ft_confirm_pipe(&list);
+			ft_confirm_redir(&list);
+			ft_confirm_expand(&list);
+			ft_is_builtin(&list);
+			ft_free_list(&list);
+		}
 	}
 	ft_free_list(&new_env);
-	free(new_env);
     return (0);
 }
