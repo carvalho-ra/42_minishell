@@ -48,15 +48,16 @@ void ft_handler(int signal);
 //prototypes lexer
 t_token *ft_lexer(char *str);
 
-char	**ft_lexer_array(char *str);
-void ft_print_array_list(char **list);
-
+//prototypes lexer utils quotes
+int ft_single_quote(char *str, int i);
+int ft_double_quote(char *str, int i);
 
 //prototypes lexer utils
 int ft_is_blank(char c);
 int ft_is_pipe_redir(char c);
-int ft_single_quote(char *str, int i);
-int ft_double_quote(char *str, int i);
+int	ft_is_pipe(char c);
+int ft_is_redir_more(char c);
+int ft_is_redir_less(char c);
 
 //prototypes parser utils
 int ft_count_pipes(t_token **list);
@@ -73,6 +74,7 @@ int ft_confirm_expand(t_token **list);
 int ft_is_builtin(t_token **list);
 
 //prototypes parser utils err
+int	ft_err_pipe(t_token **list);
 int	ft_err_redir_in(t_token **list);
 int	ft_err_redir_out(t_token **list);
 
