@@ -49,9 +49,10 @@ int main(int argc, char **argv, char **envp)
 		{
 			ft_print_list(list);
 			printf("\n");
-			ft_confirm_pipe(&list);
+			ft_err_pipe(&list);
 			ft_err_redir_in(&list);
 			ft_err_redir_out(&list);
+			ft_confirm_pipe(&list);
 			ft_confirm_append(&list);
 			ft_confirm_heredoc(&list);
 			ft_confirm_redir_in(&list);
