@@ -94,6 +94,9 @@ int	ft_confirm_redir_out(t_token **list);
 
 //prototypes expand
 t_token *ft_copy_env(char **envp);
+void ft_vars_to_expand(t_token **list);
+int	ft_is_expand(char *data);
+
 
 //utils
 int ft_strcmp(char *s1, char *s2);

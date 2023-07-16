@@ -56,6 +56,8 @@ int main(int argc, char **argv, char **envp)
 			// ft_confirm_redir(&list);  -->got substituted by others
 			ft_confirm_expand(&list);
 			ft_is_builtin(&list);
+
+			ft_vars_to_expand(&list);
 			ft_free_list(&list);
 		}
 	}
