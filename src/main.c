@@ -22,11 +22,6 @@ int main(int argc, char **argv, char **envp)
 		if (!line) 
 		{
 			write(2, "exit\n", 5);
-			//free user input
-			if (!line)
-				break ;
-			else
-				free(line);
 			break ;
 		}
 		// cmd exit
