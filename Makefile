@@ -6,8 +6,10 @@ SRCS = ./src/main.c \
 		./src/list.c \
 		./src/lexer_utils.c \
 		./src/lexer.c \
-		./src/parser_utils.c \
-		./src/parser.c \
+		./src/parser/parser_utils_err.c \
+		./src/parser/parser_utils_redirs.c \
+		./src/parser/parser_utils.c \
+		./src/parser/parser.c \
 		./src/prompt.c \
 		./src/signal.c \
 		./src/utils.c \
