@@ -125,33 +125,33 @@ int	ft_confirm_redir(t_token **list)
 		{
 			i++;
 			aux->error_code = 0;
-			aux->type = REDIRECT;
-			printf("token %i is redirect\n", aux->index);
+			aux->type = REDIRECT_IN;
+			printf("token %i is redirect input (<)\n", aux->index);
 		}
 		else if (aux->data[0] == '<' && aux->next && aux->next->data[0] != '<')
 		{
 			i++;
 			aux->error_code = 0;
-			aux->index = REDIRECT;
-			printf("token %i is redirect\n", aux->index);
+			aux->type = REDIRECT_OUT;
+			printf("token %i is redirect output (>)\n", aux->index);
 		}
 		else if (aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
 			aux->next->next && aux->next->next->data[0] != '<')
 		{
 			i++;
 			aux->error_code = 0;
-			aux->index = HEREDOC;
+			aux->type = HEREDOC;
 			aux = aux->next;
-			printf("token %i is heredoc\n", aux->index);
+			printf("token %i is heredoc (<<)\n", aux->index);
 		}
 		else if (aux->data[0] == '>' && aux->next && aux->next->data[0] == '>' &&
 			aux->next->next && aux->next->next->data[0] != '>')
 		{
 			i++;
 			aux->error_code = 0;
-			aux->index = APPEND;
+			aux->type = APPEND;
 			aux = aux->next;
-			printf("token %i is append\n", aux->index);
+			printf("token %i is append (>>)\n", aux->index);
 		}
 		else if ((aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
 			aux->next->next && aux->next->next->data[0] == '<') ||
