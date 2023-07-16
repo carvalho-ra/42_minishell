@@ -22,7 +22,8 @@ typedef struct s_token
 enum token_class 
 {
     PIPE,
-    REDIRECT,
+    REDIRECT_IN,
+    REDIRECT_OUT,
     APPEND,
     HEREDOC,
     CMD,
