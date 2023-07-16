@@ -21,7 +21,7 @@ typedef struct s_token
 
 enum token_class 
 {
-    PIPE,
+    PIPE=1,
     REDIRECT_IN,
     REDIRECT_OUT,
     APPEND,
@@ -29,7 +29,8 @@ enum token_class
     CMD,
     BUILTIN,
     WORD,
-    EXPAND
+    EXPAND,
+    ERR
 };
 
 //prototypes list
@@ -46,6 +47,10 @@ void ft_handler(int signal);
 
 //prototypes lexer
 t_token *ft_lexer(char *str);
+
+char	**ft_lexer_array(char *str);
+void ft_print_array_list(char **list);
+
 
 //prototypes lexer utils
 int ft_is_blank(char c);
@@ -64,8 +69,20 @@ void ft_builtin_env(t_token *new_env);
 //prototypes parser
 int ft_confirm_pipe(t_token **list);
 int ft_confirm_expand(t_token **list);
-int	ft_confirm_redir(t_token **list);
+//int	ft_confirm_redir(t_token **list);
 int ft_is_builtin(t_token **list);
+
+//prototypes parser utils err
+int	ft_err_redir_in(t_token **list);
+int	ft_err_redir_out(t_token **list);
+
+//prototypes parser utils redirs
+int	ft_confirm_append(t_token **list);
+int	ft_confirm_heredoc(t_token **list);
+int	ft_confirm_redir_in(t_token **list);
+int	ft_confirm_redir_out(t_token **list);
+
+
 
 //prototypes expand
 t_token *ft_copy_env(char **envp);

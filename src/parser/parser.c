@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 //here we classify tokens and treat errors
 
@@ -110,73 +110,75 @@ int ft_confirm_expand(t_token **list)
 // bash: syntax error near unexpected token `newline'
 // error code: 2
 
-int	ft_confirm_redir(t_token **list)
-{
-	t_token	*aux;
-	//make a new list????
-	//t_token	*new_list;
-	int		i;
+//next funtion was to long. it was substituted by others
 
-	aux = *list;
-	i = 0;
-	while (aux)
-	{
-		if (aux->data[0] == '>' && aux->next && aux->next->data[0] != '>')
-		{
-			i++;
-			aux->error_code = 0;
-			aux->type = REDIRECT_IN;
-			printf("token %i is redirect input (<)\n", aux->index);
-		}
-		else if (aux->data[0] == '<' && aux->next && aux->next->data[0] != '<')
-		{
-			i++;
-			aux->error_code = 0;
-			aux->type = REDIRECT_OUT;
-			printf("token %i is redirect output (>)\n", aux->index);
-		}
-		else if (aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
-			aux->next->next && aux->next->next->data[0] != '<')
-		{
-			i++;
-			aux->error_code = 0;
-			aux->type = HEREDOC;
-			aux = aux->next;
-			printf("token %i is heredoc (<<)\n", aux->index);
-		}
-		else if (aux->data[0] == '>' && aux->next && aux->next->data[0] == '>' &&
-			aux->next->next && aux->next->next->data[0] != '>')
-		{
-			i++;
-			aux->error_code = 0;
-			aux->type = APPEND;
-			aux = aux->next;
-			printf("token %i is append (>>)\n", aux->index);
-		}
-		else if ((aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
-			aux->next->next && aux->next->next->data[0] == '<') ||
-			(aux->data[0] == '<' && !aux->next))
-		{
-			//set error variable in token???
-			aux->error_code = 2;
-			//take thar error print to another place???
-			printf("minishell: syntax error near unexpected token `<'\n");
-			break ;
-		}
-		else if ((aux->data[0] == '>' && aux->next && aux->next->data[0] == '>' &&
-			aux->next->next && aux->next->next->data[0] == '>') ||
-			(aux->data[0] == '>' && !aux->next))
-		{
-			//set error variable in token???
-			aux->error_code = 1;
-			//take thar error print to another place???
-			printf("minishell: syntax error near unexpected token `>'\n");
-			break ;
-		}
-		aux = aux->next;
-	}
-	return (i);
-}
+// int	ft_confirm_redir(t_token **list)
+// {
+// 	t_token	*aux;
+// 	//make a new list????
+// 	//t_token	*new_list;
+// 	int		i;
+
+// 	aux = *list;
+// 	i = 0;
+// 	while (aux)
+// 	{
+// 		if (aux->data[0] == '>' && aux->next && aux->next->data[0] != '>')
+// 		{
+// 			i++;
+// 			aux->error_code = 0;
+// 			aux->type = REDIRECT_IN;
+// 			printf("token %i is redirect input (<)\n", aux->index);
+// 		}
+// 		else if (aux->data[0] == '<' && aux->next && aux->next->data[0] != '<')
+// 		{
+// 			i++;
+// 			aux->error_code = 0;
+// 			aux->type = REDIRECT_OUT;
+// 			printf("token %i is redirect output (>)\n", aux->index);
+// 		}
+// 		else if (aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
+// 			aux->next->next && aux->next->next->data[0] != '<')
+// 		{
+// 			i++;
+// 			aux->error_code = 0;
+// 			aux->type = HEREDOC;
+// 			aux = aux->next;
+// 			printf("token %i is heredoc (<<)\n", aux->index);
+// 		}
+// 		else if (aux->data[0] == '>' && aux->next && aux->next->data[0] == '>' &&
+// 			aux->next->next && aux->next->next->data[0] != '>')
+// 		{
+// 			i++;
+// 			aux->error_code = 0;
+// 			aux->type = APPEND;
+// 			aux = aux->next;
+// 			printf("token %i is append (>>)\n", aux->index);
+// 		}
+// 		else if ((aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
+// 			aux->next->next && aux->next->next->data[0] == '<') ||
+// 			(aux->data[0] == '<' && !aux->next))
+// 		{
+// 			//set error variable in token???
+// 			aux->error_code = 2;
+// 			//take thar error print to another place???
+// 			printf("minishell: syntax error near unexpected token `<'\n");
+// 			break ;
+// 		}
+// 		else if ((aux->data[0] == '>' && aux->next && aux->next->data[0] == '>' &&
+// 			aux->next->next && aux->next->next->data[0] == '>') ||
+// 			(aux->data[0] == '>' && !aux->next))
+// 		{
+// 			//set error variable in token???
+// 			aux->error_code = 1;
+// 			//take thar error print to another place???
+// 			printf("minishell: syntax error near unexpected token `>'\n");
+// 			break ;
+// 		}
+// 		aux = aux->next;
+// 	}
+// 	return (i);
+// }
 
 int ft_is_builtin(t_token **list)
 {
