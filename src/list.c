@@ -1,51 +1,104 @@
 #include "../inc/minishell.h"
 
-t_token	*ft_create_node(char *str)
+t_token	*ft_create_node(char *str, int index)
 {
 	t_token	*new_node;
 
 	new_node = malloc(sizeof(t_token));
 	if (!(new_node))
 		return (NULL);
+	new_node->index = index;
 	new_node->data = str;
 	new_node->next = NULL;
 	return (new_node);
 }
 
-void	ft_add_node_bottom(t_token **list, char *str)
+void	ft_add_token(t_shell *shell, char *str, int index)
 {
 	t_token *aux;
 
-	if (*list == NULL)
-		*list = ft_create_node(str);
+	aux = NULL;
+	aux = shell->list;
+	if (aux == NULL)
+		shell->list = ft_create_node(str, 1);
 	else
 	{
-		aux = *list;
 		while (aux->next != NULL)
+		{
+			index++;
 			aux = aux->next;
-		aux->next = ft_create_node(str);
+		}
+		aux->next = ft_create_node(str, index);
 	}
 }
 
-void	ft_print_list(t_token *list)
+void	ft_add_env(t_shell *shell, char *str, int index)
 {
-	while (list)
+	t_token *aux;
+
+	aux = shell->new_env;
+	if (aux == NULL)
+		shell->new_env = ft_create_node(str, 0);
+	else
 	{
-		printf("%s\n", list->data);
-		list = list->next;
+		aux = shell->new_env;
+		while (aux->next != NULL)
+		{
+			index++;
+			aux = aux->next;
+		}
+		aux->next = ft_create_node(str, index);
 	}
 }
 
-void	ft_free_list(t_token **list)
+void	ft_print_list(t_shell *shell)
+{
+	t_token *aux;
+
+	aux = shell->list;
+	while (aux)
+	{
+		printf("token %i =  %s\n", aux->index, aux->data);
+		aux = aux->next;
+	}
+}
+
+void	ft_free_token_list(t_shell *shell)
 {
 	t_token *aux;
 	
-	while(*list)
+	aux = shell->list;
+	while(aux)
 	{
-		aux = *list;
 		free(aux->data);
-		*list = (*list)->next;
-		free(aux);
-		aux = NULL;
+		aux = aux->next;
+		free(shell->list);
+		shell->list = aux;
 	}
+}
+
+void	ft_free_env_list(t_shell *shell)
+{
+	t_token *aux;
+	
+	aux = shell->new_env;
+	while(aux)
+	{
+		free(aux->data);
+		aux = aux->next;
+		free(shell->new_env);
+		shell->new_env = aux;
+	}
+}
+
+//AO FAZER NOVA STRUCT PARA MINISHELL
+
+void	ft_free_shell(t_shell *shell)
+{
+	t_shell *aux;
+	
+	aux = shell;
+	free(aux->new_env);
+	free(aux->list);
+	free(shell);
 }

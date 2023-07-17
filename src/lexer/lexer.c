@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int	ft_aux_lexer(char *str, int i)
 {
@@ -13,25 +13,25 @@ static int	ft_aux_lexer(char *str, int i)
 	return (i);
 }
 
-t_token	*ft_lexer(char *str)
+t_token	*ft_lexer(t_shell *shell)
 {
 	unsigned int	i;
 	unsigned int	start;
-	t_token			*list;
+	unsigned int 	id;
 
-	list = NULL;
 	i = 0;
 	start = 0;
-	if (!str)
+	id = 2;
+	if (!shell->line)
 		return (NULL);
-	while (str[i])
+	while (shell->line[i])
 	{
-		while (str[i] && ft_is_blank(str[i]))
+		while (shell->line[i] && ft_is_blank(shell->line[i]))
 			i++;
 		start = i;
-		i = ft_aux_lexer(str, i);
+		i = ft_aux_lexer(shell->line, i);
 		if (start != i)
-			ft_add_node_bottom(&list, ft_substr(str, start, i - start));
+			ft_add_token(shell, ft_substr(shell->line, start, i - start), id);
 	}
-	return (list);
+	return (shell->list);
 }
