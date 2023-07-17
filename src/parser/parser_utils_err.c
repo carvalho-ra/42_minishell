@@ -23,14 +23,14 @@
 // bash: syntax error near unexpected token `newline'
 // error code: 2
 
-int	ft_err_pipe(t_token **list)
+int	ft_err_pipe(t_shell *shell)
 {
 	t_token	*aux;
 
-	aux = *list;
+	aux = shell->list;
 	while (aux)
 	{
-		if (!ft_strcmp("|", aux->data) && (!aux->next || aux == *list
+		if (!ft_strcmp("|", aux->data) && (!aux->next || aux == shell->list
 			|| !ft_strcmp("|", aux->next->data)))
 		{
 			aux->error_code = 2;
@@ -48,12 +48,12 @@ int	ft_err_pipe(t_token **list)
 	return (0);
 }
 
-int	ft_err_redir_in(t_token **list)
+int	ft_err_redir_in(t_shell *shell)
 {
 	t_token	*aux;
 	int		i;
 
-	aux = *list;
+	aux = shell->list;
 	i = 0;
 	while (aux)
 	{
@@ -75,12 +75,12 @@ int	ft_err_redir_in(t_token **list)
 	return (i);
 }
 
-int	ft_err_redir_out(t_token **list)
+int	ft_err_redir_out(t_shell *shell)
 {
 	t_token	*aux;
 	int		i;
 
-	aux = *list;
+	aux = shell->list;
 	i = 0;
 	while (aux)
 	{
