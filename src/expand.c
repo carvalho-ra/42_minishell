@@ -86,6 +86,8 @@ int	ft_is_expand(char *data)
 
 	i = 0;
 	start = 0;
+	tmp = NULL;
+	str = NULL;
 	prev = NULL;
 	if (data[i] == 34)
 		tmp = ft_strtrim(data, "\"");
@@ -93,25 +95,38 @@ int	ft_is_expand(char *data)
 		tmp = ft_strdup(data);
 	while (tmp[i])
 	{
-		while (tmp[i] && tmp[i] != '$')
-			i++;
-		prev = ft_substr(tmp, start, i - start);
-		if (tmp[i] && tmp[i] == '$')
-			i++;
-		start = i;
-		while (tmp[i] && ft_isalnum(tmp[i]))
-			i++;
-		if (start != i)
+		if (tmp[i] && tmp[i] != '$')
 		{
-			str = ft_substr(tmp, start, i - start);
 			start = i;
+			while (tmp[i] && tmp[i] != '$')
+				i++;
+			if (start != i)
+				prev = ft_substr(tmp, start, i - start);
+		}
+		if (tmp[i] && tmp[i] == '$')
+		{
+			i++;
+			start = i;
+			while (tmp[i] && (ft_isalnum(tmp[i]) || tmp[i] == '_'))
+				i++;
+			if (start != i)
+				str = ft_substr(tmp, start, i - start);
 		}
 		printf("prev variable [%s]\n", prev);
 		printf("look for in env [%s]\n", str);
-		i++;
+		prev = NULL;
+		str = NULL;
+		//join prev + str expanded + prev 
+		//i++;
 	}
 	return (0);
 }
+
+
+// int ft_look_for_in_env(char *str, t_token*new_env)
+// {
+
+// }
 
 //procurar com ft_strcmp(env);
 
