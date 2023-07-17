@@ -8,19 +8,18 @@
 
 //unset em variavel inexistente é igual ao comportamento normal, não dá erro
 
-t_token *ft_copy_env(char **envp)
+int ft_copy_env(t_shell *shell, char **envp)
 {
-	t_token	*new_env;
 	int		i;
-	
-	new_env = NULL;
+
+	shell->new_env = NULL;
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		ft_add_node_bottom(&new_env, ft_strdup((const char *)envp[i]), 2);
+		ft_add_env(shell, ft_strdup((const char *)envp[i]), 1);
 		i++;
 	}
-	return (new_env);
+	return (0);
 }
 
 // pseudocode
@@ -29,12 +28,12 @@ t_token *ft_copy_env(char **envp)
 // - function to iterate through strings
 // of each node looking for $ (ISSUE! consider $$???)
 
-int ft_confirm_expand(t_token **list)
+int ft_confirm_expand(t_shell *shell)
 {
 	t_token *aux;
 	int	i;
 
-	aux = *list;
+	aux = shell->list;
 	while (aux)
 	{
 		i = 0;
@@ -55,17 +54,17 @@ int ft_confirm_expand(t_token **list)
 	return (0);
 }
 
-void ft_vars_to_expand(t_token **list)
+void ft_vars_to_expand(t_shell *shell)
 {
 	t_token *aux;
 
-	aux = *list;
+	aux = shell->list;
 	while (aux)
 	{
 		if (aux->type == EXPAND)
 		{
 			printf("expandir [%s]\n", aux->data);
-			ft_is_expand(aux->data);
+			ft_is_expand(aux->data, shell);
 		}
 		aux = aux->next;
 	}
@@ -76,23 +75,37 @@ void ft_vars_to_expand(t_token **list)
 // cortar a variavel que vai expandir
 // é só a varivel??
 
-int	ft_is_expand(char *data)
+char *ft_prep_expand(char *data)
+{
+	int		i;
+	char	*str;
+	//char	**ret;
+
+	i = 0;
+	str = NULL;
+	if (data[i] == 34)
+		str = ft_strtrim(data, "\"");
+	else
+		str = ft_strdup(data);
+	//ret = ft_split(str, '$');
+	return (str);
+}
+
+int	ft_is_expand(char *data, t_shell *shell)
 {
 	char 	*tmp;
 	char	*prev;
 	char	*str;
+	char	*final;
 	int		i;
 	int 	start;
 
 	i = 0;
 	start = 0;
-	tmp = NULL;
 	str = NULL;
 	prev = NULL;
-	if (data[i] == 34)
-		tmp = ft_strtrim(data, "\"");
-	else
-		tmp = ft_strdup(data);
+	final = NULL;
+	tmp = ft_prep_expand(data);
 	while (tmp[i])
 	{
 		if (tmp[i] && tmp[i] != '$')
@@ -112,21 +125,47 @@ int	ft_is_expand(char *data)
 			if (start != i)
 				str = ft_substr(tmp, start, i - start);
 		}
+		write(2, "here", 4);
+		str = ft_look_for_in_env(str, shell);
+		if (prev && str && !final)
+			final = ft_strjoin(prev, str);
+		else if (prev && !str && final)
+			final = ft_strjoin(final, prev);
+		else if (!prev && str && final)
+			final = ft_strjoin(final, str);
+		else
+			final = str;
 		printf("prev variable [%s]\n", prev);
 		printf("look for in env [%s]\n", str);
+		printf("expanded [%s]\n", final);
 		prev = NULL;
 		str = NULL;
 		//join prev + str expanded + prev 
 		//i++;
 	}
+	//free(tmp, prev, str);
 	return (0);
 }
 
+char	*ft_look_for_in_env(char *str, t_shell *shell)
+{
+	t_token *aux;
+	char	*ret;
 
-// int ft_look_for_in_env(char *str, t_token*new_env)
-// {
-
-// }
+	aux = shell->new_env;
+	ret = NULL;
+	while (aux->next)
+	{
+		if (!ft_strncmp(str, aux->data, ft_strlen(str))
+			&& aux->data[ft_strlen(str)] == '=')
+		{
+			ret = ft_substr(aux->data, (ft_strlen(str) + 1),
+				ft_strlen(aux->data) - (ft_strlen(str) + 1));
+		}
+		aux = aux->next;
+	}
+	return (ret);
+}
 
 //procurar com ft_strcmp(env);
 

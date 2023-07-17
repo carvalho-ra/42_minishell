@@ -1,10 +1,10 @@
 #include "../../inc/minishell.h"
 
-int ft_is_builtin(t_token **list)
+int ft_is_builtin(t_shell *shell)
 {
 	t_token *aux;
 
-	aux = *list;
+	aux = shell->list;
 	while (aux)
 	{
 		//echo

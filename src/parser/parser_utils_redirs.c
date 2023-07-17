@@ -1,11 +1,11 @@
 #include "../../inc/minishell.h"
 
-int	ft_confirm_append(t_token **list)
+int	ft_confirm_append(t_shell *shell)
 {
 	t_token	*aux;
 	int		i;
 
-	aux = *list;
+	aux = shell->list;
 	i = 0;
 	while (aux)
 	{
@@ -24,12 +24,12 @@ int	ft_confirm_append(t_token **list)
 	return (i);
 }
 
-int	ft_confirm_heredoc(t_token **list)
+int	ft_confirm_heredoc(t_shell *shell)
 {
 	t_token	*aux;
 	int		i;
 
-	aux = *list;
+	aux = shell->list;
 	i = 0;
 	while (aux)
 	{
@@ -48,13 +48,12 @@ int	ft_confirm_heredoc(t_token **list)
 	return (i);
 }
 
-int	ft_confirm_redir_out(t_token **list)
+int	ft_confirm_redir_out(t_shell *shell)
 {
 	t_token	*aux;
-	
 	int		i;
 
-	aux = *list;
+	aux = shell->list;
 	i = 0;
 	while (aux)
 	{
@@ -71,13 +70,12 @@ int	ft_confirm_redir_out(t_token **list)
 	return (i);
 }
 
-int	ft_confirm_redir_in(t_token **list)
+int	ft_confirm_redir_in(t_shell *shell)
 {
 	t_token	*aux;
-	
 	int		i;
 
-	aux = *list;
+	aux = shell->list;
 	i = 0;
 	while (aux)
 	{
