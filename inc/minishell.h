@@ -39,20 +39,8 @@ enum token_class
     ERR
 };
 
-//prototypes list
-t_token	*ft_create_node(char *str, int index);
-void	ft_add_node_bottom(t_token **list, char *str, int index);
-void	ft_print_list(t_token *list);
-void	ft_free_list(t_token **list);
-
-//prototypes prompt
-void ft_is_history(char *str);
-
-//prototypes signal
-void ft_handler(int signal);
-
-//prototypes lexer
-t_token *ft_lexer(char *str);
+//prototypes builtins - env
+void ft_builtin_env(t_token *new_env);
 
 //prototypes lexer utils quotes
 int ft_single_quote(char *str, int i);
@@ -65,18 +53,11 @@ int	ft_is_pipe(char c);
 int ft_is_redir_more(char c);
 int ft_is_redir_less(char c);
 
-//prototypes parser utils
-int ft_count_pipes(t_token **list);
-int	ft_count_redirs(t_token **list);
-int	ft_count_expand(char *str);
+//prototypes lexer
+t_token *ft_lexer(char *str);
 
-//prototypes builtins - env
-void ft_builtin_env(t_token *new_env);
 
-//prototypes parser
-int ft_confirm_pipe(t_token **list);
-int ft_confirm_expand(t_token **list);
-//int	ft_confirm_redir(t_token **list);
+//prototype parser utils bultin
 int ft_is_builtin(t_token **list);
 
 //prototypes parser utils err
@@ -87,16 +68,33 @@ int	ft_err_redir_out(t_token **list);
 //prototypes parser utils redirs
 int	ft_confirm_append(t_token **list);
 int	ft_confirm_heredoc(t_token **list);
-int	ft_confirm_redir_in(t_token **list);
 int	ft_confirm_redir_out(t_token **list);
+int	ft_confirm_redir_in(t_token **list);
 
+//prototypes parser utils
+int ft_count_pipes(t_token **list);
+int	ft_count_redirs(t_token **list);
 
+//prototypes parser
+int ft_confirm_pipe(t_token **list);
 
 //prototypes expand
 t_token *ft_copy_env(char **envp);
+int ft_confirm_expand(t_token **list);
 void ft_vars_to_expand(t_token **list);
 int	ft_is_expand(char *data);
 
+//prototypes list
+t_token	*ft_create_node(char *str, int index);
+void	ft_add_node_bottom(t_token **list, char *str, int index);
+void	ft_print_list(t_token *list);
+void	ft_free_list(t_token **list);
+
+//prototypes prompt
+void ft_is_history(char *str);
+
+//prototypes signal
+void ft_handler(int signal);
 
 //utils
 int ft_strcmp(char *s1, char *s2);
