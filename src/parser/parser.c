@@ -10,21 +10,13 @@
 
 // redirect + PIPE é erro? ver com mais pessoas!!!!
 
-int	ft_confirm_pipe(t_token **list)
+int	ft_confirm_pipe(t_shell *shell)
 {
 	t_token	*aux;
 
-	aux = *list;
+	aux = shell->list;
 	while (aux)
 	{
-		// if (!ft_strcmp("|", aux->data) && (!aux->next || aux == *list
-		// 	|| !ft_strcmp("|", aux->next->data)))
-		// {
-		// 	aux->error_code = 2;
-		// 	aux->type = ERR;
-		// 	printf("token %i, minishell: syntax error near unexpected token `|'\n", aux->index);
-		// 	break ;
-		// }
 		if (!ft_strcmp("|", aux->data) && aux->next 
 			&& ft_strcmp("|", aux->next->data) && aux->type != ERR)
 		{
