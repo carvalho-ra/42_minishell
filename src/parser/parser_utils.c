@@ -9,7 +9,7 @@ int	ft_count_pipes(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		if (aux->data[0] == '|')
+		if (aux->str[0] == '|')
 			i++;
 		aux = aux->next;
 	}
@@ -25,7 +25,7 @@ int	ft_count_redirs(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		if (aux->data[0] == '>' || aux->data[0] == '<')
+		if (aux->str[0] == '>' || aux->str[0] == '<')
 			i++;
 		aux = aux->next;
 	}

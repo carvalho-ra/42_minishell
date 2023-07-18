@@ -17,8 +17,8 @@ int	ft_confirm_pipe(t_shell *shell)
 	aux = shell->list;
 	while (aux)
 	{
-		if (!ft_strcmp("|", aux->data) && aux->next 
-			&& ft_strcmp("|", aux->next->data) && aux->type != ERR)
+		if (!ft_strcmp("|", aux->str) && aux->next 
+			&& ft_strcmp("|", aux->next->str) && aux->type != ERR)
 		{
 			//set no error
 			aux->error_code = 0;

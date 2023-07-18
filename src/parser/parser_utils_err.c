@@ -30,12 +30,12 @@ int	ft_err_pipe(t_shell *shell)
 	aux = shell->list;
 	while (aux)
 	{
-		if (!ft_strcmp("|", aux->data) && (!aux->next || aux == shell->list
-			|| !ft_strcmp("|", aux->next->data)))
+		if (!ft_strcmp("|", aux->str) && (!aux->next || aux == shell->list
+			|| !ft_strcmp("|", aux->next->str)))
 		{
 			aux->error_code = 2;
 			aux->type = ERR;
-			while (aux->next && ft_is_pipe_redir(aux->next->data[0]))
+			while (aux->next && ft_is_pipe_redir(aux->next->str[0]))
 			{
 				aux->next->type = ERR;
 				aux = aux->next;
@@ -57,13 +57,13 @@ int	ft_err_redir_in(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		if ((aux->data[0] == '<' && aux->next && aux->next->data[0] == '<' &&
-			aux->next->next && ft_is_pipe_redir(aux->next->next->data[0])) ||
-			(aux->data[0] == '<' && !aux->next))
+		if ((aux->str[0] == '<' && aux->next && aux->next->str[0] == '<' &&
+			aux->next->next && ft_is_pipe_redir(aux->next->next->str[0])) ||
+			(aux->str[0] == '<' && !aux->next))
 		{
 			aux->error_code = 1;
 			aux->type = ERR;
-			while (aux->next && ft_is_pipe_redir(aux->next->data[0]))
+			while (aux->next && ft_is_pipe_redir(aux->next->str[0]))
 			{
 				aux->next->type = ERR;
 				aux = aux->next;
@@ -84,13 +84,13 @@ int	ft_err_redir_out(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		if ((aux->data[0] == '>' && aux->next && aux->next->data[0] == '>' &&
-			aux->next->next && ft_is_pipe_redir(aux->next->next->data[0]))
-			|| (aux->data[0] == '>' && !aux->next))
+		if ((aux->str[0] == '>' && aux->next && aux->next->str[0] == '>' &&
+			aux->next->next && ft_is_pipe_redir(aux->next->next->str[0]))
+			|| (aux->str[0] == '>' && !aux->next))
 		{
 			aux->error_code = 1;
 			aux->type = ERR;
-			while (aux->next && ft_is_pipe_redir(aux->next->data[0]))
+			while (aux->next && ft_is_pipe_redir(aux->next->str[0]))
 			{
 				aux->next->type = ERR;
 				aux = aux->next;

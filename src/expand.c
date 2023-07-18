@@ -37,11 +37,11 @@ int ft_confirm_expand(t_shell *shell)
 	while (aux)
 	{
 		i = 0;
-		while (aux->data[i])
+		while (aux->str[i])
 		{
-			i = (ft_single_quote(aux->data, i));
-			if (aux->data[i] == '$' && aux->data[i + 1] != '$'
-				&& aux->data[i - 1] != '$')
+			i = (ft_single_quote(aux->str, i));
+			if (aux->str[i] == '$' && aux->str[i + 1] != '$'
+				&& aux->str[i - 1] != '$')
 			{
 				aux->error_code = 0;
 				aux->type = EXPAND;
@@ -57,14 +57,16 @@ int ft_confirm_expand(t_shell *shell)
 void ft_vars_to_expand(t_shell *shell)
 {
 	t_token *aux;
+	char	*prep_exp;
 
 	aux = shell->list;
 	while (aux)
 	{
 		if (aux->type == EXPAND)
 		{
-			printf("expandir [%s]\n", aux->data);
-			ft_is_expand(aux->data, shell);
+			printf("expandir [%s]\n", aux->str);
+			prep_exp = ft_prep_expand(aux->str);
+			ft_is_expand(prep_exp, shell);
 		}
 		aux = aux->next;
 	}
@@ -75,75 +77,75 @@ void ft_vars_to_expand(t_shell *shell)
 // cortar a variavel que vai expandir
 // é só a varivel??
 
-char *ft_prep_expand(char *data)
+char *ft_prep_expand(char *str)
 {
 	int		i;
-	char	*str;
-	//char	**ret;
+	char	*tmp;
 
 	i = 0;
-	str = NULL;
-	if (data[i] == 34)
-		str = ft_strtrim(data, "\"");
+	tmp = str;
+	if (tmp[i] == 34)
+		tmp = ft_strtrim(tmp, "\"");
 	else
-		str = ft_strdup(data);
-	//ret = ft_split(str, '$');
-	return (str);
+		tmp = ft_strdup(tmp);
+	return (tmp);
 }
 
-int	ft_is_expand(char *data, t_shell *shell)
+int ft_is_expand(char *str, t_shell *shell)
 {
-	char 	*tmp;
 	char	*prev;
-	char	*str;
+	char	*var;
 	char	*final;
 	int		i;
 	int 	start;
 
 	i = 0;
 	start = 0;
-	str = NULL;
+	var = NULL;
 	prev = NULL;
 	final = NULL;
-	tmp = ft_prep_expand(data);
-	while (tmp[i])
+	while (str[i])
 	{
-		if (tmp[i] && tmp[i] != '$')
-		{
-			start = i;
-			while (tmp[i] && tmp[i] != '$')
-				i++;
-			if (start != i)
-				prev = ft_substr(tmp, start, i - start);
-		}
-		if (tmp[i] && tmp[i] == '$')
-		{
+		while (str[i] && str[i] != '$')
 			i++;
-			start = i;
-			while (tmp[i] && (ft_isalnum(tmp[i]) || tmp[i] == '_'))
-				i++;
-			if (start != i)
-				str = ft_substr(tmp, start, i - start);
-		}
-		write(2, "here", 4);
-		str = ft_look_for_in_env(str, shell);
-		if (prev && str && !final)
-			final = ft_strjoin(prev, str);
-		else if (prev && !str && final)
+		if (start != i)
+			prev = ft_substr(str, start, i - start);
+		if (str[i] == '$' && str[i + 1])
+			i++;
+		start = i;
+		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+			i++;
+		if (start != i)
+			var = ft_substr(str, start, i - start);
+		start = i;
+		//write(2, "here", 4);
+		var = ft_look_for_in_env(var, shell);
+		if (prev && var && !final)
+			final = ft_strjoin(prev, var);
+		else if (!prev && var && final)
+			final = ft_strjoin(final, var);
+		else if (!prev && var && !final)
+			final = var;
+		else if (prev && var && final)
+		{
 			final = ft_strjoin(final, prev);
-		else if (!prev && str && final)
-			final = ft_strjoin(final, str);
-		else
-			final = str;
+			final = ft_strjoin(final, var);
+		}
+		else if (prev && !var && final)
+			final = ft_strjoin(final, prev);
+		else if (prev && !var && !final)
+			final = prev;
+		else if (!prev && !var && !final)
+			break ;
 		printf("prev variable [%s]\n", prev);
-		printf("look for in env [%s]\n", str);
+		printf("look for in env [%s]\n", var);
 		printf("expanded [%s]\n", final);
 		prev = NULL;
-		str = NULL;
+		var = NULL;
 		//join prev + str expanded + prev 
 		//i++;
 	}
-	//free(tmp, prev, str);
+	//free(str, prev, str);
 	return (0);
 }
 
@@ -156,11 +158,11 @@ char	*ft_look_for_in_env(char *str, t_shell *shell)
 	ret = NULL;
 	while (aux->next)
 	{
-		if (!ft_strncmp(str, aux->data, ft_strlen(str))
-			&& aux->data[ft_strlen(str)] == '=')
+		if (!ft_strncmp(str, aux->str, ft_strlen(str))
+			&& aux->str[ft_strlen(str)] == '=')
 		{
-			ret = ft_substr(aux->data, (ft_strlen(str) + 1),
-				ft_strlen(aux->data) - (ft_strlen(str) + 1));
+			ret = ft_substr(aux->str, (ft_strlen(str) + 1),
+				ft_strlen(aux->str) - (ft_strlen(str) + 1));
 		}
 		aux = aux->next;
 	}

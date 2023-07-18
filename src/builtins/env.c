@@ -7,7 +7,7 @@ void	ft_builtin_env(t_shell *shell)
 	aux = shell->new_env;
 	while (aux)
 	{
-		printf("%s\n", aux->data);
+		printf("%s\n", aux->str);
 		aux = aux->next;
 	}
 }

@@ -8,7 +8,7 @@ t_token	*ft_create_node(char *str, int index)
 	if (!(new_node))
 		return (NULL);
 	new_node->index = index;
-	new_node->data = str;
+	new_node->str = str;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -58,7 +58,7 @@ void	ft_print_list(t_shell *shell)
 	aux = shell->list;
 	while (aux)
 	{
-		printf("token %i =  %s\n", aux->index, aux->data);
+		printf("token %i =  %s\n", aux->index, aux->str);
 		aux = aux->next;
 	}
 }
@@ -70,7 +70,7 @@ void	ft_free_token_list(t_shell *shell)
 	aux = shell->list;
 	while(aux)
 	{
-		free(aux->data);
+		free(aux->str);
 		aux = aux->next;
 		free(shell->list);
 		shell->list = aux;
@@ -84,7 +84,7 @@ void	ft_free_env_list(t_shell *shell)
 	aux = shell->new_env;
 	while(aux)
 	{
-		free(aux->data);
+		free(aux->str);
 		aux = aux->next;
 		free(shell->new_env);
 		shell->new_env = aux;

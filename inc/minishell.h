@@ -7,7 +7,7 @@ typedef struct s_token
     int             index;
     int             type;
     int             error_code;
-    char            *data;
+    char            *str;
     struct t_shell  *shell;
     struct s_token  *next;
 }   t_token;
@@ -98,7 +98,6 @@ void ft_vars_to_expand(t_shell *shell);
 int	ft_is_expand(char *data, t_shell *shell);
 char *ft_prep_expand(char *data);
 char	*ft_look_for_in_env(char *str, t_shell *shell);
-
 
 //prototypes list
 t_token	*ft_create_node(char *str, int index);
