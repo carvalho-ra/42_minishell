@@ -50,6 +50,7 @@ enum token_class
     BUILTIN_EXIT,
     WORD,
     EXPAND,
+    EXPAND_PID,
     ERR
 };
 

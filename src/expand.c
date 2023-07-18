@@ -41,11 +41,18 @@ int ft_confirm_expand(t_shell *shell)
 		{
 			i = (ft_single_quote(aux->str, i));
 			if (aux->str[i] == '$' && aux->str[i + 1] != '$'
-				&& aux->str[i - 1] != '$')
+				&& aux->str[i - 1] != '$' && !aux->str[i - 1])
 			{
 				aux->error_code = 0;
 				aux->type = EXPAND;
 				printf("token %i is expand\n", aux->index);
+			}
+			else if (aux->str[i] == '$' && aux->str[i + 1] == '$'
+				&& aux->str[i - 1] != '$')
+			{
+				aux->error_code = 0;
+				aux->type = EXPAND_PID;
+				printf("token %i is expand PID\n", aux->index);
 			}
 			i++;
 		}
@@ -62,7 +69,7 @@ void ft_vars_to_expand(t_shell *shell)
 	aux = shell->list;
 	while (aux)
 	{
-		if (aux->type == EXPAND)
+		if (aux->type == EXPAND || aux->type == EXPAND_PID)
 		{
 			printf("expandir [%s]\n", aux->str);
 			prep_exp = ft_prep_expand(aux->str);
@@ -110,13 +117,26 @@ int ft_is_expand(char *str, t_shell *shell)
 			i++;
 		if (start != i)
 			prev = ft_substr(str, start, i - start);
-		if (str[i] == '$' && str[i + 1])
+		if (str[i] == '$' && str[i + 1] == '$')
+		{
+			
+			prev = ft_itoa(getpid());
 			i++;
-		start = i;
+			i++;
+		}
+		else if (str[i] && str[i] == '$')
+		{
+			i++;
+			prev = ft_substr(str, start, i - start);
+		}
+		else if (str[i] == '$' && str[i + 1] != '$')
+			start = i;
 		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 			i++;
 		if (start != i)
 			var = ft_substr(str, start, i - start);
+		else
+			break ;
 		start = i;
 		//write(2, "here", 4);
 		var = ft_look_for_in_env(var, shell);
