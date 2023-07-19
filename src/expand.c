@@ -64,7 +64,7 @@ void ft_vars_to_expand(t_shell *shell)
 		if (aux->type == EXPAND)
 		{
 			printf("expandir [%s]\n", aux->data);
-			ft_is_expand(aux->data, shell);
+			ft_is_expand(ft_prep_expand(aux->data), shell);
 		}
 		aux = aux->next;
 	}
@@ -87,63 +87,44 @@ char *ft_prep_expand(char *data)
 		str = ft_strtrim(data, "\"");
 	else
 		str = ft_strdup(data);
-	//ret = ft_split(str, '$');
 	return (str);
 }
 
 int	ft_is_expand(char *data, t_shell *shell)
 {
-	char 	*tmp;
-	char	*prev;
-	char	*str;
 	char	*final;
 	int		i;
 	int 	start;
 
 	i = 0;
 	start = 0;
-	str = NULL;
-	prev = NULL;
 	final = NULL;
-	tmp = ft_prep_expand(data);
-	while (tmp[i])
+	while (data[i])
 	{
-		if (tmp[i] && tmp[i] != '$')
+		start = i;
+		if (data[i] && data[i] != '$')
 		{
-			start = i;
-			while (tmp[i] && tmp[i] != '$')
+			while (data[i] && data[i] != '$')
 				i++;
-			if (start != i)
-				prev = ft_substr(tmp, start, i - start);
+			if (start != i && !final)
+				final = ft_substr(data, start, i - start);
+			else
+				final = ft_strjoin(final, ft_substr(data, start, i - start));
 		}
-		if (tmp[i] && tmp[i] == '$')
+		if (data[i] && data[i] == '$')
 		{
 			i++;
 			start = i;
-			while (tmp[i] && (ft_isalnum(tmp[i]) || tmp[i] == '_'))
+			while (data[i] && (ft_isalnum(data[i]) || data[i] == '_'))
 				i++;
-			if (start != i)
-				str = ft_substr(tmp, start, i - start);
+			if (start != i && !final && ft_look_for_in_env(ft_substr(data, start, i - start), shell))
+				final = ft_look_for_in_env(ft_substr(data, start, i - start), shell);
+			else if (start != i && final && ft_look_for_in_env(ft_substr(data, start, i - start), shell))
+				final = ft_strjoin(final, ft_look_for_in_env(ft_substr(data, start, i - start), shell));
 		}
-		write(2, "here", 4);
-		str = ft_look_for_in_env(str, shell);
-		if (prev && str && !final)
-			final = ft_strjoin(prev, str);
-		else if (prev && !str && final)
-			final = ft_strjoin(final, prev);
-		else if (!prev && str && final)
-			final = ft_strjoin(final, str);
-		else
-			final = str;
-		printf("prev variable [%s]\n", prev);
-		printf("look for in env [%s]\n", str);
 		printf("expanded [%s]\n", final);
-		prev = NULL;
-		str = NULL;
-		//join prev + str expanded + prev 
-		//i++;
+
 	}
-	//free(tmp, prev, str);
 	return (0);
 }
 
