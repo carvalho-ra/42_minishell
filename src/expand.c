@@ -40,19 +40,12 @@ int ft_confirm_expand(t_shell *shell)
 		while (aux->str[i])
 		{
 			i = (ft_single_quote(aux->str, i));
-			if (aux->str[i] == '$' && aux->str[i + 1] != '$'
-				&& aux->str[i - 1] != '$' && !aux->str[i - 1])
+			if (aux->str[i] == '$' && aux->str[i + 1])
 			{
 				aux->error_code = 0;
 				aux->type = EXPAND;
 				printf("token %i is expand\n", aux->index);
-			}
-			else if (aux->str[i] == '$' && aux->str[i + 1] == '$'
-				&& aux->str[i - 1] != '$')
-			{
-				aux->error_code = 0;
-				aux->type = EXPAND_PID;
-				printf("token %i is expand PID\n", aux->index);
+				break ;
 			}
 			i++;
 		}
@@ -69,7 +62,7 @@ void ft_vars_to_expand(t_shell *shell)
 	aux = shell->list;
 	while (aux)
 	{
-		if (aux->type == EXPAND || aux->type == EXPAND_PID)
+		if (aux->type == EXPAND)
 		{
 			printf("expandir [%s]\n", aux->str);
 			prep_exp = ft_prep_expand(aux->str);
@@ -98,74 +91,130 @@ char *ft_prep_expand(char *str)
 	return (tmp);
 }
 
+int ft_aux_exp_word_flag(char *str, int i)
+{
+	int	start;
+
+	start = 0;
+	if ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
+	{
+		start = i;
+		while ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
+			i++;
+	}
+	return (i);
+}
+
+char *ft_aux_exp_word(char *str, int i)
+{
+	int start;
+	char *final;
+
+	start = 0;
+	final = (NULL);
+	if ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
+	{
+		start = i;
+		while ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
+			i++;
+		if (start != i)
+			final = ft_substr(str, start, i - start);
+	}
+	return (final);
+}
+
+int ft_aux_exp_pid_flag(char *str, int i)
+{
+	int start;
+
+	start = 0;
+	if (str[i] && str[i] == '$' && str[i + 1] == '$')
+	{
+		i++;
+		i++;
+	}
+	return (i);
+}
+
+char *ft_aux_exp_pid(char *str, int i)
+{
+	char *final;
+	int	start;
+
+	final = (NULL);
+	start = 0;
+	if (str[i] && str[i] == '$' && str[i + 1] == '$')
+	{
+		i++;
+		i++;
+		if (start != i)
+			final = ft_itoa(getpid());
+		else if (start != i)
+			final = ft_strjoin(final, ft_itoa(getpid()));
+	}
+	return (final);
+}
+
+int ft_aux_exp_var_flag(char *str, int i)
+{
+	int start;
+
+	start = 0;
+	if (str[i] && str[i] == '$' && str[i + 1])
+	{
+		i++;
+		start = i;
+		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+			i++;
+	}
+	return (i);
+}
+
+char *ft_aux_exp_var(char *str, int i, t_shell *shell)
+{
+	char	*final;
+	int	start;
+
+	start = 0;
+	final = (NULL);
+	if (str[i] && str[i] == '$' && str[i + 1])
+	{
+		i++;
+		start = i;
+		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+			i++;
+		if (start != i && ft_look_for_in_env(ft_substr(str, start, i - start), shell))
+			final = ft_look_for_in_env(ft_substr(str, start, i - start), shell);
+	}
+	return (final);
+}
+
 int ft_is_expand(char *str, t_shell *shell)
 {
-	char	*prev;
-	char	*var;
 	char	*final;
 	int		i;
-	int 	start;
 
 	i = 0;
-	start = 0;
-	var = NULL;
-	prev = NULL;
 	final = NULL;
 	while (str[i])
 	{
-		while (str[i] && str[i] != '$')
-			i++;
-		if (start != i)
-			prev = ft_substr(str, start, i - start);
-		if (str[i] == '$' && str[i + 1] == '$')
-		{
-			
-			prev = ft_itoa(getpid());
-			i++;
-			i++;
-		}
-		else if (str[i] && str[i] == '$')
-		{
-			i++;
-			prev = ft_substr(str, start, i - start);
-		}
-		else if (str[i] == '$' && str[i + 1] != '$')
-			start = i;
-		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-			i++;
-		if (start != i)
-			var = ft_substr(str, start, i - start);
-		else
-			break ;
-		start = i;
-		//write(2, "here", 4);
-		var = ft_look_for_in_env(var, shell);
-		if (prev && var && !final)
-			final = ft_strjoin(prev, var);
-		else if (!prev && var && final)
-			final = ft_strjoin(final, var);
-		else if (!prev && var && !final)
-			final = var;
-		else if (prev && var && final)
-		{
-			final = ft_strjoin(final, prev);
-			final = ft_strjoin(final, var);
-		}
-		else if (prev && !var && final)
-			final = ft_strjoin(final, prev);
-		else if (prev && !var && !final)
-			final = prev;
-		else if (!prev && !var && !final)
-			break ;
-		printf("prev variable [%s]\n", prev);
-		printf("look for in env [%s]\n", var);
-		printf("expanded [%s]\n", final);
-		prev = NULL;
-		var = NULL;
-		//join prev + str expanded + prev 
-		//i++;
+		if (ft_aux_exp_word(str, i) && !final)
+			final = ft_strjoin(final, ft_aux_exp_word(str, i));
+		else if (i != ft_aux_exp_word_flag(str, i) && !final)
+			final = ft_aux_exp_word(str, i);
+		i = ft_aux_exp_word_flag(str, i);
+		if (ft_aux_exp_pid(str, i) && final)
+			final = ft_strjoin(final, ft_aux_exp_pid(str, i));
+		else if (i != ft_aux_exp_pid_flag(str, i) && !final)
+			final = ft_aux_exp_pid(str, i);
+		i = ft_aux_exp_pid_flag(str, i);
+		if (ft_aux_exp_var(str, i, shell) && final)
+			final = ft_strjoin(final, ft_aux_exp_var(str, i, shell));
+		else if (i != ft_aux_exp_var_flag(str, i) && !final)
+			final = ft_aux_exp_var(str, i, shell);
+		i = ft_aux_exp_var_flag(str, i);
 	}
-	//free(str, prev, str);
+	printf("expanded [%s]\n", final);
 	return (0);
 }
 
