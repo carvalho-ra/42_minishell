@@ -93,43 +93,34 @@ char *ft_prep_expand(char *str)
 
 int ft_aux_exp_word_flag(char *str, int i)
 {
-	int	start;
-
-	start = 0;
 	if ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
 	{
-		start = i;
 		while ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
 			i++;
 	}
 	return (i);
 }
 
-char *ft_aux_exp_word(char *str, char *final, int i)
+char *ft_aux_exp_word(char *str, int i)
 {
 	int start;
-	char *new;
+	char *final;
 
 	start = 0;
-	new = (NULL);
+	final = (NULL);
 	if ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
 	{
 		start = i;
 		while ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
 			i++;
-		if (start != i && !final)
-			new = ft_substr(str, start, i - start);
-		else if (start != i && final)
-			new = ft_strjoin(final, ft_substr(str, start, i - start));
+		if (start != i)
+			final = ft_substr(str, start, i - start);
 	}
-	return (new);
+	return (final);
 }
 
 int ft_aux_exp_pid_flag(char *str, int i)
 {
-	int start;
-
-	start = 0;
 	if (str[i] && str[i] == '$' && str[i + 1] == '$')
 	{
 		i++;
@@ -138,59 +129,53 @@ int ft_aux_exp_pid_flag(char *str, int i)
 	return (i);
 }
 
-char *ft_aux_exp_pid(char *str, char *final, int i)
+char *ft_aux_exp_pid(char *str, int i)
 {
-	char *new;
+	char *final;
 	int	start;
 
-	new = (NULL);
+	final = (NULL);
 	start = 0;
 	if (str[i] && str[i] == '$' && str[i + 1] == '$')
 	{
 		i++;
 		i++;
-		if (start != i && !final)
-			new = ft_itoa(getpid());
-		else if (start != i && final)
-			new = ft_strjoin(final, ft_itoa(getpid()));
+		if (start != i)
+			final = ft_itoa(getpid());
+		else if (start != i)
+			final = ft_strjoin(final, ft_itoa(getpid()));
 	}
-	return (new);
+	return (final);
 }
 
 int ft_aux_exp_var_flag(char *str, int i)
 {
-	int start;
-
-	start = 0;
 	if (str[i] && str[i] == '$' && str[i + 1])
 	{
 		i++;
-		start = i;
 		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 			i++;
 	}
 	return (i);
 }
 
-char *ft_aux_exp_var(char *str, char *final, int i, t_shell *shell)
+char *ft_aux_exp_var(char *str, int i, t_shell *shell)
 {
-	char	*new;
+	char	*final;
 	int	start;
 
 	start = 0;
-	new = (NULL);
+	final = (NULL);
 	if (str[i] && str[i] == '$' && str[i + 1])
 	{
 		i++;
 		start = i;
 		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 			i++;
-		if (start != i && ft_look_for_in_env(ft_substr(str, start, i - start), shell) && !final)
-			new = ft_look_for_in_env(ft_substr(str, start, i - start), shell);
-		else if (start != i && ft_look_for_in_env(ft_substr(str, start, i - start), shell) && final)
-			new = ft_strjoin(final, ft_look_for_in_env(ft_substr(str, start, i - start), shell));
+		if (start != i && ft_look_for_in_env(ft_substr(str, start, i - start), shell))
+			final = ft_look_for_in_env(ft_substr(str, start, i - start), shell);
 	}
-	return (new);
+	return (final);
 }
 
 int ft_is_expand(char *str, t_shell *shell)
@@ -202,11 +187,20 @@ int ft_is_expand(char *str, t_shell *shell)
 	final = NULL;
 	while (str[i])
 	{
-		final = ft_aux_exp_word(str, final, i);
+		if (ft_aux_exp_word(str, i) && !final)
+			final = ft_aux_exp_word(str, i);
+		else if (i != ft_aux_exp_word_flag(str, i) && !final)
+			final = ft_strjoin(final, ft_aux_exp_word(str, i));
 		i = ft_aux_exp_word_flag(str, i);
-		final = ft_aux_exp_pid(str, final, i);
+		if (ft_aux_exp_pid(str, i) && final)
+			final = ft_strjoin(final, ft_aux_exp_pid(str, i));
+		else if (i != ft_aux_exp_pid_flag(str, i) && !final)
+			final = ft_aux_exp_pid(str, i);
 		i = ft_aux_exp_pid_flag(str, i);
-		final = ft_aux_exp_var(str, final, i, shell);
+		if (ft_aux_exp_var(str, i, shell) && final)
+			final = ft_strjoin(final, ft_aux_exp_var(str, i, shell));
+		else if (i != ft_aux_exp_var_flag(str, i) && !final)
+			final = ft_aux_exp_var(str, i, shell);
 		i = ft_aux_exp_var_flag(str, i);
 	}
 	printf("expanded [%s]\n", final);
