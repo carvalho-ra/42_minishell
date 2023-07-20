@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/19 21:20:31 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 00:59:27 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ t_token	*ft_create_node(char *str, int index)
 	if (!(new_node))
 		return (NULL);
 	new_node->index = index;
+	new_node->type = 0;
+	new_node->error_code = 0;
 	new_node->str = str;
+	new_node->shell = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -77,30 +80,34 @@ void	ft_print_list(t_shell *shell)
 
 void	ft_free_token_list(t_shell *shell)
 {
-	t_token *aux;
+	t_token *current;
+	t_token *next;
 	
-	aux = shell->list;
-	while(aux)
+	current = shell->list;
+	while(current)
 	{
-		free(aux->str);
-		aux = aux->next;
-		free(shell->list);
-		shell->list = aux;
+		next = current->next;
+		free(current->str);
+		free(current);
+		current = next;
 	}
+	shell->list = NULL;
 }
 
 void	ft_free_env_list(t_shell *shell)
 {
-	t_token *aux;
+	t_token *current;
+	t_token *next;
 	
-	aux = shell->new_env;
-	while(aux)
+	current = shell->new_env;
+	while(current)
 	{
-		free(aux->str);
-		aux = aux->next;
-		free(shell->new_env);
-		shell->new_env = aux;
+		next = current->next;
+		free(current->str);
+		free(current);
+		current = next;
 	}
+	shell->new_env = NULL;
 }
 
 //AO FAZER NOVA STRUCT PARA MINISHELL
@@ -113,4 +120,5 @@ void	ft_free_shell(t_shell *shell)
 	free(aux->new_env);
 	free(aux->list);
 	free(shell);
+	shell = NULL;
 }
