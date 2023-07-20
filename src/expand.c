@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/07/19 21:19:27 by rcarvalh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 //TODO need to export more than 1 variable at the same time? in the same line
@@ -64,7 +76,6 @@ void ft_vars_to_expand(t_shell *shell)
 	{
 		if (aux->type == EXPAND)
 		{
-			printf("expandir [%s]\n", aux->str);
 			prep_exp = ft_prep_expand(aux->str);
 			ft_is_expand(prep_exp, shell);
 		}
@@ -101,22 +112,24 @@ int ft_aux_exp_word_flag(char *str, int i)
 	return (i);
 }
 
-char *ft_aux_exp_word(char *str, int i)
+char *ft_aux_exp_word(char *str, char *final, int i)
 {
 	int start;
-	char *final;
+	char *new;
 
 	start = 0;
-	final = (NULL);
+	new = (NULL);
 	if ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
 	{
 		start = i;
 		while ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
 			i++;
-		if (start != i)
-			final = ft_substr(str, start, i - start);
+		if (start != i && !final)
+			new = ft_substr(str, start, i - start);
+		else if (start != i && final)
+			new = ft_strjoin(final, ft_substr(str, start, i - start));
 	}
-	return (final);
+	return (new);
 }
 
 int ft_aux_exp_pid_flag(char *str, int i)
@@ -129,23 +142,23 @@ int ft_aux_exp_pid_flag(char *str, int i)
 	return (i);
 }
 
-char *ft_aux_exp_pid(char *str, int i)
+char *ft_aux_exp_pid(char *str, char *final, int i)
 {
-	char *final;
+	char *new;
 	int	start;
 
-	final = (NULL);
+	new = (NULL);
 	start = 0;
 	if (str[i] && str[i] == '$' && str[i + 1] == '$')
 	{
 		i++;
 		i++;
-		if (start != i)
-			final = ft_itoa(getpid());
-		else if (start != i)
-			final = ft_strjoin(final, ft_itoa(getpid()));
+		if (start != i && !final)
+			new = ft_itoa(getpid());
+		else if (start != i && final)
+			new = ft_strjoin(final, ft_itoa(getpid()));
 	}
-	return (final);
+	return (new);
 }
 
 int ft_aux_exp_var_flag(char *str, int i)
@@ -159,23 +172,25 @@ int ft_aux_exp_var_flag(char *str, int i)
 	return (i);
 }
 
-char *ft_aux_exp_var(char *str, int i, t_shell *shell)
+char *ft_aux_exp_var(char *str, char *final, int i, t_shell *shell)
 {
-	char	*final;
+	char	*new;
 	int	start;
 
 	start = 0;
-	final = (NULL);
+	new = (NULL);
 	if (str[i] && str[i] == '$' && str[i + 1])
 	{
 		i++;
 		start = i;
 		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 			i++;
-		if (start != i && ft_look_for_in_env(ft_substr(str, start, i - start), shell))
-			final = ft_look_for_in_env(ft_substr(str, start, i - start), shell);
+		if (start != i && ft_look_for_in_env(ft_substr(str, start, i - start), shell) && !final)
+			new = ft_look_for_in_env(ft_substr(str, start, i - start), shell);
+		else if (start != i && ft_look_for_in_env(ft_substr(str, start, i - start), shell) && final)
+			new = ft_strjoin(final, ft_look_for_in_env(ft_substr(str, start, i - start), shell));
 	}
-	return (final);
+	return (new);
 }
 
 int ft_is_expand(char *str, t_shell *shell)
@@ -187,20 +202,14 @@ int ft_is_expand(char *str, t_shell *shell)
 	final = NULL;
 	while (str[i])
 	{
-		if (ft_aux_exp_word(str, i) && !final)
-			final = ft_aux_exp_word(str, i);
-		else if (i != ft_aux_exp_word_flag(str, i) && !final)
-			final = ft_strjoin(final, ft_aux_exp_word(str, i));
+		if (ft_aux_exp_word(str, final, i))
+			final = ft_aux_exp_word(str, final, i);
 		i = ft_aux_exp_word_flag(str, i);
-		if (ft_aux_exp_pid(str, i) && final)
-			final = ft_strjoin(final, ft_aux_exp_pid(str, i));
-		else if (i != ft_aux_exp_pid_flag(str, i) && !final)
-			final = ft_aux_exp_pid(str, i);
+		if (ft_aux_exp_pid(str, final, i))
+			final = ft_aux_exp_pid(str, final, i);
 		i = ft_aux_exp_pid_flag(str, i);
-		if (ft_aux_exp_var(str, i, shell) && final)
-			final = ft_strjoin(final, ft_aux_exp_var(str, i, shell));
-		else if (i != ft_aux_exp_var_flag(str, i) && !final)
-			final = ft_aux_exp_var(str, i, shell);
+		if (ft_aux_exp_var(str, final, i, shell))
+			final = ft_aux_exp_var(str, final, i, shell);
 		i = ft_aux_exp_var_flag(str, i);
 	}
 	printf("expanded [%s]\n", final);
