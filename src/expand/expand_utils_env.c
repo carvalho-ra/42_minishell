@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:39:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 10:42:59 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:21:40 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 //unset em variavel inexistente é igual ao comportamento normal, não dá erro
 
-int ft_copy_env(t_shell *shell, char **envp)
+int	ft_copy_env(t_shell *shell, char **envp)
 {
 	int		i;
 
@@ -55,7 +55,7 @@ int ft_copy_env(t_shell *shell, char **envp)
 
 char	*ft_search_env(char *str, t_shell *shell)
 {
-	t_token *aux;
+	t_token	*aux;
 	char	*ret;
 
 	aux = shell->new_env;
@@ -66,7 +66,7 @@ char	*ft_search_env(char *str, t_shell *shell)
 			&& aux->str[ft_strlen(str)] == '=')
 		{
 			ret = ft_substr(aux->str, (ft_strlen(str) + 1),
-				ft_strlen(aux->str) - (ft_strlen(str) + 1));
+					ft_strlen(aux->str) - (ft_strlen(str) + 1));
 			break ;
 		}
 		aux = aux->next;
@@ -78,7 +78,8 @@ char	*ft_search_env(char *str, t_shell *shell)
 
 //procurar com ft_strcmp(env);
 
-//colocar em um loop para pagar string previa concatenar com a parte do ENV, e continuar
+//colocar em um loop para pagar string previa concatenar 
+//com a parte do ENV, e continuar
 
 // strdup do strlen + 1 pra pular o igual da variavel;
 

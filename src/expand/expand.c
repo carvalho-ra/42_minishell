@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 11:34:12 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:12:47 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 // - function to iterate through strings
 // of each node looking for $ (ISSUE! consider $$???)
 
-int ft_confirm_expand(t_shell *shell)
+int	ft_confirm_expand(t_shell *shell)
 {
-	t_token *aux;
-	int	i;
+	t_token	*aux;
+	int		i;
 
 	aux = shell->list;
 	while (aux)
@@ -44,9 +44,9 @@ int ft_confirm_expand(t_shell *shell)
 	return (0);
 }
 
-void ft_expand_args(t_shell *shell)
+void	ft_expand_args(t_shell *shell)
 {
-	t_token *aux;
+	t_token	*aux;
 	char	*prep_exp;
 
 	aux = shell->list;
@@ -68,7 +68,7 @@ void ft_expand_args(t_shell *shell)
 // cortar a variavel que vai expandir
 // é só a varivel??
 
-char *ft_prep_expand(char *str)
+char	*ft_prep_expand(char *str)
 {
 	int		i;
 	char	*tmp;
@@ -82,7 +82,7 @@ char *ft_prep_expand(char *str)
 	return (tmp);
 }
 
-char *ft_expand_core(char *str, t_shell *shell)
+char	*ft_expand_core(char *str, t_shell *shell)
 {
 	char	*final;
 	int		i;

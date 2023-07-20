@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 11:42:53 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 16:12:42 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int main(int argc, char **argv, char **envp)
 			printf("\n");
 			
 			ft_free_token_list(shell);
+			free(shell->line);
 		}
 	}
 	ft_free_token_list(shell);

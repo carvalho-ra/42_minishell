@@ -110,14 +110,9 @@ char *ft_aux_exp_word(char *str, char *final, int i);
 int ft_confirm_expand(t_shell *shell);
 void ft_expand_args(t_shell *shell);
 char *ft_prep_expand(char *str);
-
-
-
-
-
-
 char *ft_expand_core(char *str, t_shell *shell);
 char *ft_prep_expand(char *data);
+void ft_free_ptrs(char *str, char *str2, char *str3);
 
 //prototypes list
 t_token	*ft_create_node(char *str, int index);

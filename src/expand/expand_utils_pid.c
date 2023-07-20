@@ -6,15 +6,15 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:36:24 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 12:02:21 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:19:02 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int ft_aux_exp_pid_flag(char *str, int i)
+int	ft_aux_exp_pid_flag(char *str, int i)
 {
-	if (str[i] && str[i] == '$' && str[i + 1] == '$')
+	if (str[i] && str[i] == '$' && str[i + 1] && str[i + 1] == '$')
 	{
 		i++;
 		i++;
@@ -22,26 +22,29 @@ int ft_aux_exp_pid_flag(char *str, int i)
 	return (i);
 }
 
-char *ft_aux_exp_pid(char *str, char *final, int i)
+char	*ft_aux_exp_pid(char *str, char *final, int i)
 {
-	char *new;
 	char	*ret;
-	int	start;
+	char	*sub;
+	int		start;
 
-	new = (NULL);
+	ret = (NULL);
+	sub = NULL;
 	start = 0;
-	if (str[i] && str[i] == '$' && str[i + 1] == '$')
+	if (str[i] && str[i] == '$' && str[i + 1] && str[i + 1] == '$')
 	{
 		i++;
 		i++;
-		new = ft_itoa(getpid());
 		if (start != i && !final)
-			return (new);
+			ret = ft_itoa(getpid());
 		else if (start != i && final)
 		{
-			ret = ft_strjoin(final, new);
-			free(new);
-			new = NULL;
+			sub = ft_itoa(getpid());
+			ret = ft_strjoin(final, sub);
+			free(final);
+			final = NULL;
+			free(sub);
+			sub = NULL;
 		}
 	}
 	return (ret);

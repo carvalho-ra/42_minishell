@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 00:59:27 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 16:12:05 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	ft_free_shell(t_shell *shell)
 	t_shell *aux;
 	
 	aux = shell;
+	free(aux->line);
 	free(aux->new_env);
 	free(aux->list);
 	free(shell);
