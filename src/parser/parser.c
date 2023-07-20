@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/19 21:21:30 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/07/19 21:21:31 by rcarvalh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 //when string initiates with | (a pipe) - ERROR
@@ -17,8 +29,8 @@ int	ft_confirm_pipe(t_shell *shell)
 	aux = shell->list;
 	while (aux)
 	{
-		if (!ft_strcmp("|", aux->data) && aux->next 
-			&& ft_strcmp("|", aux->next->data) && aux->type != ERR)
+		if (!ft_strcmp("|", aux->str) && aux->next 
+			&& ft_strcmp("|", aux->next->str) && aux->type != ERR)
 		{
 			//set no error
 			aux->error_code = 0;

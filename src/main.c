@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/07/20 16:12:42 by rcarvalh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 static t_shell *ft_shell_init(t_shell *shell, char **envp)
@@ -6,15 +18,8 @@ static t_shell *ft_shell_init(t_shell *shell, char **envp)
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		return (NULL);
-	shell->expanded = NULL;
 	shell->line = NULL;
-	// shell->list = malloc(sizeof(t_token));
-	// if (!shell->list)
-	// 	return (NULL);
 	shell->list = NULL;
-	// shell->new_env = malloc(sizeof(t_token));
-	// if (!shell->new_env)
-	// 	return (NULL);
 	shell->new_env = NULL;
 	ft_copy_env(shell, envp);
 	return (shell);
@@ -70,12 +75,15 @@ int main(int argc, char **argv, char **envp)
 			ft_confirm_redir_in(shell);
 			ft_confirm_redir_out(shell);
 			
-			// ft_confirm_redir(list);  -->got substituted by others
 			ft_confirm_expand(shell);
 			ft_is_builtin(shell);
 
-			ft_vars_to_expand(shell);
+			ft_expand_args(shell);
+			ft_print_list(shell);
+			printf("\n");
+			
 			ft_free_token_list(shell);
+			free(shell->line);
 		}
 	}
 	ft_free_token_list(shell);
