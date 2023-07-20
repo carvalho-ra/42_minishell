@@ -2,7 +2,11 @@ NAME = minishell
 
 SRCS = ./src/main.c \
 		./src/builtins/env.c \
-		./src/expand.c \
+		./src/expand/expand_utils_env.c \
+		./src/expand/expand_utils_pid.c \
+		./src/expand/expand_utils_var.c \
+		./src/expand/expand_utils_word.c \
+		./src/expand/expand.c \
 		./src/list.c \
 		./src/lexer/lexer_utils_quotes.c \
 		./src/lexer/lexer_utils.c \
