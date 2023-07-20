@@ -17,7 +17,6 @@ typedef struct s_token
 typedef struct s_shell
 {
     char    *line; //chamar direto da readline pra cá
-    char    *expanded;
     t_token *list;
     t_token *new_env;
 }   t_shell;

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:39:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 01:14:06 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 01:51:05 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,25 @@ int ft_copy_env(t_shell *shell, char **envp)
 	}
 	return (0);
 }
+
+// O CÓDIGO A SEGUIR ESTÁ CORRETO???
+
+// int ft_copy_env(t_shell *shell, char **envp)
+// {
+// 	int		i;
+// 	char *env_line;
+
+// 	shell->new_env = NULL;
+// 	i = 0;
+// 	while (envp[i] != NULL)
+// 	{
+// 		env_line = ft_strdup((const char *)envp[i]);
+// 		ft_add_env(shell, env_line, 1);
+// 		i++;
+// 	}
+// 	free(env_line);
+// 	return (0);
+// }
 
 char	*ft_search_env(char *str, t_shell *shell)
 {

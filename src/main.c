@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/19 21:50:29 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 01:04:50 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,8 @@ static t_shell *ft_shell_init(t_shell *shell, char **envp)
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		return (NULL);
-	shell->expanded = NULL;
 	shell->line = NULL;
-	// shell->list = malloc(sizeof(t_token));
-	// if (!shell->list)
-	// 	return (NULL);
 	shell->list = NULL;
-	// shell->new_env = malloc(sizeof(t_token));
-	// if (!shell->new_env)
-	// 	return (NULL);
 	shell->new_env = NULL;
 	ft_copy_env(shell, envp);
 	return (shell);
