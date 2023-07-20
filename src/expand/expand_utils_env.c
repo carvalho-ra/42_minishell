@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:39:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/19 21:44:25 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 01:14:06 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ char	*ft_search_env(char *str, t_shell *shell)
 
 	aux = shell->new_env;
 	ret = NULL;
-	while (aux->next)
+	while (aux)
 	{
 		if (!ft_strncmp(str, aux->str, ft_strlen(str))
 			&& aux->str[ft_strlen(str)] == '=')
 		{
 			ret = ft_substr(aux->str, (ft_strlen(str) + 1),
 				ft_strlen(aux->str) - (ft_strlen(str) + 1));
+			break ;
 		}
 		aux = aux->next;
 	}
