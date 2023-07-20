@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/19 21:52:34 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 11:34:12 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void ft_expand_args(t_shell *shell)
 		if (aux->type == EXPAND)
 		{
 			prep_exp = ft_prep_expand(aux->str);
+			free (aux->str);
+			aux->str = NULL;
 			aux->str = ft_expand_core(prep_exp, shell);
 		}
 		aux = aux->next;
@@ -89,15 +91,17 @@ char *ft_expand_core(char *str, t_shell *shell)
 	final = NULL;
 	while (str[i])
 	{
-		if (ft_aux_exp_word(str, final, i))
+		if (i != ft_aux_exp_word_flag(str, i))
 			final = ft_aux_exp_word(str, final, i);
 		i = ft_aux_exp_word_flag(str, i);
-		if (ft_aux_exp_pid(str, final, i))
+		if (i != ft_aux_exp_pid_flag(str, i))
 			final = ft_aux_exp_pid(str, final, i);
 		i = ft_aux_exp_pid_flag(str, i);
-		if (ft_aux_exp_var(str, final, i, shell))
+		if (i != ft_aux_exp_var_flag(str, i))
 			final = ft_aux_exp_var(str, final, i, shell);
 		i = ft_aux_exp_var_flag(str, i);
 	}
+	free(str);
+	str = (NULL);
 	return (final);
 }

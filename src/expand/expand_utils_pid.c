@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:36:24 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/19 21:44:19 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 12:02:21 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int ft_aux_exp_pid_flag(char *str, int i)
 char *ft_aux_exp_pid(char *str, char *final, int i)
 {
 	char *new;
+	char	*ret;
 	int	start;
 
 	new = (NULL);
@@ -33,10 +34,15 @@ char *ft_aux_exp_pid(char *str, char *final, int i)
 	{
 		i++;
 		i++;
+		new = ft_itoa(getpid());
 		if (start != i && !final)
-			new = ft_itoa(getpid());
+			return (new);
 		else if (start != i && final)
-			new = ft_strjoin(final, ft_itoa(getpid()));
+		{
+			ret = ft_strjoin(final, new);
+			free(new);
+			new = NULL;
+		}
 	}
-	return (new);
+	return (ret);
 }

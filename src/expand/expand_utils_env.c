@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:39:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 01:51:05 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:42:59 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ char	*ft_search_env(char *str, t_shell *shell)
 		}
 		aux = aux->next;
 	}
+	free (str);
+	str = (NULL);
 	return (ret);
 }
 
