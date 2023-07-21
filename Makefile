@@ -13,6 +13,7 @@ SRCS = ./src/main.c \
 		./src/lexer/lexer.c \
 		./src/parser/parser_utils_builtin.c \
 		./src/parser/parser_utils_err.c \
+		./src/parser/parser_utils_expand.c \
 		./src/parser/parser_utils_redirs.c \
 		./src/parser/parser_utils.c \
 		./src/parser/parser.c \
