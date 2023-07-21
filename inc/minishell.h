@@ -104,6 +104,7 @@ char *ft_aux_exp_var(char *str, char *final, int i, t_shell *shell);
 
 //prototypes expand utils word
 int ft_aux_exp_word_flag(char *str, int i);
+char	*ft_norm_aux_exp_var(char *tmp, char *final, int start, int i);
 char *ft_aux_exp_word(char *str, char *final, int i);
 
 //prototypes expand
