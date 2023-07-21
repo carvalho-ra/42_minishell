@@ -1,0 +1,1 @@
+//apaga variáveis de ambiente
