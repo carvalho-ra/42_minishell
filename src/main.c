@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 16:12:42 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/21 10:59:26 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int main(int argc, char **argv, char **envp)
 		{
 			//print env on call
 			ft_builtin_env(shell);
+			free(shell->line);
 			continue ;
 		}
         // include readline/history.h

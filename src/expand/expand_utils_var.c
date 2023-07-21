@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:36:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 21:02:51 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/21 12:44:25 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,18 @@ char	*ft_aux_exp_var(char *str, char *final, int i, t_shell *shell)
 			i++;
 		tmp = ft_search_env(ft_substr(str, start, i - start), shell);
 		if (start != i && tmp && final)
+		{
 			new = ft_strjoin(final, tmp);
+			ft_free_ptrs(tmp, final);
+		}
 		else if ((start != i && tmp && !final))
+		{
 			new = tmp;
+			ft_free_ptrs(final, NULL);
+		}
 		else if (start != i && !tmp && final)
 			new = final;
 	}
-	ft_free_ptrs(final, NULL);
 	return (new);
 }
 
