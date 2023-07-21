@@ -6,43 +6,11 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 18:12:47 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/21 12:32:16 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// pseudocode
-
-// look for expand ($)
-// - function to iterate through strings
-// of each node looking for $ (ISSUE! consider $$???)
-
-int	ft_confirm_expand(t_shell *shell)
-{
-	t_token	*aux;
-	int		i;
-
-	aux = shell->list;
-	while (aux)
-	{
-		i = 0;
-		while (aux->str[i])
-		{
-			i = (ft_single_quote(aux->str, i));
-			if (aux->str[i] == '$' && aux->str[i + 1])
-			{
-				aux->error_code = 0;
-				aux->type = EXPAND;
-				printf("token %i is expand\n", aux->index);
-				break ;
-			}
-			i++;
-		}
-		aux = aux->next;
-	}
-	return (0);
-}
 
 void	ft_expand_args(t_shell *shell)
 {
@@ -101,7 +69,20 @@ char	*ft_expand_core(char *str, t_shell *shell)
 			final = ft_aux_exp_var(str, final, i, shell);
 		i = ft_aux_exp_var_flag(str, i);
 	}
-	free(str);
-	str = (NULL);
+	ft_free_ptrs(str, NULL);
 	return (final);
+}
+
+void	ft_free_ptrs(char *str, char *str2)
+{
+	if (str)
+	{
+		free(str);
+		str = NULL;
+	}
+	if (str2)
+	{
+		free(str2);
+		str2 = NULL;
+	}
 }

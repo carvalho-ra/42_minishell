@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:17 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/19 21:21:18 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:22:08 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_err_pipe(t_shell *shell)
 	while (aux)
 	{
 		if (!ft_strcmp("|", aux->str) && (!aux->next || aux == shell->list
-			|| !ft_strcmp("|", aux->next->str)))
+				|| !ft_strcmp("|", aux->next->str)))
 		{
 			aux->error_code = 2;
 			aux->type = ERR;
@@ -69,9 +69,9 @@ int	ft_err_redir_in(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		if ((aux->str[0] == '<' && aux->next && aux->next->str[0] == '<' &&
-			aux->next->next && ft_is_pipe_redir(aux->next->next->str[0])) ||
-			(aux->str[0] == '<' && !aux->next))
+		if ((aux->str[0] == '<' && aux->next && aux->next->str[0] == '<'
+				&& aux->next->next && ft_is_pipe_redir(aux->next->next->str[0]))
+			|| (aux->str[0] == '<' && !aux->next))
 		{
 			aux->error_code = 1;
 			aux->type = ERR;
@@ -96,8 +96,8 @@ int	ft_err_redir_out(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		if ((aux->str[0] == '>' && aux->next && aux->next->str[0] == '>' &&
-			aux->next->next && ft_is_pipe_redir(aux->next->next->str[0]))
+		if ((aux->str[0] == '>' && aux->next && aux->next->str[0] == '>'
+				&& aux->next->next && ft_is_pipe_redir(aux->next->next->str[0]))
 			|| (aux->str[0] == '>' && !aux->next))
 		{
 			aux->error_code = 1;
@@ -113,4 +113,3 @@ int	ft_err_redir_out(t_shell *shell)
 	}
 	return (i);
 }
-

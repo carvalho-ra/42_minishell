@@ -1,0 +1,9 @@
+$ $$ $$$USER "$$$USER tes" $USER$$ $USER tes$USER $$$$$
+token 1 =  $
+token 2 =  95862
+token 3 =  95862rodrigo
+token 4 =  95862rodrigo tes
+token 5 =  rodrigo95862
+token 6 =  rodrigo
+token 7 =  tesrodrigo
+token 8 =  9586295862$

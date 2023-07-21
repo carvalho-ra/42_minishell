@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:36:24 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 18:19:02 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/21 12:19:12 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_aux_exp_pid_flag(char *str, int i)
 	}
 	return (i);
 }
+
+//NAO PODE USAR GETPID!!!
 
 char	*ft_aux_exp_pid(char *str, char *final, int i)
 {
@@ -41,11 +43,8 @@ char	*ft_aux_exp_pid(char *str, char *final, int i)
 		{
 			sub = ft_itoa(getpid());
 			ret = ft_strjoin(final, sub);
-			free(final);
-			final = NULL;
-			free(sub);
-			sub = NULL;
 		}
 	}
+	ft_free_ptrs(final, sub);
 	return (ret);
 }

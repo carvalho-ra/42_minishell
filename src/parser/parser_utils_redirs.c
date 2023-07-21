@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/19 21:21:22 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:28:32 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	ft_confirm_append(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		if (aux->str[0] == '>' && aux->next && aux->next->str[0] == '>' &&
-			aux->next->next && aux->next->next->str[0] != '>' 
+		if (aux->str[0] == '>' && aux->next && aux->next->str[0] == '>'
+			&& aux->next->next && aux->next->next->str[0] != '>'
 			&& aux->type != ERR)
 		{
 			i++;
@@ -45,8 +45,8 @@ int	ft_confirm_heredoc(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		if (aux->str[0] == '<' && aux->next && aux->next->str[0] == '<' &&
-			aux->next->next && aux->next->next->str[0] != '<' 
+		if (aux->str[0] == '<' && aux->next && aux->next->str[0] == '<'
+			&& aux->next->next && aux->next->next->str[0] != '<'
 			&& aux->type != ERR)
 		{
 			i++;
@@ -69,7 +69,7 @@ int	ft_confirm_redir_out(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		if (aux->str[0] == '>' && aux->next && aux->next->str[0] != '>' 
+		if (aux->str[0] == '>' && aux->next && aux->next->str[0] != '>'
 			&& aux->type != APPEND && aux->type != ERR)
 		{
 			i++;
@@ -91,7 +91,7 @@ int	ft_confirm_redir_in(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		if (aux->str[0] == '<' && aux->next && aux->next->str[0] != '<' 
+		if (aux->str[0] == '<' && aux->next && aux->next->str[0] != '<'
 			&& aux->type != HEREDOC && aux->type != ERR)
 		{
 			i++;
