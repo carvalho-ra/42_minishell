@@ -54,6 +54,11 @@ int main(int argc, char **argv, char **envp)
 			ft_builtin_env(shell);
 			continue ;
 		}
+		if (ft_strcmp(shell->line, "pwd") == 0)
+		{
+			ft_builtin_pwd();
+			continue ;
+		}
         // include readline/history.h
 		ft_is_history(shell->line);
 		shell->list = ft_lexer(shell);
@@ -69,7 +74,7 @@ int main(int argc, char **argv, char **envp)
 			ft_confirm_heredoc(shell);
 			ft_confirm_redir_in(shell);
 			ft_confirm_redir_out(shell);
-			
+
 			// ft_confirm_redir(list);  -->got substituted by others
 			ft_confirm_expand(shell);
 			ft_is_builtin(shell);

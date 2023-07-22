@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 04:38:40 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/22 12:42:02 by cnascime         ###   ########.fr       */
+/*   Created: 2023/07/22 04:11:35 by cnascime          #+#    #+#             */
+/*   Updated: 2023/07/22 12:41:39 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//?Runs a program in a modified environment. Sets each name to value in the
-//?environment and runs the given command.
-// Displays the environment variables.
-int	ft_builtin_env(t_shell *shell)
+// Changes the current directory.
+int	ft_builtin_cd(t_shell *shell)
 {
-	t_token	*aux;
+	char	*path;
 
-	aux = shell->new_env;
-	while (aux)
-	{
-		printf("%s\n", aux->data);
-		aux = aux->next;
-	}
+	path = shell->list->data;
+	if (path == NULL || path[0] == '~')
+		chdir(getenv("HOME"));
+	else if (path[0] == '-')
+		chdir(getenv("OLDPWD"));
+	else
+		chdir(path);
 	return (1);
 }

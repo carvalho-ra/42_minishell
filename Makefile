@@ -2,6 +2,9 @@ NAME = minishell
 
 SRCS = ./src/main.c \
 		./src/builtins/env.c \
+		./src/builtins/cd.c \
+		./src/builtins/echo.c \
+		./src/builtins/pwd.c \
 		./src/expand.c \
 		./src/list.c \
 		./src/lexer/lexer_utils_quotes.c \
@@ -27,21 +30,21 @@ CC = cc -g -Wall -Wextra -Werror
 all: $(NAME)
 
 $(LIBFT):
-	cd inc/libft && $(MAKE)
+	@cd inc/libft && $(MAKE)
 
 %.o: %.c
-	$(CC) -c $< -o $@
+	@$(CC) -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(INC) -o $(NAME) -lreadline
+	@$(CC) $(OBJS) $(INC) -o $(NAME) -lreadline
 
 clean:
-	rm -f $(OBJS)
-	cd inc/libft && $(MAKE) clean
+	@rm -f $(OBJS)
+	@cd inc/libft && $(MAKE) clean
 	
 fclean: clean
-	$(RM) $(NAME) $(LIBFT)
+	@$(RM) $(NAME) $(LIBFT)
 
 re: fclean all
 
-.PHONY: all libft ft_printf clean fclean re
+.PHONY: all libft clean fclean re

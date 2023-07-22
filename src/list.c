@@ -58,7 +58,7 @@ void	ft_print_list(t_shell *shell)
 	aux = shell->list;
 	while (aux)
 	{
-		printf("token %i =  %s\n", aux->index, aux->data);
+		printf("token %i = %s\n", aux->index, aux->data);
 		aux = aux->next;
 	}
 }
