@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/19 21:21:40 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/07/20 19:04:43 by rcarvalh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	ft_is_blank(char c)
@@ -24,7 +36,7 @@ int	ft_is_pipe(char c)
 		return (0);
 }
 
-int ft_is_redir_more(char c)
+int	ft_is_redir_more(char c)
 {
 	if (c == '>')
 		return (1);
@@ -32,7 +44,7 @@ int ft_is_redir_more(char c)
 		return (0);
 }
 
-int ft_is_redir_less(char c)
+int	ft_is_redir_less(char c)
 {
 	if (c == '<')
 		return (1);

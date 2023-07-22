@@ -7,7 +7,7 @@ typedef struct s_token
     int             index;
     int             type;
     int             error_code;
-    char            *data;
+    char            *str;
     struct t_shell  *shell;
     struct s_token  *next;
 }   t_token;
@@ -17,7 +17,6 @@ typedef struct s_token
 typedef struct s_shell
 {
     char    *line; //chamar direto da readline pra cá
-    char    *expanded;
     t_token *list;
     t_token *new_env;
 }   t_shell;
@@ -91,14 +90,30 @@ int	ft_count_redirs(t_shell *shell);
 //prototypes parser
 int ft_confirm_pipe(t_shell *shell);
 
-//prototypes expand
+//prototypes expand utils env
 int ft_copy_env(t_shell *shell, char **envp);
-int ft_confirm_expand(t_shell *shell);
-void ft_vars_to_expand(t_shell *shell);
-int	ft_is_expand(char *data, t_shell *shell);
-char *ft_prep_expand(char *data);
-char	*ft_look_for_in_env(char *str, t_shell *shell);
+char	*ft_search_env(char *str, t_shell *shell);
 
+//prototypes expand utils pid
+int ft_aux_exp_pid_flag(char *str, int i);
+char *ft_aux_exp_pid(char *str, char *final, int i);
+
+//prototypes expand utils var
+int ft_aux_exp_var_flag(char *str, int i);
+char *ft_aux_exp_var(char *str, char *final, int i, t_shell *shell);
+
+//prototypes expand utils word
+int ft_aux_exp_word_flag(char *str, int i);
+char	*ft_norm_aux_exp_var(char *tmp, char *final, int start, int i);
+char *ft_aux_exp_word(char *str, char *final, int i);
+
+//prototypes expand
+int ft_confirm_expand(t_shell *shell);
+void ft_expand_args(t_shell *shell);
+char *ft_prep_expand(char *str);
+char *ft_expand_core(char *str, t_shell *shell);
+char *ft_prep_expand(char *data);
+void ft_free_ptrs(char *str, char *str2);
 
 //prototypes list
 t_token	*ft_create_node(char *str, int index);

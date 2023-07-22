@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/19 21:21:43 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/07/20 19:05:19 by rcarvalh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 static int	ft_aux_lexer(char *str, int i)
@@ -17,7 +29,7 @@ t_token	*ft_lexer(t_shell *shell)
 {
 	unsigned int	i;
 	unsigned int	start;
-	unsigned int 	id;
+	unsigned int	id;
 
 	i = 0;
 	start = 0;
