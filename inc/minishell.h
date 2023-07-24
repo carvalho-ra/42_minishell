@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/24 13:56:03 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:48:03 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,19 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-//AO FAZER NOVA STRUCT PARA MINISHELL
+//NOVA STRUCT PARA MINISHELL
+
+
 typedef struct s_shell
 {
-	char			*line; //chamar direto da readline pra cá
-	//char			*expanded;
-	char			**envp;
-	struct s_token	*list; // isso é a linha, mas separada em tokens?
-	struct s_token	*new_env; // mudar esse nome
+	char			*line; //chamada da readline - linha completa
+	struct s_token	*list; // linha separada em tokens
+	struct s_env	*env; // mudar esse nome
 }	t_shell;
 
 typedef struct	s_env
 {
-	int				index;
-	char			*str; //expanded
-	char			*original;
+	char			*str;
 	struct s_env	*next;
 }	t_env;
 
@@ -132,6 +130,8 @@ int		ft_confirm_pipe(t_shell *shell);
 
 //prototypes expand utils env
 int		ft_copy_env(t_shell *shell, char **envp);
+t_env	*ft_create_env_node(char *str);
+void	ft_add_env(t_shell *shell, char *str);
 char	*ft_search_env(char *str, t_shell *shell);
 
 //prototypes expand utils pid
@@ -158,7 +158,8 @@ void	ft_free_ptrs(char *str, char *str2);
 //prototypes list
 t_token	*ft_create_node(char *str, int index);
 void	ft_add_token(t_shell *shell, char *str, int index);
-void	ft_add_env(t_shell *shell, char *str, int index);
+
+
 void	ft_print_list(t_shell *shell);
 void	ft_free_token_list(t_shell *shell);
 void	ft_free_env_list(t_shell *shell);

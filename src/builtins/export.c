@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 04:39:40 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/24 11:07:06 by cnascime         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../inc/minishell.h"
 
 //TODO Se nome for aceitável, mas não tiver =, não adiciona.
@@ -19,15 +7,23 @@
 int	ft_builtin_export(t_shell *shell)
 {
 	t_token	*aux;
+	t_env	*env;
 
 	aux = shell->list->next;
+	env = shell->env;
 	printf("variável de ambiente a implementar: %s\n", aux->str);
 	if (ft_is_valid_env_name(aux->str))
 	{
 	//TODO comparar cada item da lista de variáveis de ambiente
 	//TODO se já existir, sobrescrever (free na antiga e atribuir nova)
 	//TODO se não existir, criar
-		ft_add_token(shell, aux->str, 0); // não deu certo, só aparece uma linha vazia
+		
+		while (env->next)
+		{
+			env = env->next;// anda até o final da lista de nodos env
+		}
+		env->next = ft_create_env_node(ft_strdup(aux->str)); // adiciona nodo à lista de t_env
+		//aqui não dava pra usar ft_add_env, pq ela limpa memória do char * passado pra ela. 
 	}
 	else
 	{
