@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/21 10:59:26 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/24 04:18:56 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static t_shell *ft_shell_init(t_shell *shell, char **envp)
+static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 {
 	shell = NULL;
 	shell = malloc(sizeof(t_shell));
@@ -25,23 +25,23 @@ static t_shell *ft_shell_init(t_shell *shell, char **envp)
 	return (shell);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	t_shell *shell;
+	t_shell	*shell;
 
 	shell = NULL;
 	shell = ft_shell_init(shell, envp);
 	(void)argv;
 	(void)argc;
     //ignore SIGQUIT Ctrl+'\'
-    signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
     //treat SIGINT Ctrl+C
-    signal(SIGINT, &ft_handler);
-    while (1)
-    {
-        shell->line = readline("minishell> "); // Prompt 
+	signal(SIGINT, &ft_handler);
+	while (1)
+	{
+		shell->line = readline("minishell> "); // Prompt 
 		// Ctrl+D (EOF)
-		if (!shell->line) 
+		if (!shell->line)
 		{
 			write(2, "exit\n", 5);
 			break ;
@@ -75,14 +75,14 @@ int main(int argc, char **argv, char **envp)
 			ft_confirm_heredoc(shell);
 			ft_confirm_redir_in(shell);
 			ft_confirm_redir_out(shell);
-			
+
 			ft_confirm_expand(shell);
 			ft_is_builtin(shell);
 
 			ft_expand_args(shell);
 			ft_print_list(shell);
 			printf("\n");
-			
+
 			ft_free_token_list(shell);
 			free(shell->line);
 		}
@@ -90,5 +90,5 @@ int main(int argc, char **argv, char **envp)
 	ft_free_token_list(shell);
 	ft_free_env_list(shell);
 	free(shell);
-    return (0);
+	return (0);
 }

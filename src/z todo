@@ -1,0 +1,39 @@
+[X] Exibir um prompt enquanto aguarda um novo comando
+[ ] Possuir histórico funcional
+[ ] Pesquisar e rodar o executável certo
+	[ ] De acordo com a variável PATH ou o caminho absoluto ou relativo
+[ ] Ter no máximo uma variável global
+[ ] Não precisa interpretar aspas não-fechadas
+[ ] Não precisa interpretar caracteres especiais (nem \ nem ;)
+[ ] Interpretar ' ' (aspas simples)
+	[ ] Sem interpretar metacaracteres dentro das aspas
+[ ] Interpretar " " (aspas duplas)
+	[ ] Interpretando apenas $ (cifrão)
+[ ] Implementar redirecionamento < input
+[ ] Implementar redirecionamento > output
+[ ] Implementar redirecionamento << com um delimitador
+	[ ] Ler o input até detectar uma linha com este delimitador (ex: EOF)
+	[ ] Não precisa incluir no histórico
+[ ] Implementar redirecionamento >> append
+[ ] Implementar | (pipes)
+	[ ] O output de cada comando deve ser o input do próximo
+[ ] Implementar $ (variáveis de ambiente)
+	[ ] Seguir funcionamento da Iza no heredoc
+[ ] Implementar $? (expandir para o status de saída da execução mais recente)
+[ ] Ctrl + C deve funcionar como em bash
+	[ ] No modo interativo, Ctrl + C exibe novo prompt em uma nova linha
+[ ] Ctrl + D deve funcionar como em bash
+	[ ] No modo interativo, Ctrl + D sai do shell
+[ ] Ctrl + \ deve funcionar como em bash
+	[ ] No modo interativo, Ctrl + \ não faz nada
+[ ] Builtin echo
+[ ] Builtin echo -n
+[ ] Builtin cd
+[ ] Builtin cd caminho absoluto
+[ ] Builtin cd caminho relativo
+[X] Builtin pwd (sem opções)
+[ ] Builtin export (sem opções)
+[ ] Builtin unset (sem opções)
+[ ] Builtin env (sem opções e sem argumentos)
+[ ] Builtin exit (sem opções)
+[ ] Não vazar memória, exceto da função readline
