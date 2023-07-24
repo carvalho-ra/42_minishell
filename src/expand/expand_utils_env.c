@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:39:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/24 16:01:26 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/24 16:27:16 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_copy_env(t_shell *shell, char **envp)
 {
 	int		i;
 
-	shell->env = NULL;
+	//shell->env = NULL;
 	i = 0;
 	while (envp[i] != NULL)
 	{
