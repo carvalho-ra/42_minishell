@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/24 16:25:21 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:12:25 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int	main(int argc, char **argv, char **envp)
 			ft_confirm_redir_in(shell);
 			ft_confirm_redir_out(shell);
 
-			ft_confirm_expand(shell);
-
-			ft_expand_args(shell);
 			ft_is_builtin(shell);
+			
+			ft_confirm_expand(shell);
+			ft_expand_args(shell);
 			ft_print_list(shell);
 			printf("\n");
 
