@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/24 11:18:01 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/24 13:45:38 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@ typedef struct s_shell
 	struct s_token	*list; // isso é a linha, mas separada em tokens?
 	struct s_token	*new_env; // mudar esse nome
 }	t_shell;
+
+typedef struct	s_env
+{
+	int				index;
+	char			*str;
+	struct s_env	*next;
+}	t_env;
 
 //fazer função para repassar a lista (excluir nó do meio e dar free!!!)
 // passar head + posição (INDEX)
