@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:48 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/24 04:36:24 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:58:48 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 // Displays the environment variables.
 int	ft_builtin_env(t_shell *shell)
 {
-	t_token	*envs;
+	t_env	*env;
 
-	envs = shell->new_env;
-	while (envs)
+	env = shell->env;
+	while (env)
 	{
-		printf("%s\n", envs->str);
-		envs = envs->next;
+		printf("%s\n", env->str);
+		env = env->next;
 	}
 	return (1);
 }

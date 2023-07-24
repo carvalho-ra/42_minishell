@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 04:39:40 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/24 11:07:06 by cnascime         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../inc/minishell.h"
 
 //TODO Se nome for aceitável, mas não tiver =, não adiciona.
@@ -27,7 +15,7 @@ int	ft_builtin_export(t_shell *shell)
 	//TODO comparar cada item da lista de variáveis de ambiente
 	//TODO se já existir, sobrescrever (free na antiga e atribuir nova)
 	//TODO se não existir, criar
-		ft_add_token(shell, aux->str, 0); // não deu certo, só aparece uma linha vazia
+		ft_add_env(shell, aux->str); // adiciona nodo à lista de t_env
 	}
 	else
 	{

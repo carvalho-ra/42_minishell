@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/24 11:28:09 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:48:32 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,7 @@ void	ft_add_token(t_shell *shell, char *str, int index)
 	}
 }
 
-//? Precisa mesmo desse index? Se quiser adicionar ao final sem saber quantos nós há?
-//?Se for importante para alterar a lista, seria possível criar uma variável index na struct?
-void	ft_add_env(t_shell *shell, char *str, int index)
-{
-	t_token	*aux;
 
-	aux = shell->new_env;
-	if (aux == NULL)
-		shell->new_env = ft_create_node(str, 0);
-	else
-	{
-		while (aux->next != NULL)
-		{
-			index++;
-			aux = aux->next;
-		}
-		aux->next = ft_create_node(str, index);
-	}
-}
 
 void	ft_print_list(t_shell *shell)
 {
@@ -97,10 +79,10 @@ void	ft_free_token_list(t_shell *shell)
 
 void	ft_free_env_list(t_shell *shell)
 {
-	t_token	*current;
-	t_token	*next;
+	t_env	*current;
+	t_env	*next;
 
-	current = shell->new_env;
+	current = shell->env;
 	while (current)
 	{
 		next = current->next;
@@ -108,7 +90,7 @@ void	ft_free_env_list(t_shell *shell)
 		free(current);
 		current = next;
 	}
-	shell->new_env = NULL;
+	shell->env = NULL;
 }
 
 //AO FAZER NOVA STRUCT PARA MINISHELL
@@ -118,7 +100,7 @@ void	ft_free_shell(t_shell *shell)
 
 	aux = shell;
 	free(aux->line);
-	free(aux->new_env);
+	free(aux->env);
 	free(aux->list);
 	free(shell);
 	shell = NULL;
@@ -126,31 +108,31 @@ void	ft_free_shell(t_shell *shell)
 
 
 // ********************* TEST *********************
-char	**ft_add_envp(char **envp, char *node)
-{
-	char	**envvariable;
-	int		i;
-	size_t	length;
+// char	**ft_add_envp(char **envp, char *node)
+// {
+// 	char	**envvariable;
+// 	int		i;
+// 	size_t	length;
 
-	i = 0;
-	if (!node)
-		return (envp);
-	// length = calcular tamanho da lista (libft)
-	envvariable = malloc(sizeof(char *) * (length + 2));
-	envvariable[length + 1] = NULL;
-	if (!envvariable)
-		return (envp);
-	while (i < length)
-	{
-		envvariable[i] = ft_strdup(envp[i]);
-		if (!envvariable[i])
-		{
-			//free envp
-			//free envvariable;
-		}
-		i++;
-	}
-	envvariable[i] = ft_strdup(node);
-	free(envp);
-	return (envvariable);
-}
+// 	i = 0;
+// 	if (!node)
+// 		return (envp);
+// 	// length = calcular tamanho da lista (libft)
+// 	envvariable = malloc(sizeof(char *) * (length + 2));
+// 	envvariable[length + 1] = NULL;
+// 	if (!envvariable)
+// 		return (envp);
+// 	while (i < length)
+// 	{
+// 		envvariable[i] = ft_strdup(envp[i]);
+// 		if (!envvariable[i])
+// 		{
+// 			//free envp
+// 			//free envvariable;
+// 		}
+// 		i++;
+// 	}
+// 	envvariable[i] = ft_strdup(node);
+// 	free(envp);
+// 	return (envvariable);
+// }
