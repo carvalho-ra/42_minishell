@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/24 15:48:03 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:59:21 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_shell
 {
 	char			*line; //chamada da readline - linha completa
 	struct s_token	*list; // linha separada em tokens
+	char			**cmd; // full command
 	struct s_env	*env; // mudar esse nome
 }	t_shell;
 

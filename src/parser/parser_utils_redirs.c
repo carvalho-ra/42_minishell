@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 19:28:32 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/24 22:59:27 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	ft_confirm_heredoc(t_shell *shell)
 	}
 	return (i);
 }
+
+// o que vem do lado de um redirect é o nome do arquivo
 
 int	ft_confirm_redir_out(t_shell *shell)
 {

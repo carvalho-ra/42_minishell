@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:11:35 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/24 03:32:24 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:32:26 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,5 @@ int	ft_builtin_cd(t_shell *shell)
 // usar a prórpia export!!!!
 //guardar o path em algum lugar
 //guardar OLD path em algum lugar
+//cd ..
+//cd ../

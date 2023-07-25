@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:43 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 19:05:19 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:47:36 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ static int	ft_aux_lexer(char *str, int i)
 	while (str[i] && !(ft_is_blank(str[i])))
 	{
 		i = ft_double_quote(str, i);
-		i = ft_single_quote(str, i);
-		i++;
+		if (str[i])
+			i = ft_single_quote(str, i);
+		if (str[i])
+			i++;
 		if (ft_is_pipe_redir(str[i - 1]) || ft_is_pipe_redir(str[i]))
 			break ;
 	}
