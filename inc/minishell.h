@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/26 09:14:25 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:37:39 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_token
 	int				type;
 	int				error_code;
 	char			*str; // antes chamado data; os dois nomes não são claros; não tem de ser char**?
+	char			**cmd; // full command
 	struct s_shell	*shell;
 	struct s_token	*next;
 }	t_token;
@@ -50,11 +51,10 @@ typedef struct s_shell
 {
 	char			*line; //chamada da readline - linha completa
 	struct s_token	*list; // linha separada em tokens
-	char			**cmd; // full command
 	struct s_env	*env; // mudar esse nome
 }	t_shell;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*str;
 	struct s_env	*next;
@@ -111,6 +111,12 @@ t_token	*ft_lexer(t_shell *shell);
 
 //prototype parser utils bultin
 int		ft_is_builtin(t_shell *shell);
+
+//prototypes parser_to_cmd
+void	ft_parse_to_cmd(t_shell *shell);
+void	ft_print_cmds(t_shell *shell);
+void	ft_print_check(t_shell *shell);
+
 
 //prototypes parser utils err
 int		ft_err_pipe(t_shell *shell);

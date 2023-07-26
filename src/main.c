@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/24 22:39:42 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:41:25 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	main(int argc, char **argv, char **envp)
 			write(2, "exit\n", 5);
 			break ;
 		}
-		// cmd exit
 		if (ft_strcmp(shell->line, "exit") == 0)
 		{
 			//free user input
@@ -68,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			ft_print_list(shell);
 			printf("\n");
-			
+
 			ft_err_pipe(shell);
 			ft_err_redir_in(shell);
 			ft_err_redir_out(shell);
@@ -79,12 +78,15 @@ int	main(int argc, char **argv, char **envp)
 			ft_confirm_redir_out(shell);
 
 			ft_is_builtin(shell);
-			
+
 			ft_confirm_expand(shell);
 			ft_expand_args(shell);
 			ft_print_list(shell);
 			printf("\n");
 
+			ft_parse_to_cmd(shell);
+			//ft_print_check(shell);
+			ft_print_cmds(shell);
 			ft_free_token_list(shell);
 			free(shell->line);
 		}
