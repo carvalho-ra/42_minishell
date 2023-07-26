@@ -3,6 +3,8 @@
         "array": "c",
         "string": "c",
         "string_view": "c",
-        "algorithm": "c"
-    }
+        "algorithm": "c",
+        "*.tcc": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
