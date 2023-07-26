@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/25 21:40:33 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/26 12:29:17 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int		ft_is_builtin(t_shell *shell);
 //prototypes parser_to_cmd
 void ft_parse_to_cmd(t_shell *shell);
 void ft_print_cmds(t_shell *shell);
+void ft_print_check(t_shell *shell);
 
 
 //prototypes parser utils err

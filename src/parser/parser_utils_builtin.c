@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/24 14:39:52 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:30:53 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,25 @@ int	ft_is_builtin(t_shell *shell)
 		{
 			aux->type = BUILTIN_ECHO;
 			printf("token %i is builtin echo\n", aux->index);
-			return (ft_builtin_echo(shell));
+			//return (ft_builtin_echo(shell));
 		}
 		if (ft_strcmp(aux->str, "cd") == 0)
 		{
 			aux->type = BUILTIN_CD;
 			printf("token %i is builtin cd\n", aux->index);
-			return (ft_builtin_cd(shell));
+			//return (ft_builtin_cd(shell));
 		}
 		if (ft_strcmp(aux->str, "pwd") == 0)
 		{
 			aux->type = BUILTIN_PWD;
 			printf("token %i is builtin pwd\n", aux->index);
-			return (ft_builtin_pwd());
+			//return (ft_builtin_pwd());
 		}
 		if (ft_strcmp(aux->str, "export") == 0)
 		{
 			aux->type = BUILTIN_EXPORT;
 			printf("token %i is builtin export\n", aux->index);
-			return (ft_builtin_export(shell));
+			//return (ft_builtin_export(shell));
 		}
 		if (ft_strcmp(aux->str, "unset") == 0)
 		{
@@ -55,7 +55,7 @@ int	ft_is_builtin(t_shell *shell)
 		{
 			aux->type = BUILTIN_ENV;
 			printf("token %i is builtin env\n", aux->index);
-			return (ft_builtin_env(shell));
+			//return (ft_builtin_env(shell));
 		}
 		if (ft_strcmp(aux->str, "exit") == 0) // Tem aqui e na main?
 		{

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/26 10:39:58 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:26:30 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	ft_free_token_list(t_shell *shell)
 	t_token	*next;
 	int		i;
 
-	i = 0;
 	current = shell->list;
 	while (current)
 	{
+		i = 0;
 		next = current->next;
 		free(current->str);
 		if (current->cmd)

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:29:17 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/26 11:15:12 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:23:02 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,66 +121,45 @@ void ft_parse_to_cmd(t_shell *shell)
             count = current;
             i = 0;
             cmd_size = 0;
-            while (count && ((count->type >= BUILTIN_ECHO && count->type <= BUILTIN_EXIT)
-                    && count->type == 0 || count->type == EXPAND)) //enquanto houver nodo
+            while (count && (count->type == EXPAND || count->type == 0
+                    || (count->type >= BUILTIN_ECHO && count->type <= BUILTIN_EXIT))) //enquanto houver nodo e for uma BUILTIN ou 0 ou EXPAND
             {
-                cmd_size++; //pode ser preciso inverer a linha debaixo
+                cmd_size++;
                 count = count->next; //aponta para o próximo nó
             }
-            //ainda dentro do nodo marcado com type BULITIN
+            //ainda dentro do nodo marcado com type BUILTIN
             if (!(current->cmd = (char**)malloc(sizeof(char*) * (cmd_size + 1))))//malloca o tamanho do array contando com o último NULL
                 return ;
+            //current->cmd[i++] = ft_strdup(current->str);
             count = current;
-            while(count && ((count->type >= BUILTIN_ECHO && count->type <= BUILTIN_EXIT)
-                    || count->type == 0 || count->type == EXPAND)) //percorre com o auxiliar pra andar na lista
+            while(count && (count->type == EXPAND || count->type == 0
+                    || (count->type >= BUILTIN_ECHO && count->type <= BUILTIN_EXIT))) // enquanto for uma BUILTIN ou 0 ou EXPAND
             {
                 current->cmd[i] = ft_strdup(count->str); //copia da str para o array na posição i
                 i++;
                 count = count->next;
             }
             current->cmd[i] = NULL;//fecha este array com a ultima string NULL
-            while (current && ((current->type >= BUILTIN_ECHO && current->type <= BUILTIN_EXIT)
-                    || current->type == 0 || current->type == EXPAND))
+            while (current && (current->type == EXPAND || current->type == 0
+                    || (current->type >= BUILTIN_ECHO && current->type <= BUILTIN_EXIT))) // enquanto for uma BUILTIN ou 0 ou EXPAND
                 current = current->next;
+            if (!current)
+                return ;
         }
-        while (current && current->type == ERR)
+        if (current && current->type == ERR)
         {
             current = current->next;
         }
         if (current && (current->type >= PIPE && current->type <= HEREDOC))
         {
-            count = current;
-            i = 0;
-            cmd_size = 0;
-            while (count && !(count->type >= PIPE && count->type <= HEREDOC) && count->type != ERR
-                    && !(count->type >= BUILTIN_ECHO && count->type <= BUILTIN_EXIT)) //enquanto houver nodo
-            {
-                cmd_size++; //pode ser preciso inverer a linha debaixo
-                count = count->next; //aponta para o próximo nó
-            }
-            //ainda dentro do nodo marcado com type BULITIN
-            if (!(current->cmd = (char**)malloc(sizeof(char*) * (cmd_size + 1))))//malloca o tamanho do array contando com o último NULL
-                return ;
-            count = current;
-            while(count && !(count->type >= PIPE && count->type <= HEREDOC) && count->type != ERR
-                    && !(count->type >= BUILTIN_ECHO && count->type <= BUILTIN_EXIT)) //percorre com o auxiliar pra andar na lista
-            {
-                current->cmd[i] = ft_strdup(count->str); //copia da str para o array na posição i
-                i++;
-                count = count->next;
-            }
-            current->cmd[i] = NULL;//fecha este array com a ultima string NULL
-            while (current && !(current->type >= PIPE && current->type <= HEREDOC) && current->type != ERR
-                    && !(current->type >= BUILTIN_ECHO && current->type <= BUILTIN_EXIT))
-                current = current->next;
+            current = current->next;
         }
         if (current->type == EXPAND || current->type == 0)
         {
             count = current;
             i = 0;
             cmd_size = 0;
-            while (count && !(count->type >= PIPE && count->type <= HEREDOC) && count->type != ERR
-                    && !(count->type >= BUILTIN_ECHO && count->type <= BUILTIN_EXIT)) //enquanto houver nodo
+            while (count && (count->type == EXPAND || count->type == 0)) //enquanto houver nodo
             {
                 cmd_size++; //pode ser preciso inverer a linha debaixo
                 count = count->next; //aponta para o próximo nó
@@ -189,22 +168,19 @@ void ft_parse_to_cmd(t_shell *shell)
             if (!(current->cmd = (char**)malloc(sizeof(char*) * (cmd_size + 1))))//malloca o tamanho do array contando com o último NULL
                 return ;
             count = current;
-            while(count && !(count->type >= PIPE && count->type <= HEREDOC) && count->type != ERR
-                    && !(count->type >= BUILTIN_ECHO && count->type <= BUILTIN_EXIT)) //percorre com o auxiliar pra andar na lista
+            while(count && (count->type == EXPAND || count->type == 0)) //percorre com o auxiliar pra andar na lista
             {
                 current->cmd[i] = ft_strdup(count->str); //copia da str para o array na posição i
                 i++;                
                 count = count->next;
             }
             current->cmd[i] = NULL;//fecha este array com a ultima string NULL
-            while (current && !(current->type >= PIPE && current->type <= HEREDOC) && current->type != ERR
-                    && !(current->type >= BUILTIN_ECHO && current->type <= BUILTIN_EXIT))
+            while (current && (current->type == EXPAND || current->type == 0))
                 current = current->next;
+            if (!current)// se não houver mais nodos
+                return ; 
         }
-        if (!current)// se não houver mais nodos
-            return ;//it's not working because it segfaults 
-        else 
-            current = current->next;
+        current = current->next;
     }
     return ;
 }
@@ -218,7 +194,7 @@ void ft_print_cmds(t_shell *shell)
     aux = shell->list;
     if (!aux)
         return ;
-    while (aux->next)
+    while (aux)
     {
         if (aux->cmd)
         {
@@ -229,8 +205,27 @@ void ft_print_cmds(t_shell *shell)
                 printf ("%s\n", aux->cmd[i]);
                 i++;
                 if (aux->cmd[i] == NULL)
-                    printf("NULL\n");    
+                    printf("NULL\n"); 
             }
+        }
+        aux = aux->next;
+    }
+}
+
+void ft_print_check(t_shell *shell)
+{
+    t_token *aux;
+
+    aux = NULL;
+    aux = shell->list;
+    if (!aux)
+        return ;
+    while (aux)
+    {
+        if (aux->type)
+        {
+            printf("token index %i\n", aux->index);
+            printf("token type %i\n", aux->type);
         }
         aux = aux->next;
     }
