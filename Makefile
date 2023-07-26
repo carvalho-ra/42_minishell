@@ -1,5 +1,8 @@
 NAME = minishell
 
+VALGRIND	= valgrind --leak-check=full -s -v --track-origins=yes
+SANITIZER	= -fsanitize=address -fno-omit-frame-pointer -static-libasan
+
 SRCS = ./src/main.c \
 		./src/builtins/cd.c \
 		./src/builtins/echo.c \
@@ -44,7 +47,8 @@ $(LIBFT):
 	$(CC) -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(INC) -o $(NAME) -lreadline
+#	$(CC) $(OBJS) $(INC) -o $(NAME) -lreadline
+	$(CC) $(OBJS) $(INC) $(SANITIZER) -o $(NAME) -lreadline
 
 clean:
 	rm -f $(OBJS)
@@ -55,4 +59,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re vrun

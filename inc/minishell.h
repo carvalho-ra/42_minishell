@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/25 16:59:21 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/26 09:14:25 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int		ft_builtin_pwd(void);
 //builtin utils
 char	*quotes_treatment(char *string);
 int		ft_is_valid_env_name(char *name);
+int		ft_isforbidden(char character, char *forbidden);
 
 //prototypes lexer utils quotes
 int		ft_single_quote(char *str, int i);
@@ -123,6 +124,7 @@ int		ft_confirm_redir_out(t_shell *shell);
 int		ft_confirm_redir_in(t_shell *shell);
 
 //prototypes parser utils
+void	ft_parse_to_cmd(t_shell *shell);
 int		ft_count_pipes(t_shell *shell);
 int		ft_count_redirs(t_shell *shell);
 

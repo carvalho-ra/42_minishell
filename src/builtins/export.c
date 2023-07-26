@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/22 04:39:40 by cnascime          #+#    #+#             */
+/*   Updated: 2023/07/26 06:59:35 by cnascime         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-//TODO Se nome for aceitável, mas não tiver =, não adiciona.
-//TODO Se nome for aceitável e tiver =, mas nada depois, adiciona valor vazio
+//TODO TESTAR Se nome for aceitável, mas não tiver =, não adiciona.
+//TODO TESTAR Se nome for aceitável e tiver =, mas nada depois, adiciona valor vazio
 
 // 
 int	ft_builtin_export(t_shell *shell)
@@ -11,18 +23,17 @@ int	ft_builtin_export(t_shell *shell)
 
 	aux = shell->list->next;
 	env = shell->env;
-	printf("variável de ambiente a implementar: %s\n", aux->str);
+	printf("\t\tvariável de ambiente a implementar: %s\n", aux->str);
 	if (ft_is_valid_env_name(aux->str))
 	{
-	//TODO comparar cada item da lista de variáveis de ambiente
-	//TODO se já existir, sobrescrever (free na antiga e atribuir nova)
-	//TODO se não existir, criar
-		
+		//TODO comparar cada item da lista de variáveis de ambiente
+		//TODO se já existir, sobrescrever
+		//TODO se não existir, criar
 		while (env->next)
 		{
-			env = env->next;// anda até o final da lista de nodos env
+			env = env->next; // anda até o final da lista de nós env
 		}
-		env->next = ft_create_env_node(ft_strdup(aux->str)); // adiciona nodo à lista de t_env
+		env->next = ft_create_env_node(ft_strdup(aux->str)); // adiciona nó à lista t_env
 		//aqui não dava pra usar ft_add_env, pq ela limpa memória do char * passado pra ela. 
 	}
 	else
@@ -31,7 +42,7 @@ int	ft_builtin_export(t_shell *shell)
 		return (1); // retorno em caso de erro
 	}
 	return (1); //retorno original deveria ser 0, mas a função que chama
-	// pergunta se é builtin, então o esperado seria TRUE. Trocar no futuro.
+	// pergunta se é builtin, então o esperado seria TRUE.
 }
 
 int	ft_is_valid_env_name(char *name)
@@ -41,12 +52,14 @@ int	ft_is_valid_env_name(char *name)
 	i = 0;
 	if (ft_isdigit(name[0]))
 		return (0);
-	while (name[i] != '=' || name[i] != '\0')
+	while (name[i] == '=')
 	{
-		while (ft_isalnum(name[i]) || name[i] == '_')
-			i++;
-		return (1);
+		if (!ft_isalnum(name[i]) && name[i] != '_')
+			return (0);
+		i++;
 	}
+	if (name[i] == '=')
+		return (1);
 	return (0);
 }
 
