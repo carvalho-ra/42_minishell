@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/24 15:48:32 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/26 10:39:58 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_token	*ft_create_node(char *str, int index)
 	new_node->type = 0;
 	new_node->error_code = 0;
 	new_node->str = str;
+	new_node->cmd = NULL;
 	new_node->shell = NULL;
 	new_node->next = NULL;
 	return (new_node);
@@ -65,12 +66,23 @@ void	ft_free_token_list(t_shell *shell)
 {
 	t_token	*current;
 	t_token	*next;
+	int		i;
 
+	i = 0;
 	current = shell->list;
 	while (current)
 	{
 		next = current->next;
 		free(current->str);
+		if (current->cmd)
+		{
+			while (current->cmd[i])
+			{
+				free(current->cmd[i]);
+				i++;
+			}
+		}
+		free(current->cmd);
 		free(current);
 		current = next;
 	}
@@ -106,6 +118,8 @@ void	ft_free_shell(t_shell *shell)
 	shell = NULL;
 }
 
+//unitialized values: 
+//
 
 // ********************* TEST *********************
 // char	**ft_add_envp(char **envp, char *node)
