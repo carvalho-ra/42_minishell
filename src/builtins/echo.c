@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/24 04:54:04 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:09:24 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	ft_builtin_echo(t_shell *shell)
 	{
 		string = quotes_treatment(aux->str); //* Faço o tratamento das aspas
 		ft_putstr_fd(string, 1); //* Imprimo a string já tratada
+		free(string);
 		if (aux->next) //* Se não for o último elemento, separo com um espaço
 			ft_putstr_fd(" ", 1);
 		aux = aux->next;
