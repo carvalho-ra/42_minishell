@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/26 21:17:53 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/27 01:37:56 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,22 @@ typedef struct	s_env
 
 enum	e_token_class
 {
-	PIPE = 1,
-	REDIRECT_IN,
-	REDIRECT_OUT,
-	APPEND,
-	HEREDOC,
-	CMD,
-	BUILTIN_ECHO,
+	BUILTIN_ECHO = 1,
 	BUILTIN_CD,
 	BUILTIN_PWD,
 	BUILTIN_EXPORT,
 	BUILTIN_UNSET,
 	BUILTIN_ENV,
 	BUILTIN_EXIT,
-	WORD,
 	EXPAND,
-	ERR
+	PIPE,
+	REDIRECT_IN,
+	REDIRECT_OUT,
+	APPEND,
+	HEREDOC,
+	ERR,
+	CMD,
+	ARG,
 };
 
 //prototypes builtins
@@ -112,12 +112,12 @@ t_token	*ft_lexer(t_shell *shell);
 int		ft_is_builtin(t_shell *shell);
 
 //prototypes parser_to_cmd
-void ft_parse_full_cmds(t_shell *shell);
+void ft_parse_full_cmds(t_token *list);
 
 t_token *ft_parse_cmd(t_token *list);
 t_token *ft_parse_bultin(t_token *list);
 
-void ft_print_cmds(t_shell *shell);
+void ft_print_cmds(t_token *list);
 void ft_print_check(t_shell *shell);
 
 
