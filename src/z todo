@@ -1,14 +1,14 @@
 [X] Exibir um prompt enquanto aguarda um novo comando
-[ ] Possuir histórico funcional
+[X] Possuir histórico funcional
 [ ] Pesquisar e rodar o executável certo
 	[ ] De acordo com a variável PATH ou o caminho absoluto ou relativo
 [ ] Ter no máximo uma variável global
-[ ] Não precisa interpretar aspas não-fechadas
-[ ] Não precisa interpretar caracteres especiais (nem \ nem ;)
-[ ] Interpretar ' ' (aspas simples)
-	[ ] Sem interpretar metacaracteres dentro das aspas
-[ ] Interpretar " " (aspas duplas)
-	[ ] Interpretando apenas $ (cifrão)
+[X] Não precisa interpretar aspas não-fechadas
+[X] Não precisa interpretar caracteres especiais (nem \ nem ;)
+[X] Interpretar ' ' (aspas simples)
+	[X] Sem interpretar metacaracteres dentro das aspas
+[X] Interpretar " " (aspas duplas)
+	[X] Interpretando apenas $ (cifrão)
 [ ] Implementar redirecionamento < input
 [ ] Implementar redirecionamento > output
 [ ] Implementar redirecionamento << com um delimitador
@@ -17,11 +17,11 @@
 [ ] Implementar redirecionamento >> append
 [ ] Implementar | (pipes)
 	[ ] O output de cada comando deve ser o input do próximo
-[ ] Implementar $ (variáveis de ambiente)
+[X] Implementar $ (variáveis de ambiente)
 	[ ] Seguir funcionamento da Iza no heredoc
 [ ] Implementar $? (expandir para o status de saída da execução mais recente)
-[ ] Ctrl + C deve funcionar como em bash
-	[ ] No modo interativo, Ctrl + C exibe novo prompt em uma nova linha
+[X] Ctrl + C deve funcionar como em bash
+	[X] No modo interativo, Ctrl + C exibe novo prompt em uma nova linha
 [ ] Ctrl + D deve funcionar como em bash
 	[ ] No modo interativo, Ctrl + D sai do shell
 [ ] Ctrl + \ deve funcionar como em bash
@@ -37,3 +37,42 @@
 [ ] Builtin env (sem opções e sem argumentos)
 [ ] Builtin exit (sem opções)
 [ ] Não vazar memória, exceto da função readline
+
+//TODO
+
+[X] verificar se o token de builtin está sendo marcado corretamente (IMPORTANTE!!!)
+[X] verificar se o token de erro está sendo marcado corretamente - FIXED in parser_utils_redirs.c
+[X] verificar se o token de argumento está sendo marcado corretamente - nao esta sendo marcado
+[X] verificar se o token de expand está sendo marcado corretamente - strings expandidas já são devolvidas nos tokens token->str;
+[X] verificar se o token de pipe está sendo marcado corretamente
+[X] verificar se o token de heredoc está sendo marcado corretamente
+[X] verificar se o token de redirecionamento está sendo marcado corretamente
+[X] verificar se o token de comando está sendo marcado corretamente - marcado agora, na função ft_parse_cmds
+
+AQUI preciso de ajuda pra entender a lógica do bash e ir codando comigo algumas funções
+
+[ ] depois de pipe vem um argumento, é um comando?
+ou pode ser um redirecionamento? ou um pipe? ou uma builtin?
+[ ] depois de uma builtin é um argumento? nem sempre, né? e se for um pipe? ou um redirecionamento?
+quais funcionam e não funcionam? 
+[ ] depois de um redirecionamento é um argumento?
+tem que abrir arquivo? tem que armazenar o fd do arquivo? fazer fd_in e fd_out no token?
+[ ] depois de um pipe, se não for builtin, é um comando?
+verificar se pode ter outras possibilidades
+
+[ ]Erros de redirecionamento e pipe
+até então só estão funcionando os casos:
+[X] inicia com pipe;
+[X] termina com pipe vazio;
+[X] pipe depois de pipe, redirecionamento depois de redirecionamento (e variações)
+[ ] termina com pipe depois de um redirecionamento - checar essa lógica
+	[ ] pipe depois de redirecionamento? Existe? Funciona? Quais? Como?
+[ ] termina com redirecionamento depois de um pipe - checar essa lógica
+	[ ] redirecionamento depois de pipe? Existe? Funciona? Quais? Como? 
+[ ] redirecionamento depois de builtin? Existe? Funciona? Quais? Como?
+[ ] builtin depois de redirecionamento? Existe? Funciona? Quais? Como?
+[ ] builtin depois de pipe? Existe? Funciona? Quais? Como?
+[ ] pipe depois de builtin? Existe? Funciona? Quais? Como?
+[ ] builtin depois de builtin;
+
+[ ] será que peguei todas?
