@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/26 15:37:39 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/27 03:27:55 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,14 @@ int		ft_builtin_echo(t_shell *shell);
 int		ft_builtin_env(t_shell *shell);
 int		ft_builtin_export(t_shell *shell);
 int		ft_builtin_pwd(void);
+int		ft_builtin_unset(t_shell *shell);
 
 //builtin utils
 char	*quotes_treatment(char *string);
-int		ft_is_valid_env_name(char *name);
+int		ft_is_valid_key(char *name);
+int		ft_is_key_duplicate(t_env *env, char *key, int origin);
+int		ft_replace_env(t_env *env, int index, char *new_value);
+int		ft_delete_env(t_env *env, int index);
 int		ft_isforbidden(char character, char *forbidden);
 
 //prototypes lexer utils quotes

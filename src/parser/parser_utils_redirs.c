@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils_redirs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/26 12:42:42 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:37:50 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_confirm_append(t_shell *shell)
 			aux->type = ERR;
 			aux->next->type = APPEND;
 			aux = aux->next;
-			printf("token %i is append (>>)\n", aux->index);
+			printf("\t\ttoken %i is append (>>)\n", aux->index);
 		}
 		aux = aux->next;
 	}
@@ -55,7 +55,7 @@ int	ft_confirm_heredoc(t_shell *shell)
 			aux->type = ERR;
 			aux->next->type = HEREDOC;
 			aux = aux->next;
-			printf("token %i is heredoc (<<)\n", aux->index);
+			printf("\t\ttoken %i is heredoc (<<)\n", aux->index);
 		}
 		aux = aux->next;
 	}
@@ -79,7 +79,7 @@ int	ft_confirm_redir_out(t_shell *shell)
 			i++;
 			aux->error_code = 0;
 			aux->type = REDIRECT_OUT;
-			printf("token %i is redirect output (>)\n", aux->index);
+			printf("\t\ttoken %i is redirect output (>)\n", aux->index);
 		}
 		aux = aux->next;
 	}
@@ -101,7 +101,7 @@ int	ft_confirm_redir_in(t_shell *shell)
 			i++;
 			aux->error_code = 0;
 			aux->type = REDIRECT_IN;
-			printf("token %i is redirect input (<)\n", aux->index);
+			printf("\t\ttoken %i is redirect input (<)\n", aux->index);
 		}
 		aux = aux->next;
 	}

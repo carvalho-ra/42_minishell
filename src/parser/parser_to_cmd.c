@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:29:17 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/26 15:41:46 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:38:52 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,14 +198,14 @@ void ft_print_cmds(t_shell *shell)
     {
         if (aux->cmd)
         {
-            printf("token %i\n", aux->index);
+            printf("\t\ttoken %i\n", aux->index);
             i = 0;
             while (aux->cmd[i])
             {
-                printf ("%s\n", aux->cmd[i]);
+                printf ("\t\t%s\n", aux->cmd[i]);
                 i++;
                 if (aux->cmd[i] == NULL)
-                    printf("NULL\n"); 
+                    printf("\t\tNULL\n"); 
             }
         }
         aux = aux->next;
@@ -224,8 +224,8 @@ void ft_print_check(t_shell *shell)
     {
         if (aux->type)
         {
-            printf("token index %i\n", aux->index);
-            printf("token type %i\n", aux->type);
+            printf("\t\ttoken index %i\n", aux->index);
+            printf("\t\ttoken type %i\n", aux->type);
         }
         aux = aux->next;
     }
