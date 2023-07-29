@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/27 01:37:56 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/29 11:02:24 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef struct s_token
 	int				index;
 	int				type;
 	int				error_code;
-	char			*str; // antes chamado data; os dois nomes não são claros; não tem de ser char**?
-	char			**cmd; // full command
+	char			*str; // string do token 
+	char			**cmd; // array de argumentos
 	struct s_shell	*shell;
 	struct s_token	*next;
 }	t_token;
@@ -57,6 +57,7 @@ typedef struct s_shell
 typedef struct	s_env
 {
 	char			*str;
+	char			**env_strs; // env em formato de array de strings
 	struct s_env	*next;
 }	t_env;
 
@@ -108,18 +109,15 @@ int		ft_is_redir_less(char c);
 //prototypes lexer
 t_token	*ft_lexer(t_shell *shell);
 
-//prototype parser utils bultin
-int		ft_is_builtin(t_shell *shell);
-
-//prototypes parser_to_cmd
+//prototypes parser_join_cmds
+char	**ft_count_args(t_token *token);
+t_token *ft_fill_array(t_token *token);
 void ft_parse_full_cmds(t_token *list);
-
-t_token *ft_parse_cmd(t_token *list);
-t_token *ft_parse_bultin(t_token *list);
-
 void ft_print_cmds(t_token *list);
 void ft_print_check(t_shell *shell);
 
+//prototype parser utils bultin
+int		ft_is_builtin(t_shell *shell);
 
 //prototypes parser utils err
 int		ft_err_pipe(t_shell *shell);
@@ -166,11 +164,17 @@ char	*ft_expand_core(char *str, t_shell *shell);
 char	*ft_prep_expand(char *data);
 void	ft_free_ptrs(char *str, char *str2);
 
+//prototypes executor
+int ft_env_to_str(t_shell *shell);
+char    **ft_cmd_full_paths(t_shell *shell);
+char    *ft_search_cmd_path(t_token *current, char **full_paths);
+
+int ft_execve(t_token *current);
+
+
 //prototypes list
 t_token	*ft_create_node(char *str, int index);
 void	ft_add_token(t_shell *shell, char *str, int index);
-
-
 void	ft_print_list(t_shell *shell);
 void	ft_free_token_list(t_shell *shell);
 void	ft_free_env_list(t_shell *shell);

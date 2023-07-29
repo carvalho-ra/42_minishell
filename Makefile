@@ -13,6 +13,7 @@ SRCS = ./src/main.c \
 		./src/expand/expand_utils_var.c \
 		./src/expand/expand_utils_word.c \
 		./src/expand/expand.c \
+		./src/executor.c \
 		./src/list.c \
 		./src/lexer/lexer_utils_quotes.c \
 		./src/lexer/lexer_utils.c \
