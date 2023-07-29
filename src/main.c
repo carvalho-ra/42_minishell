@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/29 11:04:00 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/29 12:49:17 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 		return (NULL);
 	shell->line = NULL;
 	shell->list = NULL;
+	shell->env_strs = NULL;
 	shell->env = NULL;
 	ft_copy_env(shell, envp);
 	return (shell);
@@ -87,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 
 			ft_parse_full_cmds(shell->list);
 			ft_print_cmds(shell->list);
-			ft_execve(shell->list);
+			//ft_execve(shell->list);
 			//ft_print_check(shell);
 			ft_free_token_list(shell);
 			free(shell->line);

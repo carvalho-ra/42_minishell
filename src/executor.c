@@ -13,23 +13,22 @@ int ft_env_to_str(t_shell *shell)
     
     printf("on ft_env_to_str\n");
     //aux aponta para head da lista de env
-    if (!shell->env)
-        write(2, "there's env!!!\n", 16);
+    if (!shell)
+        write(2, "nao tem shell aqui pq?\n", 24);
     else
-        write(2, "nao tem env aqui pq?\n", 22);
+        write(2, "there's shell!!!\n", 16);
     printf("%s\n", shell->env->str);
     aux = shell->env;
     //contar o número de tokens na lista
     while (aux)
     {
-        printf("%s", aux->str);
         aux = aux->next;
         i++;
     }
-    printf("ft_env_to_str\n");
+    printf("ft_env_to_str still\n");
     //alocar memória para o array de strings
-    shell->env->env_strs = (char **)malloc(sizeof(char *) * (i + 1));
-    if (!shell->env->env_strs)
+    shell->env_strs = (char **)malloc(sizeof(char *) * (i + 1));
+    if (!shell->env_strs)
         return (1);
     printf("ft_env_to_str can malloc\n");
 
@@ -39,12 +38,15 @@ int ft_env_to_str(t_shell *shell)
     aux = shell->env;
     //iterar pela lista com o número de tokens dando dup para
     // criar array de strings
+    printf("ft_env_to_str will fill array\n");
     while (aux)
     {
-        shell->env->env_strs[i] = ft_strdup(aux->str);
+        
+        shell->env_strs[i] = ft_strdup(aux->str);
         aux = aux->next;
         i++;
     }
+    printf("ft_env_to_str filled up\n");
     return (0);
 }
 
@@ -60,6 +62,7 @@ int ft_env_to_str(t_shell *shell)
 // retornar um array de strings com os paths
 char    **ft_cmd_full_paths(t_shell *shell)
 {
+    printf("on ft_cmd_full_paths\n");
     char    *path;
     char    **paths;
     t_env   *aux;
@@ -72,10 +75,14 @@ char    **ft_cmd_full_paths(t_shell *shell)
         //se encontrar a variável PATH
         if (ft_strcmp(aux->str, "PATH") == 0)
         {
+            printf("still on ft_cmd_full_paths\n");
             //path recebe o valor da variável PATH
-            path = aux->str;
+            path = ft_substr(aux->str, 5, ft_strlen(aux->str) - 5);
             //quebrar o path em um array de strings
             paths = ft_split(path, ':');
+            //liberar a memória de path
+            free(path);
+            path = NULL;
             //retornar o array de strings
             return (paths);
         }
@@ -124,9 +131,9 @@ int ft_execve(t_token *current)
     
     printf("%s\n", cmd);
     //printf("%s\n", args[1]);
-    printf("%s\n", current->shell->env->env_strs[0]);
+    printf("%s\n", current->shell->env_strs[0]);
 
-    execve(cmd, args, current->shell->env->env_strs);
+    execve(cmd, args, current->shell->env_strs);
 
     // Se o execve tiver sucesso, o código abaixo não será impresso
     // Se houver um erro, o execve retornará -1

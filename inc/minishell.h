@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/29 11:02:24 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/29 12:35:57 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,14 @@ typedef struct s_shell
 {
 	char			*line; //chamada da readline - linha completa
 	struct s_token	*list; // linha separada em tokens
+	char			**env_strs; // env em formato de array de strings
 	struct s_env	*env; // mudar esse nome
 }	t_shell;
+
 
 typedef struct	s_env
 {
 	char			*str;
-	char			**env_strs; // env em formato de array de strings
 	struct s_env	*next;
 }	t_env;
 
@@ -165,7 +166,7 @@ char	*ft_prep_expand(char *data);
 void	ft_free_ptrs(char *str, char *str2);
 
 //prototypes executor
-int ft_env_to_str(t_shell *shell);
+int		ft_env_to_str(t_shell *shell);
 char    **ft_cmd_full_paths(t_shell *shell);
 char    *ft_search_cmd_path(t_token *current, char **full_paths);
 
@@ -173,7 +174,7 @@ int ft_execve(t_token *current);
 
 
 //prototypes list
-t_token	*ft_create_node(char *str, int index);
+t_token	*ft_create_node(char *str, int index, t_shell *shell);
 void	ft_add_token(t_shell *shell, char *str, int index);
 void	ft_print_list(t_shell *shell);
 void	ft_free_token_list(t_shell *shell);
