@@ -8,9 +8,11 @@ int ft_env_to_str(t_shell *shell)
     //token auxiliar para andar na lista de env
     t_env *aux;
     //criar nova variável na struct t_shell?? ou na t_env???
-    //char **env_strs; criada na t_env
+    //char **env_strs; criada na t_shell
     int i;
-    printf("on ft_env_to_str\n");
+    
+    i = 0;
+    aux = NULL;
     //aux aponta para head da lista de env
     aux = shell->env;
     //contar o número de tokens na lista
@@ -23,6 +25,7 @@ int ft_env_to_str(t_shell *shell)
     shell->env_strs = (char **)malloc(sizeof(char *) * (i + 1));
     if (!shell->env_strs)
         return (1);
+    //shell->env_strs = NULL;
     //zerar contador;
     i = 0;
     //apontar aux de novo para head da lista
@@ -31,12 +34,10 @@ int ft_env_to_str(t_shell *shell)
     // criar array de strings
     while (aux)
     {
-        
         shell->env_strs[i] = ft_strdup(aux->str);
         aux = aux->next;
         i++;
     }
-    printf("exiting ft_env_to_str\n");
     return (0);
 }
 
@@ -56,15 +57,17 @@ char    **ft_cmd_full_paths(t_shell *shell)
     char    **paths;
     char    **cmd_full_paths;
     t_env   *aux;
-    int i;
-    printf("on ft_cmd_full_paths\n");
+    int     i;
 
     i = 0;
+    path = NULL;
+    paths = NULL;
+    cmd_full_paths = NULL;
     while (shell->env_strs[i])
     {
         i++;
     }
-    paths = (char **)malloc(sizeof(char *) * (i));
+    paths = (char **)malloc(sizeof(char *) * (i + 1));
     //aux aponta para head da lista de env
     aux = shell->env;
     //caminha pela lista
@@ -73,7 +76,6 @@ char    **ft_cmd_full_paths(t_shell *shell)
         //se encontrar a variável PATH
         if (ft_strncmp(aux->str, "PATH", 4) == 0)
         {
-            printf("found PATH\n");
             //path recebe o valor da varqiável PATH
             path = ft_substr(aux->str, 5, ft_strlen(aux->str) - 5);
             //quebrar o path em um array de strings
@@ -85,9 +87,8 @@ char    **ft_cmd_full_paths(t_shell *shell)
             //join com o comando;
             while(paths[i])
                 i++;
-            printf("number of paths = %i\n", i);
             //alocar memória para o array de strings
-            cmd_full_paths = (char **)malloc(sizeof(char *) * (i));
+            cmd_full_paths = (char **)malloc(sizeof(char *) * (i + 1));
             if (!cmd_full_paths)
                 return (NULL);
             i = 0;
@@ -98,51 +99,41 @@ char    **ft_cmd_full_paths(t_shell *shell)
                 paths[i] = ft_strdup(cmd_full_paths[i]);
                 free(cmd_full_paths[i]);
                 cmd_full_paths[i] = ft_strjoin(paths[i], shell->list->cmd[0]);
-                printf("full path %i - %s\n", i, cmd_full_paths[i]);
                 i++;
             }
+            cmd_full_paths[i] = NULL;
+            free(paths);
+            paths = NULL;
             //retornar o array de strings
-            return (cmd_full_paths);
+            if (cmd_full_paths)
+                return (cmd_full_paths);
+            else
+            {
+                printf("no PATH found\n");
+                return (NULL);
+            }
         }
         aux = aux->next;
     }
-    printf("fond NO PATH exiting ft_cmd_full_paths\n");
     return (NULL);
 }
 
 // função que procura pelo arquivo
 //retorna o path funcional se existir
-char    *ft_search_cmd_path(t_token *current, char **full_paths)
+char    *ft_search_cmd_path(char **full_paths)
 {
-    char  *cmd;
     int         i;
     
-    printf("on ft_search_cmd_path\n");
-    // aqui preciso do comando que está no current token (verificar)
-    // (shell->list->cmd[0]) é o comando no primeiro token
-    cmd = current->cmd[0];
-    
-    //criar nova variável na struct t_token
-    // char *full_cmd;
-
-    printf("cmd = %s\n", cmd);
-
     // Verifica a existência do arquivo usando access()
-    // e F_OK para checar se o arquivo existe
+    // e F_OK para checar só se o arquivo existe
     i = 0;
     while (full_paths[i])
     {
         // Verifica se o arquivo existe
         if (access(full_paths[i], F_OK) == 0)
-        {
-            printf("found cmd %s\n", cmd);
             return (full_paths[i]);
-        }
-        printf("searching[%i] = %s\n", i, full_paths[i]);
         i++;
     }
-    write(2, "exiting ft_search_cmd_path\n", 28);
-    write(2, "comand not found\n", 18);
     //retorna erro
     return (NULL);
 }
@@ -154,16 +145,15 @@ int ft_execve(t_token *current)
     char **args;
     char **full_cdm_paths;
 
-    printf("on ft_execve\n");
-
+    cmd = NULL;
+    args = current->cmd;
+    full_cdm_paths = NULL;
     ft_env_to_str(current->shell);
     full_cdm_paths = ft_cmd_full_paths(current->shell);
-    cmd = ft_search_cmd_path(current, full_cdm_paths);
-    args = current->cmd;
-    printf("full cmd = %s\n", cmd);
+    cmd = ft_search_cmd_path(full_cdm_paths);
     if (!cmd)
     {
-        printf("command not found?\n");
+        printf("command not found\n");
         return (-1); // perror() imprime uma mensagem de erro padrão
     }
     else

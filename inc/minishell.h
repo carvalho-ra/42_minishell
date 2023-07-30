@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/29 12:35:57 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/30 15:34:12 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void	ft_free_ptrs(char *str, char *str2);
 //prototypes executor
 int		ft_env_to_str(t_shell *shell);
 char    **ft_cmd_full_paths(t_shell *shell);
-char    *ft_search_cmd_path(t_token *current, char **full_paths);
+char    *ft_search_cmd_path(char **full_paths);
 
 int ft_execve(t_token *current);
 
@@ -180,6 +180,8 @@ void	ft_print_list(t_shell *shell);
 void	ft_free_token_list(t_shell *shell);
 void	ft_free_env_list(t_shell *shell);
 void	ft_free_shell(t_shell *shell);
+
+void	ft_free_env_strs(t_shell *shell);
 
 //prototypes prompt
 void	ft_is_history(char *str);
