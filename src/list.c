@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/30 15:33:53 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/30 15:39:33 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void	ft_free_env_strs(t_shell *shell)
 	int	i;
 
 	i = 0;
+	if (!shell->env_strs)
+		return ;
 	while (shell->env_strs[i])
 	{
 		free(shell->env_strs[i]);

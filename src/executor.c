@@ -21,6 +21,7 @@ int ft_env_to_str(t_shell *shell)
         aux = aux->next;
         i++;
     }
+    shell->env_strs = NULL;
     //alocar memória para o array de strings
     shell->env_strs = (char **)malloc(sizeof(char *) * (i + 1));
     if (!shell->env_strs)
@@ -38,6 +39,7 @@ int ft_env_to_str(t_shell *shell)
         aux = aux->next;
         i++;
     }
+    shell->env_strs[i] = NULL;
     return (0);
 }
 
@@ -63,11 +65,6 @@ char    **ft_cmd_full_paths(t_shell *shell)
     path = NULL;
     paths = NULL;
     cmd_full_paths = NULL;
-    while (shell->env_strs[i])
-    {
-        i++;
-    }
-    paths = (char **)malloc(sizeof(char *) * (i + 1));
     //aux aponta para head da lista de env
     aux = shell->env;
     //caminha pela lista
@@ -96,12 +93,21 @@ char    **ft_cmd_full_paths(t_shell *shell)
             {
                 cmd_full_paths[i] = ft_strjoin(paths[i], "/");
                 free(paths[i]);
+                paths[i] = NULL;
                 paths[i] = ft_strdup(cmd_full_paths[i]);
                 free(cmd_full_paths[i]);
+                cmd_full_paths[i] = NULL;
                 cmd_full_paths[i] = ft_strjoin(paths[i], shell->list->cmd[0]);
+                free(paths[i]);
+                paths[i] = NULL;
                 i++;
             }
             cmd_full_paths[i] = NULL;
+            while (paths[i])
+            {
+                free(paths[i]);
+                i++;
+            }
             free(paths);
             paths = NULL;
             //retornar o array de strings
@@ -115,6 +121,7 @@ char    **ft_cmd_full_paths(t_shell *shell)
         }
         aux = aux->next;
     }
+    printf("no PATH found\n");
     return (NULL);
 }
 
@@ -123,17 +130,36 @@ char    **ft_cmd_full_paths(t_shell *shell)
 char    *ft_search_cmd_path(char **full_paths)
 {
     int         i;
+    char *ret;
     
     // Verifica a existência do arquivo usando access()
     // e F_OK para checar só se o arquivo existe
+    ret = NULL;
     i = 0;
     while (full_paths[i])
     {
         // Verifica se o arquivo existe
         if (access(full_paths[i], F_OK) == 0)
-            return (full_paths[i]);
+        {
+            ret = ft_strdup(full_paths[i]);
+            i = 0;
+            while (full_paths[i])
+            {
+                free(full_paths[i]);
+                i++;
+            }
+            free(full_paths);
+            return (ret);
+        }
         i++;
     }
+    i = 0;
+    while (full_paths[i])
+    {
+        free(full_paths[i]);
+        i++;
+    }
+    free(full_paths);
     //retorna erro
     return (NULL);
 }
