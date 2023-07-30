@@ -144,10 +144,7 @@ char    *ft_search_cmd_path(char **full_paths)
             ret = ft_strdup(full_paths[i]);
             i = 0;
             while (full_paths[i])
-            {
-                free(full_paths[i]);
-                i++;
-            }
+                free(full_paths[i++]);
             free(full_paths);
             return (ret);
         }
@@ -155,10 +152,7 @@ char    *ft_search_cmd_path(char **full_paths)
     }
     i = 0;
     while (full_paths[i])
-    {
-        free(full_paths[i]);
-        i++;
-    }
+        free(full_paths[i++]);
     free(full_paths);
     //retorna erro
     return (NULL);
@@ -180,14 +174,12 @@ int ft_execve(t_token *current)
     if (!cmd)
     {
         printf("command not found\n");
-        
         return (-1); // perror() imprime uma mensagem de erro padrão
     }
     else
         execve(cmd, args, current->shell->env_strs);
     // Se o execve tiver sucesso, o código abaixo não será impresso
     // Se houver um erro, o execve retornará -1
-    
     return (0);
 }
 
