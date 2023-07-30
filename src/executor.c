@@ -180,6 +180,7 @@ int ft_execve(t_token *current)
     if (!cmd)
     {
         printf("command not found\n");
+        
         return (-1); // perror() imprime uma mensagem de erro padrão
     }
     else
