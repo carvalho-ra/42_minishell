@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 12:07:48 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 12:57:45 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_builtin_echo(t_shell *shell)
 	char	*string;
 	int		slash_n; //* Flag para saber se usaram -n
 
+	printf("NA BUILTIN ECHO\n");
 	string = NULL;
 	slash_n = FALSE;
 	aux = shell->list->next;

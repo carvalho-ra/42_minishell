@@ -1,3 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/31 13:03:21 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/07/31 13:13:26 by rcarvalh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../inc/minishell.h"
+
+int ft_builtin_exit(t_shell *shell)
+{
+    printf("NA BUILTIN EXIT\n");
+    free(shell->line);
+    ft_free_token_list(shell);
+	ft_free_env_list(shell);
+	ft_free_env_strs(shell);
+	free(shell);
+    exit (0);
+}
+
 //free geral!
 
 //régua cobra com parâmetro

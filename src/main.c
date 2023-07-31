@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 12:18:25 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 13:12:23 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ int	main(int argc, char **argv, char **envp)
 		if (!shell->line)
 		{
 			write(2, "exit\n", 5);
-			break ;
+			ft_builtin_exit(shell);
 		}
 		// cmd exit
-		if (ft_strcmp(shell->line, "exit") == 0)
-		{
-			//free user input
-			free(shell->line);
-			break ;
-		}
+		// if (ft_strcmp(shell->line, "exit") == 0)
+		// {
+		// 	//free user input
+		// 	free(shell->line);
+		// 	break ;
+		// }
 		// if (ft_strcmp(shell->line, "env") == 0)
 		// {
 		// 	//print env on call
@@ -93,9 +93,10 @@ int	main(int argc, char **argv, char **envp)
 			free(shell->line);
 		}
 	}
-	ft_free_token_list(shell);
-	ft_free_env_list(shell);
-	ft_free_env_strs(shell);
-	free(shell);
+	//ainda precisa por causa do ctrl+d?? NÃO
+	// ft_free_token_list(shell);
+	// ft_free_env_list(shell);
+	// ft_free_env_strs(shell);
+	// free(shell);
 	return (0);
 }
