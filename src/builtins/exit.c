@@ -3,37 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 13:03:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 14:34:24 by rcarvalh         ###   ########.fr       */
+/*   Created: 2023/07/28 19:57:45 by cnascime          #+#    #+#             */
+/*   Updated: 2023/07/29 00:24:43 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//TODO
-//[ ] devia receber um t_token *current e a partir dele chegar na lista?
-
-int ft_builtin_exit(t_shell *shell)
+void	ft_builtin_exit(t_shell *shell, t_env *env)
 {
-    printf("NA BUILTIN EXIT\n");
-    free(shell->line);
-    ft_free_token_list(shell);
-	ft_free_env_list(shell);
-	ft_free_env_strs(shell);
-	free(shell);
-    exit (0);
+	(void)shell; //!temporary
+	(void)env; //!temporary
+	//free split (env->str);
+	//free node (commands);
+	//free (env);
+	//exit (status);
+	return ;//!temporary
 }
 
+// Comentários do Rodrigo:
 //free geral!
-
 //régua cobra com parâmetro
-
 //pegar o código de retorn (exit XXXX)
-
 //quando sai com número pegar esse número e retornar
-
 //quando sai com string exit code 2
-
-

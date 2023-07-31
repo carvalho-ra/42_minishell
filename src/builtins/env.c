@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 21:21:48 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 14:34:10 by rcarvalh         ###   ########.fr       */
+/*   Created: 2023/07/22 04:38:40 by cnascime          #+#    #+#             */
+/*   Updated: 2023/07/26 05:36:20 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,10 @@
 //?Runs a program in a modified environment. Sets each name to value in the
 //?environment and runs the given command.
 // Displays the environment variables.
-
-//TODO
-/*
-[ ] devia receber um t_token *current e a partir dele chegar na lista?
-*/
-
 int	ft_builtin_env(t_shell *shell)
 {
 	t_env	*env;
 
-	printf("NA BUILTIN ENV\n");
 	env = shell->env;
 	while (env)
 	{
