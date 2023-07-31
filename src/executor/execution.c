@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 13:58:14 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:02:54 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_execution(t_shell *shell)
 		{
 			ft_execve(aux);
 			ft_free_env_strs(shell);	
-			//break ;
+			break ;
 		}
 		aux = aux->next;
 	}
