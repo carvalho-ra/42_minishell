@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:39:40 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/27 03:27:13 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/29 00:43:57 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ int	ft_builtin_export(t_shell *shell)
 {
 	t_token	*aux;
 	t_env	*env_list;
-	int		env_index;
 
 	aux = shell->list->next;
 	env_list = shell->env;
 	printf("\t\tvariável de ambiente a implementar: %s\n", aux->str);
 	if (ft_is_valid_key(aux->str))
 	{
+		ft_add_to_env_list(env_list, aux->str, BUILTIN_EXPORT); //* EM TESE É ISSO
 	// compara cada item da lista de variáveis de ambiente e pega o índice, caso ache
-		env_index = ft_is_key_duplicate(env_list, aux->str, BUILTIN_EXPORT);
+	/*	env_index = ft_is_key_duplicate(env_list, aux->str, BUILTIN_EXPORT);
 		printf("\t\tIndex %i\n", env_index);
 		if (env_index > -1)
 			ft_replace_env(env_list, env_index, aux->str);
@@ -38,7 +38,7 @@ int	ft_builtin_export(t_shell *shell)
 			env_list->next = ft_create_env_node(ft_strdup(aux->str));
 			// adiciona nó à lista t_env
 			//aqui não dava pra usar ft_add_env, pq ela limpa memória do char * passado pra ela. 
-		}
+		}*/
 	}
 	else
 		return (2);
@@ -97,7 +97,8 @@ int	ft_is_key_duplicate(t_env *env, char *key, int origin)
 			i++;
 		}
 		if ((origin == BUILTIN_EXPORT && env->str[i] == '=' && key[i] == '=')
-			|| (origin == BUILTIN_UNSET && env->str[i] == '=' && key[i] == 0))
+			|| (origin != BUILTIN_EXPORT && env->str[i] == '='
+				&& (key[i] == '\0' || key[i] == '=')))
 		{
 			printf("\t\tAchou duplicada!\n\t\tDuplicada: %s\n", env->str);
 			return (j);
@@ -122,6 +123,32 @@ int	ft_is_key_duplicate(t_env *env, char *key, int origin)
 	key = ft_substr(str, 0, i);
 	return (key);
 }*/
+
+// Returns the index of the node that's been created or replaced.
+int	ft_add_to_env_list(t_env *env_list, char *new_env, int origin)
+{
+	int		env_index;
+
+	env_index = ft_is_key_duplicate(env_list, new_env, origin);
+	printf("\t\tIndex %i\n", env_index);
+	if (env_index > -1)
+		ft_replace_env(env_list, env_index, new_env);
+		// se já existe, sobrescreve
+	else
+	{
+		env_index = 0;
+		while (env_list->next)
+		{
+			env_index++;
+			env_list = env_list->next;
+			// anda até o final da lista de nós env_list
+		}
+		env_list->next = ft_create_env_node(ft_strdup(new_env));
+		// adiciona nó à lista t_env
+		//aqui não dava pra usar ft_add_env, pq ela limpa memória do char * passado pra ela.
+	}
+	return (env_index);
+}
 
 // Goes through the entire list of environment variables, comparing the name of
 // each node with the name passed as argument (both up to the equal sign).

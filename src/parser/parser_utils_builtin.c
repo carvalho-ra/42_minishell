@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/27 02:29:51 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/27 07:53:29 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	ft_is_builtin(t_shell *shell)
 		{
 			aux->type = BUILTIN_CD;
 			printf("\t\ttoken %i is builtin cd\n", aux->index);
-			//return (ft_builtin_cd(shell));
+			return (ft_builtin_cd(shell));
 		}
 		if (ft_strcmp(aux->str, "pwd") == 0)
 		{
 			aux->type = BUILTIN_PWD;
 			printf("\t\ttoken %i is builtin pwd\n", aux->index);
-			//return (ft_builtin_pwd());
+			return (ft_builtin_pwd());
 		}
 		if (ft_strcmp(aux->str, "export") == 0)
 		{

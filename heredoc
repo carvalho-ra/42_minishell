@@ -1,0 +1,8 @@
+echo << EOF
+Articuno
+Zapdos
+Moltres
+$pwd
+Beijinho, beijinho!
+E tchau, tchau!
+EOF
