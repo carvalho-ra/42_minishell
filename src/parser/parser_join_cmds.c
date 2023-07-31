@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:29:17 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 16:38:48 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 19:00:10 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,21 @@ t_token *ft_fill_array(t_token *token)
 	t_token	*aux;
 	int		i;
 	current = token;
-	if (current && current->str != NULL && (current->type >= 0 && current->type <= EXPAND))
-	{
-		i = 0;
-		aux = current;//manter o ponteiro enquanto anda na lista
-		aux->cmd = ft_count_args(current); //retorna o array de strings já mallocado
-		while(current && current->str != 0 && (current->type >= 0 && current->type <= EXPAND)) //percorre com o auxiliar pra andar na lista
+	if (current && (current->type >= 0 && current->type <= EXPAND))
 		{
-			if (current->str)
-				aux->cmd[i++] = ft_strdup(current->str); //copia da str para o array na posição i
-			else
-				aux->cmd[i++] = NULL;
-			current = current->next;
+			i = 0;
+			aux = current;//manter o ponteiro enquanto anda na lista
+			aux->cmd = ft_count_args(current); //retorna o array de strings já mallocado
+			while(current && (current->type >= 0 && current->type <= EXPAND)) //percorre com o auxiliar pra andar na lista
+			{
+				if (current->str)
+					aux->cmd[i++] = ft_strdup(current->str); //copia da str para o array na posição i
+				else
+					aux->cmd[i++] = NULL;
+				current = current->next;
+			}
+			aux->cmd[i] = NULL;//fecha este array cteste << teste 123om a ultima string NULL
 		}
-		aux->cmd[i] = NULL;//fecha este array cteste << teste 123om a ultima string NULL
-	}
 	return (current);
 }
 
