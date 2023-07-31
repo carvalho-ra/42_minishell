@@ -13,13 +13,13 @@ SRCS = ./src/main.c \
 		./src/expand/expand_utils_var.c \
 		./src/expand/expand_utils_word.c \
 		./src/expand/expand.c \
-		./src/executor.c \
+		./src/executor/executor.c \
+		./src/executor/execution.c \
 		./src/list.c \
 		./src/lexer/lexer_utils_quotes.c \
 		./src/lexer/lexer_utils.c \
 		./src/lexer/lexer.c \
 		./src/parser/parser_join_cmds.c \
-		./src/parser/parser_utils_builtin.c \
 		./src/parser/parser_utils_err.c \
 		./src/parser/parser_utils_expand.c \
 		./src/parser/parser_utils_redirs.c \

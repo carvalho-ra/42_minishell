@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils_builtin.c                             :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 13:29:46 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 13:58:14 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//TODO Aprimorar processamento.
-
-int	ft_is_builtin(t_shell *shell)
+int	ft_execution(t_shell *shell)
 {
 	t_token	*aux;
 
@@ -41,7 +39,7 @@ int	ft_is_builtin(t_shell *shell)
 		{
 			ft_execve(aux);
 			ft_free_env_strs(shell);	
-			break ;
+			//break ;
 		}
 		aux = aux->next;
 	}

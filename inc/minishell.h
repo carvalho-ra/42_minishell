@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 13:25:45 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 13:52:55 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,21 @@ int		ft_builtin_echo(t_shell *shell);
 int		ft_builtin_env(t_shell *shell);
 int		ft_builtin_export(t_shell *shell);
 int		ft_builtin_pwd(void);
-int ft_builtin_exit(t_shell *shell);
-
+int		ft_builtin_exit(t_shell *shell);
 
 //builtin utils
 char	*quotes_treatment(char *string);
 int		ft_is_valid_env_name(char *name);
+
+//prototypes executor execution
+int	ft_execution(t_shell *shell);
+
+//prototypes executor executor
+int ft_env_to_str(t_shell *shell);
+char    **ft_get_all_paths(t_token *current);
+char    **ft_add_cmd_to_paths(t_token *current, char **paths);
+char    *ft_search_full_cmd(char **paths);
+int ft_execve(t_token *current);
 
 //prototypes lexer utils quotes
 int		ft_single_quote(char *str, int i);
@@ -113,9 +122,6 @@ t_token *ft_fill_array(t_token *token);
 void ft_parse_full_cmds(t_token *list);
 void ft_print_cmds(t_token *list);
 void ft_print_check(t_shell *shell);
-
-//prototype parser utils bultin
-int		ft_is_builtin(t_shell *shell);
 
 //prototypes parser utils err
 int		ft_err_pipe(t_shell *shell);
@@ -162,22 +168,14 @@ char	*ft_expand_core(char *str, t_shell *shell);
 char	*ft_prep_expand(char *data);
 void	ft_free_ptrs(char *str, char *str2);
 
-//prototypes executor
-int		ft_env_to_str(t_shell *shell);
-char    **ft_get_all_paths(t_token *current);
-char    **ft_add_cmd_to_paths(t_token *current, char **paths);
-char    *ft_search_full_cmd(char **paths);
-int		ft_execve(t_token *current);
-
-
 //prototypes list
 t_token	*ft_create_node(char *str, int index, t_shell *shell);
 void	ft_add_token(t_shell *shell, char *str, int index);
 void	ft_print_list(t_shell *shell);
+void	ft_free_arr_strs(char **str);
 void	ft_free_token_list(t_shell *shell);
 void	ft_free_env_list(t_shell *shell);
 void	ft_free_shell(t_shell *shell);
-
 void	ft_free_env_strs(t_shell *shell);
 
 //prototypes prompt
