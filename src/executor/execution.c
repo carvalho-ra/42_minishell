@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 14:02:54 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 18:32:06 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	ft_execution(t_shell *shell)
 	t_token	*aux;
 
 	aux = shell->list;
-	while (aux)
+	while (aux && aux->cmd)
 	{
 		if (ft_strcmp(aux->str, "echo") == 0)
-			return (ft_builtin_echo(shell));
+			return (ft_builtin_echo(aux));
 		else if (ft_strcmp(aux->str, "cd") == 0)
 			return (ft_builtin_cd(shell));
 		else if (ft_strcmp(aux->str, "pwd") == 0)

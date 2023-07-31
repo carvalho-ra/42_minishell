@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 15:49:52 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 18:46:54 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, &ft_handler);
 	while (1)
 	{
-		shell->line = readline("minishell> ");
+		shell->line = readline("MINISHELL> ");
 		// Ctrl+D (EOF)
 		if (!shell->line)
 		{
@@ -74,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_expantion(shell);
 			ft_parse_full_cmds(shell->list);
 			ft_print_cmds(shell->list);
-			//ft_execution(shell);
+			ft_execution(shell);
 			ft_free_token_list(shell);
 			free(shell->line);
 		}

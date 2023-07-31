@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 15:41:06 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 17:43:18 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ enum	e_token_class
 
 //prototypes builtins
 int		ft_builtin_cd(t_shell *shell);
-int		ft_builtin_echo(t_shell *shell);
+int		ft_builtin_echo(t_token *current);
 int		ft_builtin_env(t_shell *shell);
 int		ft_builtin_export(t_shell *shell);
 int		ft_builtin_pwd(void);
