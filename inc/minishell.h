@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 13:52:55 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 18:58:10 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ enum	e_token_class
 
 //prototypes builtins
 int		ft_builtin_cd(t_shell *shell);
-int		ft_builtin_echo(t_shell *shell);
+int		ft_builtin_echo(t_token *current);
 int		ft_builtin_env(t_shell *shell);
 int		ft_builtin_export(t_shell *shell);
 int		ft_builtin_pwd(void);
@@ -114,7 +114,9 @@ int		ft_is_redir_more(char c);
 int		ft_is_redir_less(char c);
 
 //prototypes lexer
+int	ft_aux_lexer(char *str, int i);
 t_token	*ft_lexer(t_shell *shell);
+void	ft_remove_double_quotes(t_shell *shell);
 
 //prototypes parser_join_cmds
 char	**ft_count_args(t_token *token);
