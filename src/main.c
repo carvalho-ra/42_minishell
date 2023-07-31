@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 13:12:23 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 13:23:42 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,24 @@ static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 	return (shell);
 }
 
+static	void	ft_validation(t_shell *shell)
+{
+	ft_err_pipe(shell);
+	ft_err_redir_in(shell);
+	ft_err_redir_out(shell);
+	ft_confirm_pipe(shell);
+	ft_confirm_append(shell);
+	ft_confirm_heredoc(shell);
+	ft_confirm_redir_in(shell);
+	ft_confirm_redir_out(shell);
+}
+
+static void	ft_expantion(t_shell *shell)
+{
+	ft_confirm_expand(shell);
+	ft_expand_args(shell);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
@@ -40,63 +58,24 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, &ft_handler);
 	while (1)
 	{
-		shell->line = readline("minishell> "); // Prompt 
+		shell->line = readline("minishell> ");
 		// Ctrl+D (EOF)
 		if (!shell->line)
 		{
 			write(2, "exit\n", 5);
 			ft_builtin_exit(shell);
 		}
-		// cmd exit
-		// if (ft_strcmp(shell->line, "exit") == 0)
-		// {
-		// 	//free user input
-		// 	free(shell->line);
-		// 	break ;
-		// }
-		// if (ft_strcmp(shell->line, "env") == 0)
-		// {
-		// 	//print env on call
-		// 	ft_builtin_env(shell);
-		// 	ft_is_history(shell->line);
-		// 	free(shell->line);
-		// 	continue ;
-		// }
-        // include readline/history.h
 		ft_is_history(shell->line);
 		shell->list = ft_lexer(shell);
 		if (shell->list)
 		{
-			//ft_print_list(shell);
-			//printf("\n");
-			
-			ft_err_pipe(shell);
-			ft_err_redir_in(shell);
-			ft_err_redir_out(shell);
-			ft_confirm_pipe(shell);
-			ft_confirm_append(shell);
-			ft_confirm_heredoc(shell);
-			ft_confirm_redir_in(shell);
-			ft_confirm_redir_out(shell);
-			ft_confirm_expand(shell);
-			ft_expand_args(shell);
-			//ft_print_list(shell);
-			//printf("\n");
-
+			ft_validation(shell);
+			ft_expantion(shell);
 			ft_parse_full_cmds(shell->list);
 			ft_is_builtin(shell);
-			//ft_print_cmds(shell->list);
-			//ft_execve(shell->list);
-			//ft_free_env_strs(shell);
-			//ft_print_check(shell);
 			ft_free_token_list(shell);
 			free(shell->line);
 		}
 	}
-	//ainda precisa por causa do ctrl+d?? NÃO
-	// ft_free_token_list(shell);
-	// ft_free_env_list(shell);
-	// ft_free_env_strs(shell);
-	// free(shell);
 	return (0);
 }
