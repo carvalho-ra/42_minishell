@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 18:58:18 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 19:18:55 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, &ft_handler);
 	while (1)
 	{
-		shell->line = readline("minishell> "); // Prompt 
+		shell->line = readline("minishell> ");
 		// Ctrl+D (EOF)
 		if (!shell->line)
 		{
@@ -69,28 +69,10 @@ int	main(int argc, char **argv, char **envp)
 		shell->list = ft_lexer(shell);
 		if (shell->list)
 		{
-			ft_print_list(shell);
-			printf("\n");
-			
-			ft_err_pipe(shell);
-			ft_err_redir_in(shell);
-			ft_err_redir_out(shell);
-			ft_confirm_pipe(shell);
-			ft_confirm_append(shell);
-			ft_confirm_heredoc(shell);
-			ft_confirm_redir_in(shell);
-			ft_confirm_redir_out(shell);
-
-			ft_is_builtin(shell);
-			
-			ft_confirm_expand(shell);
-			ft_expand_args(shell);
-			ft_print_list(shell);
-			printf("\n");
-
+			ft_validation(shell);
+			ft_expantion(shell);
 			ft_parse_full_cmds(shell->list);
-			ft_print_cmds(shell->list);
-			//ft_print_check(shell);
+			ft_execution(shell);
 			ft_free_token_list(shell);
 			free(shell->line);
 		}
