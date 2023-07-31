@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 12:57:45 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:33:41 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 //TODO 2 OK! (exceto se for aspas dentro de aspas)
 //TODO 3 percorrer string; se só tiver uma aspa externa, imprimir nova linha até fecharem aspas
 //TODO 4 expandir variáveis de ambiente
+
+//TODO:
+/*
+[X] está dando erro de malloc - OK linha 66 (coloquei + 1 no malloc para o NULL - funcionou)
+[ ] echo $NOUSER - quando passa algo que não está na env (sozinho, com ou sem aspas
+[ ] ela está trabalhando sempre com o primeiro nó. devia receber um t_token *current_node
+*/
 
 // Prints the arguments to stdout, separated by a space.
 int	ft_builtin_echo(t_shell *shell)

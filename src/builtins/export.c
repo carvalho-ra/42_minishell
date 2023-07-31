@@ -3,6 +3,11 @@
 //TODO Se nome for aceitável, mas não tiver =, não adiciona.
 //TODO Se nome for aceitável e tiver =, mas nada depois, adiciona valor vazio
 
+//TODO
+/*
+[ ] não substitui se a variável já existir
+*/
+
 // 
 int	ft_builtin_export(t_shell *shell)
 {

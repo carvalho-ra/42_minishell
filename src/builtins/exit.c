@@ -6,11 +6,14 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:03:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 13:13:26 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:34:24 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+//TODO
+//[ ] devia receber um t_token *current e a partir dele chegar na lista?
 
 int ft_builtin_exit(t_shell *shell)
 {
