@@ -2,122 +2,52 @@
 
 //escrever uma função que transforme a t_env em char **env
 //para passar para o execve
-
 int ft_env_to_str(t_shell *shell)
 {
-    //token auxiliar para andar na lista de env
     t_env *aux;
-    //criar nova variável na struct t_shell?? ou na t_env???
-    //char **env_strs; criada na t_shell
     int i;
     
     i = 0;
-    aux = NULL;
-    //aux aponta para head da lista de env
     aux = shell->env;
-    //contar o número de tokens na lista
     while (aux)
     {
         aux = aux->next;
         i++;
     }
-    shell->env_strs = NULL;
-    //alocar memória para o array de strings
     shell->env_strs = (char **)malloc(sizeof(char *) * (i + 1));
     if (!shell->env_strs)
         return (1);
-    //shell->env_strs = NULL;
-    //zerar contador;
     i = 0;
-    //apontar aux de novo para head da lista
     aux = shell->env;
-    //iterar pela lista com o número de tokens dando dup para
-    // criar array de strings
     while (aux)
     {
-        shell->env_strs[i] = ft_strdup(aux->str);
+        shell->env_strs[i++] = ft_strdup(aux->str);
         aux = aux->next;
-        i++;
     }
     shell->env_strs[i] = NULL;
     return (0);
 }
 
-// a função access(); é permitida, ela procura por um arquivo
-// em um diretório específico
-// retorna 0 se o arquivo existir
-// para usar precisa fornecer o caminho completo
-// do arquivo para a função access().
-// /home/Desktop/<filename>
-
-// escrever uma função que pegue o caminho completo do arquivo
-// pegar a nossa env, e usar a função ft_split(); no ":"
-// retornar um array de strings com os paths
-char    **ft_cmd_full_paths(t_shell *shell)
+// escrever uma função que pegue o caminho completo dos PATHS
+// na nossa env e retorn um array de strings com os paths
+char    **ft_get_all_paths(t_token *current)
 {
     char    *path;
     char    **paths;
-    char    **cmd_full_paths;
     t_env   *aux;
-    int     i;
 
-    i = 0;
     path = NULL;
     paths = NULL;
-    cmd_full_paths = NULL;
-    //aux aponta para head da lista de env
-    aux = shell->env;
-    //caminha pela lista
+    aux = current->shell->env;
     while (aux)
     {
-        //se encontrar a variável PATH
         if (ft_strncmp(aux->str, "PATH", 4) == 0)
         {
-            //path recebe o valor da varqiável PATH
             path = ft_substr(aux->str, 5, ft_strlen(aux->str) - 5);
-            //quebrar o path em um array de strings
             paths = ft_split(path, ':');
-            //liberar a memória de path
             free(path);
             path = NULL;
-            i = 0;
-            //join com o comando;
-            while(paths[i])
-                i++;
-            //alocar memória para o array de strings
-            cmd_full_paths = (char **)malloc(sizeof(char *) * (i + 1));
-            if (!cmd_full_paths)
-                return (NULL);
-            i = 0;
-            while (paths[i])
-            {
-                cmd_full_paths[i] = ft_strjoin(paths[i], "/");
-                free(paths[i]);
-                paths[i] = NULL;
-                paths[i] = ft_strdup(cmd_full_paths[i]);
-                free(cmd_full_paths[i]);
-                cmd_full_paths[i] = NULL;
-                cmd_full_paths[i] = ft_strjoin(paths[i], shell->list->cmd[0]);
-                free(paths[i]);
-                paths[i] = NULL;
-                i++;
-            }
-            cmd_full_paths[i] = NULL;
-            while (paths[i])
-            {
-                free(paths[i]);
-                i++;
-            }
-            free(paths);
-            paths = NULL;
-            //retornar o array de strings
-            if (cmd_full_paths)
-                return (cmd_full_paths);
-            else
-            {
-                printf("no PATH found\n");
-                return (NULL);
-            }
+            return (paths);
         }
         aux = aux->next;
     }
@@ -125,36 +55,58 @@ char    **ft_cmd_full_paths(t_shell *shell)
     return (NULL);
 }
 
+// função que adiciona "/cmd" ao final de cada string
+// retornar um array de strings com os paths completos
+char    **ft_add_cmd_to_paths(t_token *current, char **paths)
+{
+    char    *aux;
+    char    *slash_cmd;
+    int     i;
+
+    i = 0;
+    slash_cmd = ft_strjoin("/", current->cmd[0]);
+    aux = NULL;
+    while (paths[i])
+    {
+        aux = ft_strjoin(paths[i], slash_cmd);
+        free(paths[i]);
+        paths[i] = NULL;
+        paths[i] = ft_strdup(aux);
+        free(aux);
+        aux = NULL;
+        i++;
+    }
+    free(slash_cmd);
+    slash_cmd = NULL;
+    return (paths);
+}
+
 // função que procura pelo arquivo
 //retorna o path funcional se existir
-char    *ft_search_cmd_path(char **full_paths)
+char    *ft_search_full_cmd(char **paths)
 {
     int         i;
     char *ret;
     
-    // Verifica a existência do arquivo usando access()
-    // e F_OK para checar só se o arquivo existe
     ret = NULL;
     i = 0;
-    while (full_paths[i])
+    while (paths[i])
     {
-        // Verifica se o arquivo existe
-        if (access(full_paths[i], F_OK) == 0)
+        if (access(paths[i], F_OK) == 0)
         {
-            ret = ft_strdup(full_paths[i]);
+            ret = ft_strdup(paths[i]);
             i = 0;
-            while (full_paths[i])
-                free(full_paths[i++]);
-            free(full_paths);
+            while (paths[i])
+                free(paths[i++]);
+            free(paths);
             return (ret);
         }
         i++;
     }
     i = 0;
-    while (full_paths[i])
-        free(full_paths[i++]);
-    free(full_paths);
-    //retorna erro
+    while (paths[i])
+        free(paths[i++]);
+    free(paths);
     return (NULL);
 }
 
@@ -163,14 +115,10 @@ int ft_execve(t_token *current)
 {
     char *cmd;
     char **args;
-    char **full_cdm_paths;
 
-    cmd = NULL;
-    args = current->cmd;
-    full_cdm_paths = NULL;
     ft_env_to_str(current->shell);
-    full_cdm_paths = ft_cmd_full_paths(current->shell);
-    cmd = ft_search_cmd_path(full_cdm_paths);
+    cmd = ft_search_full_cmd(ft_add_cmd_to_paths(current, ft_get_all_paths(current)));
+    args = current->cmd;
     if (!cmd)
     {
         printf("command not found\n");
@@ -182,6 +130,3 @@ int ft_execve(t_token *current)
     // Se houver um erro, o execve retornará -1
     return (0);
 }
-
-
-
