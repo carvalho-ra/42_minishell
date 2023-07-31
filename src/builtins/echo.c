@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 19:24:01 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 18:59:33 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,28 @@
 // Prints the arguments to stdout, separated by a space.
 int	ft_builtin_echo(t_token *current)
 {
-	//t_token	*aux;
-	char	**strings;
+	t_token	*aux;
+	char	*string;
 	int		slash_n; //* Flag para saber se usaram -n
-	int		i;
 
-	printf("NA BUILTIN ECHO\n");
-	i = 1;
+	string = NULL;
 	slash_n = FALSE;
-	strings = current->cmd;
-	if (current->cmd && current->cmd[i][0] == '-' && current->cmd[i][1] == 'n') //* Aqui verifico se usaram -n
+	aux = shell->list->next;
+	if (aux->str[0] == '-' && aux->str[1] == 'n') //* Aqui verifico se usaram -n
 	{
 		slash_n = TRUE; //* Se sim, levanto essa flag para no final do programa não pular linha
-		i++; //* E vou para o próximo elemento do comando
+		aux = aux->next; //* E vou para o próximo elemento do comando
 	}
 	while (strings[i])
 	{
-		strings[i] = quotes_treatment(strings[i]); //* Faço o tratamento das aspas
-		ft_putstr_fd(strings[i], 1); //* Imprimo a string já tratada
-		//free(strings[i]);
-		if (strings[i + 1]) //* Se não for o último elemento, separo com um espaço
+		string = quotes_treatment(aux->str); //* Faço o tratamento das aspas
+		ft_putstr_fd(string, 1); //* Imprimo a string já tratada
+		free(string);
+		if (aux->next) //* Se não for o último elemento, separo com um espaço
 			ft_putstr_fd(" ", 1);
 		i++;
 	}
-	if (slash_n == FALSE) //* Se a flag do -n não tiver sido erguida lá em cima, pulo a linha
+	if (dash_n == FALSE) //* Se a flag do -n não tiver sido erguida lá em cima, pulo a linha
 		ft_putstr_fd("\n", 1);
 	return (TRUE); //* Devolvo 1 porque a função que chama essa função pergunta se é builtin, e é
 }
