@@ -115,6 +115,7 @@ int ft_execve(t_token *current)
 {
     char *cmd;
     char **args;
+    int pid;
 
     ft_env_to_str(current->shell);
     cmd = ft_search_full_cmd(ft_add_cmd_to_paths(current, ft_get_all_paths(current)));
@@ -125,7 +126,20 @@ int ft_execve(t_token *current)
         return (-1); // perror() imprime uma mensagem de erro padrão
     }
     else
-        execve(cmd, args, current->shell->env_strs);
+    {
+        //fazer fork e executar o comando
+        pid = fork();
+        if (pid == 0)
+        {
+            //processo filho
+            execve(cmd, args, current->shell->env_strs);
+        }
+        else
+        {
+            wait(NULL);
+            ft_free_ptrs(cmd, NULL);
+        }
+    }
     // Se o execve tiver sucesso, o código abaixo não será impresso
     // Se houver um erro, o execve retornará -1
     return (0);

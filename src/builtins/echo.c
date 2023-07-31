@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/25 15:09:24 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 12:07:48 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*quotes_treatment(char *string)
 	i = 0;
 	j = 0;
 	external = FALSE;
-	treated = malloc(sizeof(char) * ft_strlen(string));
+	treated = malloc(sizeof(char) * (ft_strlen(string) + 1));
 	while (string[i])
 	{
 		if (string[i] == '\'' || string[i] == '\"') //* Se encontrar aspas

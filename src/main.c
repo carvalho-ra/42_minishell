@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/30 16:54:16 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 12:18:25 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,21 @@ int	main(int argc, char **argv, char **envp)
 			free(shell->line);
 			break ;
 		}
-		if (ft_strcmp(shell->line, "env") == 0)
-		{
-			//print env on call
-			ft_builtin_env(shell);
-			ft_is_history(shell->line);
-			free(shell->line);
-			continue ;
-		}
+		// if (ft_strcmp(shell->line, "env") == 0)
+		// {
+		// 	//print env on call
+		// 	ft_builtin_env(shell);
+		// 	ft_is_history(shell->line);
+		// 	free(shell->line);
+		// 	continue ;
+		// }
         // include readline/history.h
 		ft_is_history(shell->line);
 		shell->list = ft_lexer(shell);
 		if (shell->list)
 		{
-			ft_print_list(shell);
-			printf("\n");
+			//ft_print_list(shell);
+			//printf("\n");
 			
 			ft_err_pipe(shell);
 			ft_err_redir_in(shell);
@@ -78,18 +78,16 @@ int	main(int argc, char **argv, char **envp)
 			ft_confirm_heredoc(shell);
 			ft_confirm_redir_in(shell);
 			ft_confirm_redir_out(shell);
-
-			ft_is_builtin(shell);
-			
 			ft_confirm_expand(shell);
 			ft_expand_args(shell);
-			ft_print_list(shell);
-			printf("\n");
+			//ft_print_list(shell);
+			//printf("\n");
 
 			ft_parse_full_cmds(shell->list);
-			ft_print_cmds(shell->list);
-			ft_execve(shell->list);
-			ft_free_env_strs(shell);
+			ft_is_builtin(shell);
+			//ft_print_cmds(shell->list);
+			//ft_execve(shell->list);
+			//ft_free_env_strs(shell);
 			//ft_print_check(shell);
 			ft_free_token_list(shell);
 			free(shell->line);
