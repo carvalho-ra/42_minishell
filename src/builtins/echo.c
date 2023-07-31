@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/25 15:09:24 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:33:41 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 //TODO 3 percorrer string; se só tiver uma aspa externa, imprimir nova linha até fecharem aspas
 //TODO 4 expandir variáveis de ambiente
 
+//TODO:
+/*
+[X] está dando erro de malloc - OK linha 66 (coloquei + 1 no malloc para o NULL - funcionou)
+[ ] echo $NOUSER - quando passa algo que não está na env (sozinho, com ou sem aspas
+[ ] ela está trabalhando sempre com o primeiro nó. devia receber um t_token *current_node
+*/
+
 // Prints the arguments to stdout, separated by a space.
 int	ft_builtin_echo(t_shell *shell)
 {
@@ -25,6 +32,7 @@ int	ft_builtin_echo(t_shell *shell)
 	char	*string;
 	int		slash_n; //* Flag para saber se usaram -n
 
+	printf("NA BUILTIN ECHO\n");
 	string = NULL;
 	slash_n = FALSE;
 	aux = shell->list->next;
@@ -57,7 +65,7 @@ char	*quotes_treatment(char *string)
 	i = 0;
 	j = 0;
 	external = FALSE;
-	treated = malloc(sizeof(char) * ft_strlen(string));
+	treated = malloc(sizeof(char) * (ft_strlen(string) + 1));
 	while (string[i])
 	{
 		if (string[i] == '\'' || string[i] == '\"') //* Se encontrar aspas

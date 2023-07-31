@@ -6,11 +6,20 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:11:35 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/25 13:32:26 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:32:59 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+//TODO
+/*
+[ ] deve ser feito com a nossa própria env
+[ ] não está trocando de pasta
+[ ] deve funcionar com o caminho relativo ../ ou ./
+[ ] deve funcionar com o caminho absoluto /home/minishell/src
+[ ] deve funcionar com "~"
+*/
 
 // Changes the current directory.
 int	ft_builtin_cd(t_shell *shell)

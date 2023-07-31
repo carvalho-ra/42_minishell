@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/27 01:37:56 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 13:52:55 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include "libft/libft.h"
 
 // To install readline:
@@ -38,8 +40,8 @@ typedef struct s_token
 	int				index;
 	int				type;
 	int				error_code;
-	char			*str; // antes chamado data; os dois nomes não são claros; não tem de ser char**?
-	char			**cmd; // full command
+	char			*str; // string do token 
+	char			**cmd; // array de argumentos
 	struct s_shell	*shell;
 	struct s_token	*next;
 }	t_token;
@@ -51,8 +53,10 @@ typedef struct s_shell
 {
 	char			*line; //chamada da readline - linha completa
 	struct s_token	*list; // linha separada em tokens
+	char			**env_strs; // env em formato de array de strings
 	struct s_env	*env; // mudar esse nome
 }	t_shell;
+
 
 typedef struct	s_env
 {
@@ -65,14 +69,7 @@ typedef struct	s_env
 
 enum	e_token_class
 {
-	BUILTIN_ECHO = 1,
-	BUILTIN_CD,
-	BUILTIN_PWD,
-	BUILTIN_EXPORT,
-	BUILTIN_UNSET,
-	BUILTIN_ENV,
-	BUILTIN_EXIT,
-	EXPAND,
+	EXPAND = 1,
 	PIPE,
 	REDIRECT_IN,
 	REDIRECT_OUT,
@@ -89,10 +86,21 @@ int		ft_builtin_echo(t_shell *shell);
 int		ft_builtin_env(t_shell *shell);
 int		ft_builtin_export(t_shell *shell);
 int		ft_builtin_pwd(void);
+int		ft_builtin_exit(t_shell *shell);
 
 //builtin utils
 char	*quotes_treatment(char *string);
 int		ft_is_valid_env_name(char *name);
+
+//prototypes executor execution
+int	ft_execution(t_shell *shell);
+
+//prototypes executor executor
+int ft_env_to_str(t_shell *shell);
+char    **ft_get_all_paths(t_token *current);
+char    **ft_add_cmd_to_paths(t_token *current, char **paths);
+char    *ft_search_full_cmd(char **paths);
+int ft_execve(t_token *current);
 
 //prototypes lexer utils quotes
 int		ft_single_quote(char *str, int i);
@@ -108,18 +116,12 @@ int		ft_is_redir_less(char c);
 //prototypes lexer
 t_token	*ft_lexer(t_shell *shell);
 
-//prototype parser utils bultin
-int		ft_is_builtin(t_shell *shell);
-
-//prototypes parser_to_cmd
+//prototypes parser_join_cmds
+char	**ft_count_args(t_token *token);
+t_token *ft_fill_array(t_token *token);
 void ft_parse_full_cmds(t_token *list);
-
-t_token *ft_parse_cmd(t_token *list);
-t_token *ft_parse_bultin(t_token *list);
-
 void ft_print_cmds(t_token *list);
 void ft_print_check(t_shell *shell);
-
 
 //prototypes parser utils err
 int		ft_err_pipe(t_shell *shell);
@@ -167,14 +169,14 @@ char	*ft_prep_expand(char *data);
 void	ft_free_ptrs(char *str, char *str2);
 
 //prototypes list
-t_token	*ft_create_node(char *str, int index);
+t_token	*ft_create_node(char *str, int index, t_shell *shell);
 void	ft_add_token(t_shell *shell, char *str, int index);
-
-
 void	ft_print_list(t_shell *shell);
+void	ft_free_arr_strs(char **str);
 void	ft_free_token_list(t_shell *shell);
 void	ft_free_env_list(t_shell *shell);
 void	ft_free_shell(t_shell *shell);
+void	ft_free_env_strs(t_shell *shell);
 
 //prototypes prompt
 void	ft_is_history(char *str);
