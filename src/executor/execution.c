@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 19:46:47 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 20:00:18 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,15 @@ int	ft_execution(t_shell *shell)
 		if (ft_strcmp(aux->str, "echo") == 0)
 			return (ft_builtin_echo(aux));
 		else if (ft_strcmp(aux->str, "cd") == 0)
-			return (ft_builtin_cd(shell));
+		{
+			//return (ft_builtin_cd(shell));	
+		}
 		else if (ft_strcmp(aux->str, "pwd") == 0)
 			return (ft_builtin_pwd());
 		else if (ft_strcmp(aux->str, "export") == 0)
-			return (ft_builtin_export(shell));
+		{
+			//return (ft_builtin_export(shell));
+		}
 		else if (ft_strcmp(aux->str, "unset") == 0)
 		{
 			//return (ft_builtin_unset(shell));	

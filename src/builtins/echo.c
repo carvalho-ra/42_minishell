@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 19:51:59 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 20:02:25 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	ft_builtin_echo(t_token *current)
 	int i;
 	int		slash_n; //* Flag para saber se usaram -n
 
-	strings = NULL;
+	strings = current->cmd;
 	slash_n = FALSE;
 	i = 1;
-	if (current->cmd[i][0] == '-' && current->cmd[1] == 'n') //* Aqui verifico se usaram -n
+	if (current->cmd[i][0] == '-' && current->cmd[i][1] == 'n') //* Aqui verifico se usaram -n
 	{
 		slash_n = TRUE; //* Se sim, levanto essa flag para no final do programa não pular linha
 		i++; //* E vou para o próximo elemento do comando
