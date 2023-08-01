@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 20:02:25 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 20:51:31 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 //TODO:
 /*
 [X] está dando erro de malloc - OK linha 66 (coloquei + 1 no malloc para o NULL - funcionou)
-[X] echo $NOUSER - quando passa algo que não está na env (sozinho, com ou sem aspas
+[ ] echo $NOUSER - quando passa algo que não está na env (sozinho, com ou sem aspas)
 [ ] ela está trabalhando sempre com o primeiro nó. devia receber um t_token *current_node
 */
 
@@ -35,16 +35,17 @@ int	ft_builtin_echo(t_token *current)
 	strings = current->cmd;
 	slash_n = FALSE;
 	i = 1;
-	if (current->cmd[i][0] == '-' && current->cmd[i][1] == 'n') //* Aqui verifico se usaram -n
+	if (strings[i] && ft_strcmp(strings[i], "-n") == 0) //* Aqui verifico se usaram -n
 	{
 		slash_n = TRUE; //* Se sim, levanto essa flag para no final do programa não pular linha
 		i++; //* E vou para o próximo elemento do comando
 	}
 	while (strings[i])
 	{
-		strings[i] = quotes_treatment(current->cmd[i]); //* Faço o tratamento das aspas
+		if (strings[i])
+			strings[i] = quotes_treatment(current->cmd[i]); //* Faço o tratamento das aspas
 		ft_putstr_fd(strings[i], 1); //* Imprimo a string já tratada
-		if(strings[i]) //* Se não for o último elemento, separo com um espaço
+		if(strings[i + 1]) //* Se não for o último elemento, separo com um espaço
 			ft_putstr_fd(" ", 1);
 		i++;
 	}

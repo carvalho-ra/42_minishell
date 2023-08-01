@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 19:51:16 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 21:03:25 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			ft_validation(shell);
 			ft_expantion(shell);
+			ft_print_list(shell);
 			ft_parse_full_cmds(shell->list);
+			ft_print_cmds(shell->list);
 			ft_execution(shell);
 			ft_free_token_list(shell);
 			free(shell->line);
