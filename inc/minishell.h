@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 18:58:10 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/01 10:37:41 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 // To install readline:
 // sudo apt-get install libreadline8; sudo apt-get install libreadline-dev
 
-# define SUCCESS 1
-# define FAILURE 0
 # define TRUE 1
 # define FALSE 0
 # define CHILD 0
@@ -53,8 +51,9 @@ typedef struct s_shell
 {
 	char			*line; //chamada da readline - linha completa
 	struct s_token	*list; // linha separada em tokens
-	char			**env_strs; // env em formato de array de strings
-	struct s_env	*env; // mudar esse nome
+	char			**env_strs; // env list em formato de array de strings
+	struct s_env	*env; // mudar esse nome, env dá a entender que é apenas um
+									// elemento da lista, mas é a lista inteira
 }	t_shell;
 
 
@@ -85,22 +84,41 @@ int		ft_builtin_cd(t_shell *shell);
 int		ft_builtin_echo(t_token *current);
 int		ft_builtin_env(t_shell *shell);
 int		ft_builtin_export(t_shell *shell);
+int		ft_builtin_export_matrix(t_shell *shell);
+int		ft_builtin_unset(t_shell *shell);
+int		ft_builtin_unset_matrix(t_shell *shell);
 int		ft_builtin_pwd(void);
 int		ft_builtin_exit(t_shell *shell);
 
 //builtin utils
 char	*quotes_treatment(char *string);
-int		ft_is_valid_env_name(char *name);
+int		ft_is_valid_key(char *name);
+int		ft_is_key_duplicate(t_env *env, char *key, int origin);
+int		ft_is_key_duplicate_matrix(char **env_list, char *key, int origin);
+int		ft_add_to_env_list(t_env *env_list, char *new_env, int origin);
+int		ft_add_to_env_matrix(char **env_matrix, char *new_env, int origin);
+int		ft_replace_env(t_env *env, int index, char *new_value);
+int		ft_replace_env_matrix(char **env_matrix, int index, char *new_value);
+char	*ft_getenv(char *key, char *env_list);
+
+//char	*ft_getenv_index(char *key, char *env_strs);
+		//talvez precise, talvez não -> is_key_duplicate faz isso, mas com lista
+char	*ft_get_key(char *str);
+char	*ft_get_value(char *str);
+int		ft_delete_env(t_env *env, int index);
+int		ft_delete_env_from_matrix(t_shell *shell, int index);
+size_t	ft_matrix_length(char **matrix);
+void	ft_oldpwd(t_shell *shell);
 
 //prototypes executor execution
-int	ft_execution(t_shell *shell);
+int		ft_execution(t_shell *shell);
 
 //prototypes executor executor
-int ft_env_to_str(t_shell *shell);
-char    **ft_get_all_paths(t_token *current);
-char    **ft_add_cmd_to_paths(t_token *current, char **paths);
-char    *ft_search_full_cmd(char **paths);
-int ft_execve(t_token *current);
+int		ft_env_to_str(t_shell *shell);
+char	**ft_get_all_paths(t_token *current);
+char	**ft_add_cmd_to_paths(t_token *current, char **paths);
+char	*ft_search_full_cmd(char **paths);
+int		ft_execve(t_token *current);
 
 //prototypes lexer utils quotes
 int		ft_single_quote(char *str, int i);
@@ -114,16 +132,16 @@ int		ft_is_redir_more(char c);
 int		ft_is_redir_less(char c);
 
 //prototypes lexer
-int	ft_aux_lexer(char *str, int i);
+int		ft_aux_lexer(char *str, int i);
 t_token	*ft_lexer(t_shell *shell);
 void	ft_remove_double_quotes(t_shell *shell);
 
 //prototypes parser_join_cmds
 char	**ft_count_args(t_token *token);
-t_token *ft_fill_array(t_token *token);
-void ft_parse_full_cmds(t_token *list);
-void ft_print_cmds(t_token *list);
-void ft_print_check(t_shell *shell);
+t_token	*ft_fill_array(t_token *token);
+void	ft_parse_full_cmds(t_token *list);
+void	ft_print_cmds(t_token *list);
+void	ft_print_check(t_shell *shell);
 
 //prototypes parser utils err
 int		ft_err_pipe(t_shell *shell);
