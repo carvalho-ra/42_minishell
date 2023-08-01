@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:57 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/26 06:25:28 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/01 08:08:22 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,28 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-// Checks whether the character in question is in the forbidden list.
-int	ft_isforbidden(char character, char *forbidden)
+// Retrieves only the key of the environment variable, up to the equal sign.
+char	*ft_get_key(char *str)
 {
-	int	i;
+	int		i;
+	char	*key;
 
 	i = 0;
-	while (forbidden[i] != '\0')
-	{
-		if (character == forbidden[i])
-			return (1);
+	while (str[i] != '=')
 		i++;
-	}
-	if (character == '\0')
-		return (1);
-	return (0);
+	key = ft_substr(str, 0, i);
+	return (key);
+}
+
+// Retrieves only the value of the environment variable, after the equal sign.
+char	*ft_get_value(char *str)
+{
+	int		i;
+	char	*value;
+
+	i = 0;
+	while (str[i] != '=')
+		i++;
+	value = ft_substr(str, i + 1, ft_strlen(str) - i);
+	return (value);
 }

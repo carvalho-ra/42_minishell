@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/28 19:57:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/29 00:24:43 by cnascime         ###   ########.fr       */
+/*   Created: 2023/07/31 13:03:21 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/07/31 19:44:39 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_builtin_exit(t_shell *shell, t_env *env)
+//TODO
+//[ ] devia receber um t_token *current e a partir dele chegar na lista?
+
+int ft_builtin_exit(t_shell *shell)
 {
-	(void)shell; //!temporary
-	(void)env; //!temporary
-	//free split (env->str);
-	//free node (commands);
-	//free (env);
-	//exit (status);
-	return ;//!temporary
+    printf("NA BUILTIN EXIT\n");
+    free(shell->line);
+    ft_free_token_list(shell);
+	ft_free_env_list(shell);
+	ft_free_env_strs(shell);
+	free(shell);
+    exit (0);
 }
 
-// Comentários do Rodrigo:
 //free geral!
 //régua cobra com parâmetro
 //pegar o código de retorn (exit XXXX)

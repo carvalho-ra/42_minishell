@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 17:24:25 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/01 08:08:30 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,80 +18,53 @@
 //TODO 3 percorrer string; se só tiver uma aspa externa, imprimir nova linha até fecharem aspas
 //TODO 4 expandir variáveis de ambiente
 
-// Prints the arguments to stdout, separated by a space.
-int	ft_builtin_echo(t_shell *shell)
-{
-	t_token	*aux;
-	int		index;
-	int		dash_n; //* Flag para saber se usaram -n
-	char	*string;
+//TODO:
+/*
+[X] está dando erro de malloc - OK linha 66 (coloquei + 1 no malloc para o NULL - funcionou)
+[ ] echo $NOUSER - quando passa algo que não está na env (sozinho, com ou sem aspas)
+[ ] ela está trabalhando sempre com o primeiro nó. devia receber um t_token *current_node
+*/
 
-	dash_n = FALSE;
-	aux = shell->list->next;
-	if (aux->str[0] == '-' && aux->str[1] == 'n') //* Aqui verifico se usaram -n
+// Prints the arguments to stdout, separated by a space.
+int	ft_builtin_echo(t_token *current)
+{
+	char	**strings;
+	int		i;
+	int		slash_n; //* Flag para saber se usaram -n
+
+	strings = current->cmd;
+	slash_n = FALSE;
+	i = 1;
+	if (strings[i] && ft_strcmp(strings[i], "-n") == 0) //* Aqui verifico se usaram -n
 	{
-		dash_n = TRUE; //* Se sim, levanto essa flag para no final do programa não pular linha
-		aux = aux->next; //* E vou para o próximo elemento do comando
+		slash_n = TRUE; //* Se sim, levanto essa flag para no final do programa não pular linha
+		i++; //* E vou para o próximo elemento do comando
 	}
-	while (aux)
+	while (strings[i])
 	{
-		string = aux->str;
-		index = 0;
-		while (aux->str[index]) // Se tiver aspas, faz tratamento.
-		{
-			if (ft_isforbidden(aux->str[index], "\'\""))
-			{
-				string = quotes_treatment(aux->str);
-				break ;
-			}
-			index++;
-		}
-		ft_putstr_fd(string, 1); //* Imprimo a string já tratada
-		//free(string); // acusa double free
-		if (aux->next) //* Se não for o último elemento, separo com um espaço
+		if (strings[i])
+			strings[i] = quotes_treatment(current->cmd[i]); //* Faço o tratamento das aspas
+		ft_putstr_fd(strings[i], 1); //* Imprimo a string já tratada
+		if(strings[i + 1]) //* Se não for o último elemento, separo com um espaço
 			ft_putstr_fd(" ", 1);
-		aux = aux->next;
+		i++;
 	}
-	if (dash_n == FALSE) //* Se a flag do -n não tiver sido erguida lá em cima, pulo a linha
+	if (slash_n == FALSE) //* Se a flag do -n não tiver sido erguida lá em cima, pulo a linha
 		ft_putstr_fd("\n", 1);
 	return (TRUE); //* Devolvo 1 porque a função que chama essa função pergunta se é builtin, e é
 }
 
 char	*quotes_treatment(char *string)
 {
-	int		i;
-	int		j;
-	int		external; //* Flag para saber se estou dentro das aspas externas, e que tipo são
-	char	*treated; //* String que vai substituir o input do usuário tirando aspas externas
+	char	*tmp;
 
-	i = 0;
-	j = 0;
-	external = FALSE;
-	treated = malloc(sizeof(char) * ft_strlen(string));
-	while (string[i])
+	tmp = NULL;
+	if (string[0] == '\'') //* Se encontrar aspas
 	{
-		if (string[i] == '\'' || string[i] == '\"') //* Se encontrar aspas
-		{
-			if (string[i] == '\'' && external == FALSE)
-				external = 1; //* Se for aspas simples, flag 1
-			else if (string[i] == '\"' && external == FALSE)
-				external = 2; //* Se for aspas duplas, flag 2
-		}
-		if (string[i] == '\'' && external == 1) //* Ignora as aspas externas
-			i++;
-		else if (string[i] == '\"' && external == 2)
-			i++;
-		else
-		{
-			treated[j] = string[i];
-			i++;
-			j++;
-		}
+		tmp = ft_strtrim(string, "\'");
+		ft_free_ptrs(string, NULL);
+		string = ft_strdup(tmp);
+		ft_free_ptrs(tmp, NULL);
 	}
-	treated[j] = '\0';
-	//printf("treated: %s\n", treated);
-	//printf("string: %s\n", string);
-	//free(string);
-	return (treated);
-	//free(treated); // acusa double free, mas tenho medo de vazar depois
+	return (string);
 }

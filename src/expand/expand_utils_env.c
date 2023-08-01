@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:39:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/29 01:55:26 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/24 16:27:16 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_env	*ft_create_env_node(char *str)
 	return (new_env_node);
 }
 
+//?Se for importante para alterar a lista, seria possível criar uma variável index na struct?
 void	ft_add_env(t_shell *shell, char *str)
 {
 	t_env	*aux;

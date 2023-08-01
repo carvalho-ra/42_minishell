@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/26 22:46:31 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/07/31 19:32:58 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_token	*ft_create_node(char *str, int index)
+t_token	*ft_create_node(char *str, int index, t_shell *shell)
 {
 	t_token	*new_node;
 
@@ -24,7 +24,7 @@ t_token	*ft_create_node(char *str, int index)
 	new_node->error_code = 0;
 	new_node->str = str;
 	new_node->cmd = NULL;
-	new_node->shell = NULL;
+	new_node->shell = shell;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -36,7 +36,7 @@ void	ft_add_token(t_shell *shell, char *str, int index)
 	aux = NULL;
 	aux = shell->list;
 	if (aux == NULL)
-		shell->list = ft_create_node(str, 1);
+		shell->list = ft_create_node(str, 1, shell);
 	else
 	{
 		while (aux->next != NULL)
@@ -44,7 +44,7 @@ void	ft_add_token(t_shell *shell, char *str, int index)
 			index++;
 			aux = aux->next;
 		}
-		aux->next = ft_create_node(str, index);
+		aux->next = ft_create_node(str, index, shell);
 	}
 }
 
@@ -60,26 +60,33 @@ void	ft_print_list(t_shell *shell)
 	}
 }
 
+void ft_free_arr_strs(char **str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		free(str[i]);
+		str[i] = NULL;
+		i++;
+	}
+}
+
 void	ft_free_token_list(t_shell *shell)
 {
 	t_token	*current;
 	t_token	*next;
-	int		i;
 
 	current = shell->list;
 	while (current)
 	{
-		i = 0;
 		next = current->next;
 		free(current->str);
 		if (current->cmd)
-		{
-			while (current->cmd[i])
-			{
-				free(current->cmd[i]);
-				i++;
-			}
-		}
+			ft_free_arr_strs(current->cmd);
 		free(current->cmd);
 		free(current);
 		current = next;
@@ -103,7 +110,22 @@ void	ft_free_env_list(t_shell *shell)
 	shell->env = NULL;
 }
 
-//AO FAZER NOVA STRUCT PARA MINISHELL
+void	ft_free_env_strs(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	if (!shell->env_strs)
+		return ;
+	while (shell->env_strs[i])
+	{
+		free(shell->env_strs[i]);
+		i++;
+	}
+	free(shell->env_strs);
+	shell->env_strs = NULL;
+}
+
 void	ft_free_shell(t_shell *shell)
 {
 	t_shell	*aux;
@@ -115,36 +137,3 @@ void	ft_free_shell(t_shell *shell)
 	free(shell);
 	shell = NULL;
 }
-
-//unitialized values: 
-//
-
-// ********************* TEST *********************
-// char	**ft_add_envp(char **envp, char *node)
-// {
-// 	char	**envvariable;
-// 	int		i;
-// 	size_t	length;
-
-// 	i = 0;
-// 	if (!node)
-// 		return (envp);
-// 	// length = calcular tamanho da lista (libft)
-// 	envvariable = malloc(sizeof(char *) * (length + 2));
-// 	envvariable[length + 1] = NULL;
-// 	if (!envvariable)
-// 		return (envp);
-// 	while (i < length)
-// 	{
-// 		envvariable[i] = ft_strdup(envp[i]);
-// 		if (!envvariable[i])
-// 		{
-// 			//free envp
-// 			//free envvariable;
-// 		}
-// 		i++;
-// 	}
-// 	envvariable[i] = ft_strdup(node);
-// 	free(envp);
-// 	return (envvariable);
-// }

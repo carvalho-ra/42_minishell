@@ -6,13 +6,13 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:43 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/25 15:47:36 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/31 15:46:57 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	ft_aux_lexer(char *str, int i)
+int	ft_aux_lexer(char *str, int i)
 {
 	while (str[i] && !(ft_is_blank(str[i])))
 	{
@@ -47,5 +47,26 @@ t_token	*ft_lexer(t_shell *shell)
 		if (start != i)
 			ft_add_token(shell, ft_substr(shell->line, start, i - start), id);
 	}
+	ft_remove_double_quotes(shell);
 	return (shell->list);
+}
+
+void	ft_remove_double_quotes(t_shell *shell)
+{
+	t_token	*aux;
+	char	*tmp;
+
+	aux = shell->list;
+	tmp = NULL;
+	while (aux)
+	{
+		if (aux->str[0] == 34)
+		{
+			tmp = ft_strtrim(aux->str, "\"");
+			ft_free_ptrs(aux->str, NULL);
+			aux->str = ft_strdup(tmp);
+			ft_free_ptrs(tmp, NULL);
+		}
+		aux = aux->next;
+	}
 }
