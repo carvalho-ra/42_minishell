@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 20:51:31 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/01 08:08:30 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 int	ft_builtin_echo(t_token *current)
 {
 	char	**strings;
-	int i;
+	int		i;
 	int		slash_n; //* Flag para saber se usaram -n
 
 	strings = current->cmd;

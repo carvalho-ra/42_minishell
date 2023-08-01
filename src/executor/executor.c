@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 19:32:44 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:05:19 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,4 +155,35 @@ int ft_execve(t_token *current)
     // Se o execve tiver sucesso, o código abaixo não será impresso
     // Se houver um erro, o execve retornará -1
     return (0);
+}
+
+// Passo a chave e a lista de envs como char* e retorno o que está depois do =
+char    *ft_getenv(char *key, char *env_list)
+{
+    int        i;
+    int        j;
+    char    *value;
+
+    i = 0;
+    j = 0;
+    value = NULL;
+    while (env_list[i])
+    {
+        if (env_list[i] == key[j])
+        {
+            while (env_list[i + j] == key[j])
+            {
+                if (key[j + 1] == '\0' && env_list[i + j + 1] == '=')
+                {
+                    value = ft_substr(env_list, i + j + 2, \
+                                    ft_strlen(env_list) - i - j - 2);
+                    printf("value: %s\n", value);
+                    return (value);
+                }
+                j++;
+            }
+        }
+        i++;
+    }
+    return (NULL);
 }
