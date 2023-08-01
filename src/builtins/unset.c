@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 03:33:10 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/01 05:39:44 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:43:25 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // Deletes environment variables from the list.
-int	ft_builtin_unset(t_shell *shell)
+int	ft_builtin_unset(t_token *current)
 {
 	t_token	*aux;
 	t_env	*env;
 	int		env_index;
 
-	aux = shell->list->next;
-	env = shell->env;
+	aux = current->next;
+	env = current->shell->env;
+	if (!current->next || aux->str == NULL)
+        return (1);
 	env_index = ft_is_key_duplicate(env, aux->str, 1);
 	printf("\t\tIndex %i\n", env_index);
 	if (env_index > -1)
