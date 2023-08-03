@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/02 19:34:00 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:59:32 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_free_token_list(t_shell *shell)
 	shell->list = NULL;
 }
 
-void ft_free_arr_strs(char **str)
+void	ft_free_arr_strs(char **str)
 {
 	int	i;
 

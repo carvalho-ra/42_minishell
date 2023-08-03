@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:39:40 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/03 09:35:46 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:54:41 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,22 @@ int	ft_builtin_export(t_shell *shell)
 
 	aux = shell->list->next;
 	env_list = shell->env;
-	printf("\t\tvariável de ambiente a implementar: %s\n", aux->str);
 	if (ft_is_valid_key(aux->str))
 	{
-		ft_add_to_env_list(env_list, aux->str, 6); //* EM TESE É ISSO
-	// compara cada item da lista de variáveis de ambiente e pega o índice, caso ache
-	env_index = ft_is_key_duplicate(env_list, aux->str, 6);
-		printf("\t\tIndex %i\n", env_index);
+		ft_add_to_env_list(env_list, aux->str, 6);
+		env_index = ft_is_key_duplicate(env_list, aux->str, 6);
 		if (env_index > -1)
 			ft_replace_env(env_list, env_index, aux->str);
-			// se já existe, sobrescreve
 		else
 		{
 			while (env_list->next)
 				env_list = env_list->next;
-				// anda até o final da lista de nós env_list
 			env_list->next = ft_create_env_node(ft_strdup(aux->str));
-			// adiciona nó à lista t_env
-			//aqui não dava pra usar ft_add_env, pq ela limpa memória do char * passado pra ela. 
 		}
 	}
 	else
 		return (2);
-		// retorno em caso de erro
 	return (0);
-	//! retorno original caso sucesso deveria ser 0, mas a função que chama
-	//! pergunta se é builtin, então o esperado seria TRUE. Precisamos mudar.
 }
 
 // If the key is not valid, prints a message and returns FALSE.
@@ -79,7 +69,6 @@ int	ft_is_valid_key(char *name)
 // A key is not valid if it starts with a number, or if it contains any
 // character that is not alphanumeric or an underscore.
 
-
 // Goes through the entire list of environment variables, comparing the name of
 // each node with the name passed as argument (both up to the equal sign).
 //*Returns the index of the node if it finds a match, or -1 if it's unique.
@@ -94,22 +83,15 @@ int	ft_is_key_duplicate(t_env *env, char *key, int origin)
 	while (env)
 	{
 		while (env->str[i] == key[i] && env->str[i] != '=' && key[i] != '=')
-		{
-			printf("\t\tComparando %c com %c\n", env->str[i], key[i]);
 			i++;
-		}
 		if ((origin == 6 && env->str[i] == '=' && key[i] == '=')
 			|| (origin != 6 && env->str[i] == '='
 				&& (key[i] == '\0' || key[i] == '=')))
-		{
-			printf("\t\tAchou duplicada!\n\t\tDuplicada: %s\n", env->str);
 			return (j);
-		}
 		i = 0;
 		j++;
 		env = env->next;
 	}
-	printf("\t\tNão achou duplicada…\n");
 	return (-1);
 }
 
@@ -119,10 +101,8 @@ int	ft_add_to_env_list(t_env *env_list, char *new_env, int origin)
 	int		env_index;
 
 	env_index = ft_is_key_duplicate(env_list, new_env, origin);
-	printf("\t\tIndex %i\n", env_index);
 	if (env_index > -1)
 		ft_replace_env(env_list, env_index, new_env);
-		// se já existe, sobrescreve
 	else
 	{
 		env_index = 0;
@@ -130,11 +110,8 @@ int	ft_add_to_env_list(t_env *env_list, char *new_env, int origin)
 		{
 			env_index++;
 			env_list = env_list->next;
-			// anda até o final da lista de nós env_list
 		}
 		env_list->next = ft_create_env_node(ft_strdup(new_env));
-		// adiciona nó à lista t_env
-		//aqui não dava pra usar ft_add_env, pq ela limpa memória do char * passado pra ela.
 	}
 	return (env_index);
 }
@@ -150,7 +127,6 @@ int	ft_replace_env(t_env *env, int index, char *new_value)
 		index--;
 		env = env->next;
 	}
-	printf("\t\tChegou no nó certo (%s - %s)\n", env->str, new_value); //!apagar
 	free(env->str);
 	env->str = ft_strdup(new_value);
 	return (TRUE);

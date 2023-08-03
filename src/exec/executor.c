@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/03 10:08:19 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:58:12 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**ft_get_all_paths(t_token *current)
 
 // função que adiciona "/cmd" ao final de cada string
 // retornar um array de strings com os paths completos
-char	**ft_add_cmd_to_paths(t_token *current, char **paths)
+char	**ft_add_cmd(t_token *current, char **paths)
 {
 	char	*aux;
 	char	*slash_cmd;
@@ -95,7 +95,7 @@ char	**ft_add_cmd_to_paths(t_token *current, char **paths)
 
 // função que procura pelo arquivo
 //retorna o path funcional se existir
-char	*ft_search_full_cmd(char **paths)
+char	*ft_search_cmd(char **paths)
 {
 	int		i;
 	char	*ret;
@@ -130,7 +130,7 @@ int	ft_execve(t_token *current)
 	int		pid;
 
 	ft_env_to_str(current->shell);
-	cmd = ft_search_full_cmd(ft_add_cmd_to_paths(current, ft_get_all_paths(current)));
+	cmd = ft_search_cmd(ft_add_cmd(current, ft_get_all_paths(current)));
 	args = current->cmd;
 	if (!cmd)
 	{

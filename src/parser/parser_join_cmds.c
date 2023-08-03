@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:29:17 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/02 19:54:15 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:33:27 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	**ft_count_args(t_token *token)
 		aux = aux->next;
 	}
 	aux = token;
-	printf ("counted %i valid tokens\n", i);
 	aux->cmd = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!(aux->cmd))
 		return (NULL);
@@ -52,7 +51,6 @@ t_token	*ft_fill_array(t_token *token)
 		aux->cmd = ft_count_args(current);
 		while (current && (current->type >= 0 && current->type <= EXPAND))
 		{
-			printf("str %i = %s\n", i, current->str);
 			if (current->str)
 				aux->cmd[i++] = ft_strdup(current->str);
 			current = current->next;
@@ -81,7 +79,6 @@ void	ft_parse_full_cmds(t_token *list)
 }
 
 // ft_print_cmds usada para verificar se os arrays estão completos
-
 void	ft_print_cmds(t_token *list)
 {
 	t_token	*aux;
@@ -111,7 +108,6 @@ void	ft_print_cmds(t_token *list)
 
 //ft_print_check usada para verificar se os tokens estavam sendo 
 //marcados direito
-
 void	ft_print_check(t_shell *shell)
 {
 	t_token	*aux;

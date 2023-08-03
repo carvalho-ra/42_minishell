@@ -1,6 +1,7 @@
 NAME = minishell
 
 SRCS = ./src/main.c \
+		./src/builtins/cd_utils.c \
 		./src/builtins/cd.c \
 		./src/builtins/echo.c \
 		./src/builtins/env.c \
