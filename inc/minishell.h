@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/03 12:57:43 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:45:44 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int		ft_builtin_env(t_shell *shell);
 int		ft_builtin_export(t_shell *shell);
 // int		ft_builtin_export_matrix(t_shell *shell);
 int		ft_builtin_unset(t_token *current);
+void	ft_free_env_node(t_env *env);
+
 // int		ft_builtin_unset_matrix(t_shell *shell);
 int		ft_builtin_pwd(void);
 int		ft_builtin_exit(t_shell *shell);

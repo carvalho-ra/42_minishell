@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 03:33:10 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/03 09:41:11 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:50:30 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ int	ft_builtin_unset(t_token *current)
 	t_env	*env;
 	int		env_index;
 
+	printf("NA BUILTIN UNSET\n");
 	aux = current->next;
 	env = current->shell->env;
 	if (!current->next || aux->str == NULL)
-        return (1);
+		return (0);
 	env_index = ft_is_key_duplicate(env, aux->str, 1);
-	printf("\t\tIndex %i\n", env_index);
 	if (env_index > -1)
 		ft_delete_env(env, env_index);
 	else
-		return (2);
+		return (0);
 	return (0);
 }
 
@@ -47,13 +47,9 @@ int	ft_delete_env(t_env *env, int index)
 	if (index == 0)
 	{
 		env = env->next;
-		free(current->str);
-		free(current);
+		ft_free_env_node(current);
 		return (0);
 	}
-	// Se não for o primeiro nó, avança pela lista até chegar no correto,
-	// libera a memória e substitui o ponteiro next do nó anterior para o
-	// próximo nó.
 	while (i < index)
 	{
 		previous = current;
@@ -64,7 +60,14 @@ int	ft_delete_env(t_env *env, int index)
 		previous->next = NULL;
 	else if (current->next != NULL)
 		previous->next = current->next;
-	free(current->str);
-	free(current);
+	ft_free_env_node(current);
 	return (0);
+}
+
+void	ft_free_env_node(t_env *env)
+{
+	free(env->str);
+	env->str = NULL;
+	free(env);
+	env = NULL;
 }
