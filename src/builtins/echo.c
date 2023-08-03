@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/01 08:08:30 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/02 20:41:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_builtin_echo(t_token *current)
 	}
 	if (slash_n == FALSE) //* Se a flag do -n não tiver sido erguida lá em cima, pulo a linha
 		ft_putstr_fd("\n", 1);
-	return (TRUE); //* Devolvo 1 porque a função que chama essa função pergunta se é builtin, e é
+	return (0); //* Devolvo 1 porque a função que chama essa função pergunta se é builtin, e é
 }
 
 char	*quotes_treatment(char *string)

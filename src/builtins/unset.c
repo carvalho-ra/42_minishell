@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 03:33:10 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/01 11:43:25 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 09:41:11 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,6 @@ int	ft_builtin_unset(t_token *current)
 	return (0);
 }
 
-// Recreates the function above, but with char* shell->env_strs[0] instead of a list.
-int	ft_builtin_unset_matrix(t_shell *shell)
-{
-	int	index;
-
-	index = ft_is_key_duplicate_matrix(shell->env_strs, shell->list->next->str, 1);
-	if (index > -1)
-		ft_delete_env_from_matrix(shell, index);
-	else
-		return (2);
-	return (0);
-}
-
 // Iterates through the environment list until it reaches the passed int,
 // then deletes the node, freeing its memory and replacing the previous node's
 // next pointer to the next node.
@@ -57,7 +44,6 @@ int	ft_delete_env(t_env *env, int index)
 	i = 0;
 	current = env;
 	previous = env;
-	// Se for o primeiro nó, apenas move o ponteiro para o próximo e libera.
 	if (index == 0)
 	{
 		env = env->next;
@@ -80,20 +66,5 @@ int	ft_delete_env(t_env *env, int index)
 		previous->next = current->next;
 	free(current->str);
 	free(current);
-	return (0);
-}
-
-// Recreates the function above, but with char* shell->env_strs[0] instead of a list.
-int	ft_delete_env_from_matrix(t_shell *shell, int index)
-{
-	int	i;
-
-	i = index;
-	while (shell->env_strs[i + 1] != NULL)
-	{
-		shell->env_strs[i] = shell->env_strs[i + 1];
-		i++;
-	}
-	shell->env_strs[i] = NULL;
 	return (0);
 }

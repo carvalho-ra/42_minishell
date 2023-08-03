@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:17 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/29 12:31:39 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/02 19:50:37 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	ft_err_pipe(t_shell *shell)
 				aux->next->type = ERR;
 				aux = aux->next;
 			}
-			printf("token %i, minishell: syntax error near unexpected token `|'\n", aux->index);
+			printf("token %i, minishell: syntax error near", aux->index);
+			printf(" unexpected token `|'\n");
 			break ;
 		}
 		aux = aux->next;
@@ -80,7 +81,8 @@ int	ft_err_redir_in(t_shell *shell)
 				aux->next->type = ERR;
 				aux = aux->next;
 			}
-			printf("token %i, minishell: syntax error near unexpected token `<'\n", aux->index);
+			printf("token %i, minishell: syntax error near", aux->index);
+			printf(" unexpected token `<'\n");
 		}
 		aux = aux->next;
 	}
@@ -107,7 +109,8 @@ int	ft_err_redir_out(t_shell *shell)
 				aux->next->type = ERR;
 				aux = aux->next;
 			}
-			printf("token %i, minishell: syntax error near unexpected token `>'\n", aux->index);
+			printf("token %i, minishell: syntax error near", aux->index);
+			printf(" unexpected token `>'\n");
 		}
 		aux = aux->next;
 	}
