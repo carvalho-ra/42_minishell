@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   lexer_utils_memory.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 21:20:52 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/03 14:04:17 by rcarvalh         ###   ########.fr       */
+/*   Created: 2023/08/02 19:31:49 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/08/03 17:21:11 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	ft_handler(int signal)
+void	ft_free_token_list(t_shell *shell)
 {
-	write (2, "\n", 1);
-	if (signal == SIGINT)
-	{
-		rl_on_new_line ();
-		rl_replace_line ("", 0);
-		rl_redisplay ();
-	}
-}
+	t_token	*current;
+	t_token	*next;
 
-//apagar historico no processo filho!!!
-//chamar função especifica da readline
+	current = shell->list;
+	while (current)
+	{
+		next = current->next;
+		free(current->str);
+		if (current->cmd)
+			ft_free_arr_strs(current->cmd);
+		free(current->cmd);
+		free(current);
+		current = next;
+	}
+	shell->list = NULL;
+}

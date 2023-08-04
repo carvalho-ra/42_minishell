@@ -1,0 +1,203 @@
+[X] Exibir um prompt enquanto aguarda um novo comando
+[X] Possuir histórico funcional
+[ ] Pesquisar e rodar o executável certo
+	[ ] De acordo com a variável PATH ou o caminho absoluto ou relativo
+[ ] Ter no máximo uma variável global
+[X] Não precisa interpretar aspas não-fechadas
+[X] Não precisa interpretar caracteres especiais (nem \ nem ;)
+[X] Interpretar ' ' (aspas simples)
+	[X] Sem interpretar metacaracteres dentro das aspas
+[X] Interpretar " " (aspas duplas)
+	[X] Interpretando apenas $ (cifrão)
+[ ] Implementar redirecionamento < input
+[ ] Implementar redirecionamento > output
+[ ] Implementar redirecionamento << com um delimitador
+	[ ] Ler o input até detectar uma linha com este delimitador (ex: EOF)
+	[ ] Não precisa incluir no histórico
+[ ] Implementar redirecionamento >> append
+[ ] Implementar | (pipes)
+	[ ] O output de cada comando deve ser o input do próximo
+[X] Implementar $ (variáveis de ambiente)
+	[ ] Seguir funcionamento da Iza no heredoc
+[ ] Implementar $? (expandir para o status de saída da execução mais recente)
+[X] Ctrl + C deve funcionar como em bash
+	[X] No modo interativo, Ctrl + C exibe novo prompt em uma nova linha
+[ ] Ctrl + D deve funcionar como em bash
+	[ ] No modo interativo, Ctrl + D sai do shell
+[ ] Ctrl + \ deve funcionar como em bash
+	[ ] No modo interativo, Ctrl + \ não faz nada
+[x] Builtin echo
+[x] Builtin echo -n
+[ ] Builtin cd
+[ ] Builtin cd caminho absoluto
+[ ] Builtin cd caminho relativo
+[X] Builtin pwd (sem opções)
+[x] Builtin export (sem opções)
+[x] Builtin unset (sem opções)
+[x] Builtin env (sem opções e sem argumentos)
+[ ] Builtin exit (sem opções)
+[ ] Não vazar memória, exceto da função readline
+
+//TODO
+
+[X] verificar se o token de builtin está sendo marcado corretamente (IMPORTANTE!!!)
+[X] verificar se o token de erro está sendo marcado corretamente - FIXED in parser_utils_redirs.c
+[X] verificar se o token de argumento está sendo marcado corretamente - nao esta sendo marcado
+[X] verificar se o token de expand está sendo marcado corretamente - strings expandidas já são devolvidas nos tokens token->str;
+[X] verificar se o token de pipe está sendo marcado corretamente
+[X] verificar se o token de heredoc está sendo marcado corretamente
+[X] verificar se o token de redirecionamento está sendo marcado corretamente
+[X] verificar se o token de comando está sendo marcado corretamente - marcado agora, na função ft_parse_cmds
+
+AQUI preciso de ajuda pra entender a lógica do bash e ir codando comigo algumas funções
+
+[X] depois de pipe vem um argumento, é um comando?
+ou pode ser um redirecionamento? ou um pipe? ou uma builtin? 
+[ ] depois de uma builtin é um argumento? nem sempre, né? e se for um pipe? ou um redirecionamento?
+quais funcionam e não funcionam? 
+[ ] depois de um redirecionamento é um argumento?
+tem que abrir arquivo? tem que armazenar o fd do arquivo? fazer fd_in e fd_out no token?
+[ ] depois de um pipe, se não for builtin, é um comando?
+verificar se pode ter outras possibilidades
+
+[ ]Erros de redirecionamento e pipe
+até então só estão funcionando os casos:
+[X] inicia com pipe;
+[X] termina com pipe vazio;
+[X] pipe depois de pipe, redirecionamento depois de redirecionamento (e variações)
+[ ] termina com pipe depois de um redirecionamento - checar essa lógica
+	[ ] pipe depois de redirecionamento? Existe? Funciona? Quais? Como?
+[ ] termina com redirecionamento depois de um pipe - checar essa lógica
+	[ ] redirecionamento depois de pipe? Existe? Funciona? Quais? Como? 
+[ ] redirecionamento depois de builtin? Existe? Funciona? Quais? Como?
+[ ] builtin depois de redirecionamento? Existe? Funciona? Quais? Como?
+[ ] builtin depois de pipe? Existe? Funciona? Quais? Como?
+[ ] pipe depois de builtin? Existe? Funciona? Quais? Como?
+[ ] builtin depois de builtin;
+
+[ ] será que peguei todas?
+
+
+||||||||||||||||||||||||||||||||||||||||||
+
+https://unix.stackexchange.com/questions/159513/what-can-go-wrong-when-using-process-substitution
+Tokens que podem vir depois de um pipe:
+SIM - BUILTIN
+SIM - COMANDO
+SIM - REDIRECIONAMENTO
+SIM - EXPAND (só vai funcionar se o valor for um comando)
+	NÃO - HEREDOC
+	NÃO - WORD
+	NÃO - ERRO
+	NÃO - NADA
+	??? - OUTRO PIPE (apenas se for coladinho, || OU, mas significa que
+	só vai executar o segundo se o primeiro falhar, acho que não precisamos fazer)
+
+Tokens que podem vir depois de um redirecionamento:
+	??? - NÚMERO (FILE DESCRIPTOR, 2>, 2>>, 3>, 3>>, 2<, 3<, 4>, 2>&1, 2>&-, 
+	2>&2, 2>&3, 2>&4, etc., acho que não precisamos fazer)
+SIM - WORD (nome do arquivo ou /dev/null, que descarta o output)
+SIM - EXPAND (nome do arquivo "$(date +%Y-%m-%d).log" ou /dev/null)
+SIM - BUILTIN (vai ser interpretado como um argumento normal)
+SIM - COMANDO (vai ser interpretado como um argumento normal)
+	NÃO - PIPE
+	NÃO - OUTRO REDIRECIONAMENTO
+
+Tokens que podem vir depois da built-in echo:
+SIM - OPÇÃO -n (não gera uma nova linha, já implementei)
+SIM - PIPE
+SIM - REDIRECIONAMENTO
+SIM - COMANDO (vai ser tratado/impresso como uma palavra normal)
+SIM - BUILTIN (vai ser tratado/impresso como uma palavra normal)
+SIM - WORD
+SIM - EXPAND
+SIM - ERRO
+SIM - NADA (não retorna nada, mesmo se for sequência de vários espaços)
+	NÃO - HEREDOC
+
+Tokens que podem vir depois da built-in cd:
+SIM - OPÇÃO ~ (volta para a home)
+SIM - OPÇÃO - (volta para o diretório anterior, caso haja um (env OLDPWD))
+SIM = PONTO
+SIM - PONTO PONTO
+SIM - PIPE
+SIM - REDIRECIONAMENTO
+SIM - COMANDO (vai ser tratado como argumento normal, só se tiver alguma pasta com nome de builtin)
+SIM - BUILTIN (vai ser tratado como argumento normal, só se tiver alguma pasta com nome de builtin)
+SIM - WORD
+SIM - EXPAND (vai ser tratado como argumento normal, só se tiver alguma pasta com nome de builtin)
+SIM - NADA
+	NÃO - HEREDOC
+
+Tokens que podem vir depois da built-in pwd:
+SIM - PIPE
+SIM - REDIRECIONAMENTO
+SIM - COMANDO (mas não vai acontecer nada além de imprimir o diretório atual)
+SIM - BUILTIN (mas não vai acontecer nada além de imprimir o diretório atual)
+SIM - WORD (mas não vai acontecer nada além de imprimir o diretório atual)
+SIM - EXPAND (mas não vai acontecer nada além de imprimir o diretório atual)
+SIM - NADA
+	NÃO - HEREDOC
+
+Tokens que podem vir depois da built-in export:
+SIM - PIPE (mas não executa o export)
+SIM - REDIRECIONAMENTO (coloca a lista de variáveis de ambiente no arquivo com "declare -x" na frente de cada)
+SIM - COMANDO (mas não executa o export, porque não segue o padrão KEY=VALUE)
+SIM - BUILTIN (mas não executa o export, porque não segue o padrão KEY=VALUE)
+SIM - WORD (desde que seja KEY=VALUE)
+SIM - EXPAND (desde que seja KEY=VALUE)
+SIM - NADA (imprime todas as variáveis de ambiente com "declare -x" na frente de cada)
+	NÃO - HEREDOC
+
+Tokens que podem vir depois da built-in unset:
+SIM - REDIRECIONAMENTO (gera arquivo vazio)
+SIM - COMANDO (mas só vai executar o unset se houver uma variável de ambiente com o mesmo nome)
+SIM - BUILTIN (mas só vai executar o unset se houver uma variável de ambiente com o mesmo nome)
+SIM - WORD (mas só vai executar o unset se houver uma variável de ambiente com o mesmo nome)
+SIM - EXPAND (mas só vai executar o unset se houver uma variável de ambiente com o mesmo nome)
+SIM - NADA (não faz nada)
+	NÃO - PIPE (mas não executa o unset)
+	NÃO - HEREDOC
+
+Tokens que podem vir depois da built-in env:
+SIM - REDIRECIONAMENTO (coloca a lista de variáveis de ambiente no arquivo)
+SIM - COMANDO (mas não executa o env, executa o comando passado!)
+SIM - BUILTIN (mas não executa o env, executa a built-in passada!)
+SIM - WORD (se for igual ao KEY=VALUE, imprime a lista de variáveis de ambiente,
+se for diferente, mesmo que seja igual à KEY, dá erro)
+SIM - EXPAND (mesmo caso acima)
+SIM - NADA (imprime todas as variáveis de ambiente)
+	NÃO - PIPE
+	NÃO - HEREDOC
+
+Tokens que podem vir depois da built-in exit:
+SIM - REDIRECIONAMENTO (sai do shell, mas gera arquivo vazio)
+SIM - COMANDO (sai do shell, não executa o comando)
+SIM - BUILTIN (sai do shell, não executa a built-in)
+SIM - WORD (sai do shell)
+SIM - EXPAND (sai do shell)
+SIM - NADA (sai do shell)
+	NÃO - PIPE (não sai do shell)
+	NÃO - HEREDOC (não sai do shell)
+
+Tokens que podem vir depois de WORD:
+SIM - PIPE (sem nada depois do pipe, não faz nada; com algo depois, executa o comando ANTES de retornar erro da WORD)
+SIM - REDIRECIONAMENTO (gera arquivo vazio)
+SIM - COMANDO (não executa o comando)
+SIM - BUILTIN (não executa a built-in)
+SIM - WORD (retorna erro da primeira WORD, ignora as outras)
+SIM - EXPAND (retorna erro da primeira WORD, ignora as outras)
+SIM - NADA (retorna erro da primeira WORD, ignora as outras)
+	NÃO - HEREDOC (não retorna erro)
+
+Tokens que podem vir depois de EXPAND:
+SIM - REDIRECIONAMENTO (gera arquivo vazio)
+SIM - COMANDO (executa o comando, ignora o EXPAND (deve depender do resultado da expansão, imagino))
+SIM - BUILTIN (expande retorna algo de acordo (erro se não for um comando)
+a menos que o conteúdo da variável seja um comando e termine com um pipe, "echo fulaninho |")
+nesse caso expande e imprime o restante da frase, não executa função nenhuma))
+SIM - WORD (expande e retorna algo de acordo (erro se não for um comando))
+SIM - EXPAND (mesmo caso da BUILTIN)
+SIM - NADA (mesmo caso da BUILTIN))
+	NÃO - PIPE (não faz nada)
+	NÃO - HEREDOC (não retorna erro)

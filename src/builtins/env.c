@@ -6,20 +6,21 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:48 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 19:06:23 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:58:35 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_builtin_env(t_shell *shell)
+int	ft_builtin_env(t_shell *shell)
 {
-	t_token	*aux;
+	t_env	*env;
 
-	aux = shell->new_env;
-	while (aux)
+	env = shell->env;
+	while (env)
 	{
-		printf("%s\n", aux->str);
-		aux = aux->next;
+		printf("%s\n", env->str);
+		env = env->next;
 	}
+	return (0);
 }

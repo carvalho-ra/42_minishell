@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 19:28:32 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/07/26 12:42:42 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ft_confirm_append(t_shell *shell)
 		{
 			i++;
 			aux->error_code = 0;
+			aux->type = ERR;
 			aux->next->type = APPEND;
 			aux = aux->next;
 			printf("token %i is append (>>)\n", aux->index);
@@ -51,6 +52,7 @@ int	ft_confirm_heredoc(t_shell *shell)
 		{
 			i++;
 			aux->error_code = 0;
+			aux->type = ERR;
 			aux->next->type = HEREDOC;
 			aux = aux->next;
 			printf("token %i is heredoc (<<)\n", aux->index);
@@ -59,6 +61,8 @@ int	ft_confirm_heredoc(t_shell *shell)
 	}
 	return (i);
 }
+
+// o que vem do lado de um redirect é o nome do arquivo
 
 int	ft_confirm_redir_out(t_shell *shell)
 {

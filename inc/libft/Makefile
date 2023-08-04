@@ -40,18 +40,18 @@ RM		=	rm -f
 CFLAGS 	= 	-Wall -Wextra -Werror
 
 .c.o:
-			$(CC) -c $(CFLAGS) $(SRCS)
+			@$(CC) -c $(CFLAGS) $(SRCS)
 
 $(NAME):	$(OBJS)
-			ar rcs libft.a $(OBJS)
+			@ar rcs libft.a $(OBJS)
 
 all:		$(NAME)
 
 clean:
-			$(RM) $(OBJS)
+			@$(RM) $(OBJS)
 
 fclean: 	clean
-			$(RM) $(NAME)
+			@$(RM) $(NAME)
 
 re: 		fclean all
 
