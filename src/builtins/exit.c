@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:03:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/03 13:08:45 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:58:39 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 int	ft_builtin_exit(t_shell *shell)
 {
-	printf("NA BUILTIN EXIT\n");
 	free(shell->line);
 	ft_free_token_list(shell);
 	ft_free_env_list(shell);

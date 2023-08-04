@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 03:33:10 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/03 13:50:30 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:58:56 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_builtin_unset(t_token *current)
 	t_env	*env;
 	int		env_index;
 
-	printf("NA BUILTIN UNSET\n");
 	aux = current->next;
 	env = current->shell->env;
 	if (!current->next || aux->str == NULL)

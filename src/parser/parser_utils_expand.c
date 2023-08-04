@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 19:27:29 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/20 19:27:53 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:55:46 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	ft_confirm_expand(t_shell *shell)
 			{
 				aux->error_code = 0;
 				aux->type = EXPAND;
-				printf("token %i is expand\n", aux->index);
 				break ;
 			}
 			i++;
