@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:39:40 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/03 13:54:41 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/04 10:53:10 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_builtin_export(t_shell *shell)
 		}
 	}
 	else
-		return (2);
+		return (0);
 	return (0);
 }
 
@@ -51,6 +51,11 @@ int	ft_is_valid_key(char *name)
 	if (ft_isdigit(name[0]))
 	{
 		ft_putstr_fd("minishell: export: nome inválido\n", 2);
+		return (FALSE);
+	}
+	if (name[0] == '=')
+	{
+		ft_putstr_fd("minishell: export: `=': não é um identificador válido\n", 2);
 		return (FALSE);
 	}
 	while (name[i] != '=' && name[i] != '\0')
