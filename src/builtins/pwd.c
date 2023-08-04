@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:52:17 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/31 19:32:32 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 12:10:57 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ int	ft_builtin_pwd(void)
 	ft_putstr_fd(pwd, 1);
 	ft_putstr_fd("\n", 1);
 	free(pwd);
-	return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 03:33:10 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/01 11:43:25 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:58:56 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,12 @@ int	ft_builtin_unset(t_token *current)
 	aux = current->next;
 	env = current->shell->env;
 	if (!current->next || aux->str == NULL)
-        return (1);
+		return (0);
 	env_index = ft_is_key_duplicate(env, aux->str, 1);
-	printf("\t\tIndex %i\n", env_index);
 	if (env_index > -1)
 		ft_delete_env(env, env_index);
 	else
-		return (2);
-	return (0);
-}
-
-// Recreates the function above, but with char* shell->env_strs[0] instead of a list.
-int	ft_builtin_unset_matrix(t_shell *shell)
-{
-	int	index;
-
-	index = ft_is_key_duplicate_matrix(shell->env_strs, shell->list->next->str, 1);
-	if (index > -1)
-		ft_delete_env_from_matrix(shell, index);
-	else
-		return (2);
+		return (0);
 	return (0);
 }
 
@@ -57,17 +43,12 @@ int	ft_delete_env(t_env *env, int index)
 	i = 0;
 	current = env;
 	previous = env;
-	// Se for o primeiro nó, apenas move o ponteiro para o próximo e libera.
 	if (index == 0)
 	{
 		env = env->next;
-		free(current->str);
-		free(current);
+		ft_free_env_node(current);
 		return (0);
 	}
-	// Se não for o primeiro nó, avança pela lista até chegar no correto,
-	// libera a memória e substitui o ponteiro next do nó anterior para o
-	// próximo nó.
 	while (i < index)
 	{
 		previous = current;
@@ -78,22 +59,14 @@ int	ft_delete_env(t_env *env, int index)
 		previous->next = NULL;
 	else if (current->next != NULL)
 		previous->next = current->next;
-	free(current->str);
-	free(current);
+	ft_free_env_node(current);
 	return (0);
 }
 
-// Recreates the function above, but with char* shell->env_strs[0] instead of a list.
-int	ft_delete_env_from_matrix(t_shell *shell, int index)
+void	ft_free_env_node(t_env *env)
 {
-	int	i;
-
-	i = index;
-	while (shell->env_strs[i + 1] != NULL)
-	{
-		shell->env_strs[i] = shell->env_strs[i + 1];
-		i++;
-	}
-	shell->env_strs[i] = NULL;
-	return (0);
+	free(env->str);
+	env->str = NULL;
+	free(env);
+	env = NULL;
 }

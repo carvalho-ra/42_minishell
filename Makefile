@@ -1,6 +1,7 @@
 NAME = minishell
 
 SRCS = ./src/main.c \
+		./src/builtins/cd_utils.c \
 		./src/builtins/cd.c \
 		./src/builtins/echo.c \
 		./src/builtins/env.c \
@@ -13,9 +14,9 @@ SRCS = ./src/main.c \
 		./src/expand/expand_utils_var.c \
 		./src/expand/expand_utils_word.c \
 		./src/expand/expand.c \
-		./src/executor/executor.c \
-		./src/executor/execution.c \
-		./src/list.c \
+		./src/exec/executor.c \
+		./src/exec/execution.c \
+		./src/lexer/lexer_utils_list.c \
 		./src/lexer/lexer_utils_quotes.c \
 		./src/lexer/lexer_utils.c \
 		./src/lexer/lexer.c \
@@ -27,6 +28,7 @@ SRCS = ./src/main.c \
 		./src/parser/parser.c \
 		./src/prompt.c \
 		./src/signal.c \
+		./src/utils_memory.c \
 		./src/utils.c \
 
 OBJS = $(SRCS:.c=.o)

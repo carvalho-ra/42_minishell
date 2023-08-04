@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:39:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/24 16:27:16 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/02 19:59:16 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,13 @@ t_env	*ft_create_env_node(char *str)
 	return (new_env_node);
 }
 
-//?Se for importante para alterar a lista, seria possível criar uma variável index na struct?
 void	ft_add_env(t_shell *shell, char *str)
 {
 	t_env	*aux;
 
 	aux = shell->env;
 	if (aux == NULL)
-		// o erro é que tínhamos que mallocar espaço pra gravar a string,
-		// assim como a ft_copy_env() faz (chamada lá na main)
-		shell->env = ft_create_env_node(ft_strdup(str)); 
+		shell->env = ft_create_env_node(ft_strdup(str));
 	else
 	{
 		while (aux->next != NULL)
@@ -45,16 +42,13 @@ void	ft_add_env(t_shell *shell, char *str)
 	ft_free_ptrs(str, NULL);
 }
 
-
 // ler regras variaveis shell
-
 //unset em variavel inexistente é igual ao comportamento normal, não dá erro
 
 int	ft_copy_env(t_shell *shell, char **envp)
 {
 	int		i;
 
-	//shell->env = NULL;
 	i = 0;
 	while (envp[i] != NULL)
 	{
@@ -94,4 +88,3 @@ char	*ft_search_env(char *str, t_shell *shell)
 	ft_free_ptrs(str, NULL);
 	return (ret);
 }
-
