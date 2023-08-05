@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/02 19:59:48 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/05 04:54:07 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,7 @@ void	ft_expand_args(t_shell *shell)
 			aux->str = ft_expand_core(aux->str, shell);
 		aux = aux->next;
 	}
-}
-
-// apagar aspas duplas
-// apagar aspas simples e nao faz mais nada
-// cortar a variavel que vai expandir
-// é só a varivel??
-
-char	*ft_prep_expand(char *str)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	tmp = str;
-	if (tmp[i] == 34)
-		tmp = ft_strtrim(tmp, "\"");
-	else
-		tmp = ft_strdup(tmp);
-	return (tmp);
+	ft_remove_quotes(shell);
 }
 
 char	*ft_expand_core(char *str, t_shell *shell)
@@ -79,5 +61,36 @@ void	ft_free_ptrs(char *str, char *str2)
 	{
 		free(str2);
 		str2 = NULL;
+	}
+}
+
+void	ft_remove_quotes(t_shell *shell)
+{
+	t_token	*aux;
+	char	*tmp;
+
+	aux = shell->list;
+	tmp = NULL;
+	while (aux)
+	{
+		if (aux->str[0] == '\'')
+		{
+			tmp = ft_strtrim(aux->str, "\'");
+			ft_free_ptrs(aux->str, NULL);
+			aux->str = ft_strdup(tmp);
+			ft_free_ptrs(tmp, NULL);
+			if (aux->next)
+				aux = aux->next;
+		}
+		if (aux->str[0] == '\"')
+		{
+			tmp = ft_strtrim(aux->str, "\"");
+			ft_free_ptrs(aux->str, NULL);
+			aux->str = ft_strdup(tmp);
+			ft_free_ptrs(tmp, NULL);
+			if (aux->next)
+				aux = aux->next;
+		}
+		aux = aux->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/03 14:07:40 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/05 04:59:25 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	ft_builtin_echo(t_token *current)
 	}
 	while (strings[i])
 	{
-		if (strings[i])
-			strings[i] = quotes_treatment(current->cmd[i]);
+		// if (strings[i])
+		// 	strings[i] = quotes_treatment(current->cmd[i]);
 		ft_putstr_fd(strings[i], 1);
 		if (strings[i + 1])
 			ft_putstr_fd(" ", 1);

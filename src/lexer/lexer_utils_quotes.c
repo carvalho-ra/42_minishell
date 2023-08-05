@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:36 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/31 15:13:28 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/05 03:28:53 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_single_quote(char *str, int i)
 		i++;
 		while (str[i] && str[i] != 39)
 			i++;
-		return (i);
+		return (i + 1);
 	}
 	return (i);
 }
@@ -31,7 +31,7 @@ int	ft_double_quote(char *str, int i)
 		i++;
 		while (str[i] != '\0' && str[i] != 34)
 			i++;
-		return (i);
+		return (i + 1);
 	}
 	return (i);
 }
