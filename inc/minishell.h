@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/03 17:16:16 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/05 04:54:21 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,10 @@ char	*ft_aux_exp_word(char *str, char *final, int i);
 //prototypes expand.c
 int		ft_confirm_expand(t_shell *shell);
 void	ft_expand_args(t_shell *shell);
-char	*ft_prep_expand(char *str);
 char	*ft_expand_core(char *str, t_shell *shell);
 char	*ft_prep_expand(char *data);
 void	ft_free_ptrs(char *str, char *str2);
+void	ft_remove_quotes(t_shell *shell);
 
 //prototypes lexer
 
@@ -171,7 +171,6 @@ int		ft_is_redir_less(char c);
 //prototypes lexer.c
 int		ft_aux_lexer(char *str, int i);
 t_token	*ft_lexer(t_shell *shell);
-void	ft_remove_double_quotes(t_shell *shell);
 
 //prototypes parser
 
