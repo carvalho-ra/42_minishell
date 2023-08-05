@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/05 15:06:52 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/05 19:46:40 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ int	ft_builtin_echo(t_token *current)
 // {
 // 	int		i;
 // 	int		j;
-// 	int		external; //* Flag para saber se estou dentro das aspas externas, e que tipo são
-// 	char	treated[ft_strlen(string)]; //* String que vai substituir o input do usuário tirando aspas externas
+// 	int		external; //* Flag para saber se estou 
+//dentro das aspas externas, e que tipo são
+// 	char	treated[ft_strlen(string)]; //* String que vai 
+//substituir o input do usuário tirando aspas externas
 // 	i = 0;
 // 	j = 0;
-	
+
 // 	external = FALSE;
 // 	while (string[i])
 // 	{
