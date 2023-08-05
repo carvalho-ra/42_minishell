@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 19:27:29 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/05 04:35:09 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/05 05:43:08 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_confirm_expand(t_shell *shell)
 	int		i;
 	int		state;
 
-	
 	aux = shell->list;
 	while (aux)
 	{
@@ -38,7 +37,6 @@ int	ft_confirm_expand(t_shell *shell)
 				state = 2;
 			if (aux->str[i] == '$' && state < 2 && aux->str[i + 1])
 			{
-				aux->error_code = 0;
 				aux->type = EXPAND;
 				break ;
 			}
