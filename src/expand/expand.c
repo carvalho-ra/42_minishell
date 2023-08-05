@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/05 15:00:15 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/05 20:00:14 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_remove_quotes(t_shell *shell)
 	quotes = NULL;
 	while (aux)
 	{
-		if (aux->str[0] == '\'' || aux->str[0] == '\"')
+		if (aux->str && (aux->str[0] == '\'' || aux->str[0] == '\"'))
 		{
 			quotes = ft_substr(aux->str, 0, 1);
 			tmp = ft_strtrim(aux->str, quotes);
