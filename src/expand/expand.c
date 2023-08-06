@@ -6,13 +6,13 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/05 20:00:14 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 11:19:57 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//ASPAS DUPLAS removidas já no final do lexer
+//ASPAS DUPLAS removidas já no final do lexer??
 void	ft_expand_args(t_shell *shell)
 {
 	t_token	*aux;
@@ -48,20 +48,6 @@ char	*ft_expand_core(char *str, t_shell *shell)
 	}
 	ft_free_ptrs(str, NULL);
 	return (final);
-}
-
-void	ft_free_ptrs(char *str, char *str2)
-{
-	if (str)
-	{
-		free(str);
-		str = NULL;
-	}
-	if (str2)
-	{
-		free(str2);
-		str2 = NULL;
-	}
 }
 
 void	ft_remove_quotes(t_shell *shell)

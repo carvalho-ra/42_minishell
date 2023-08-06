@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/05 04:43:24 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 12:13:55 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_get_all_paths(t_token *current)
 	aux = current->shell->env;
 	while (aux)
 	{
-		if (ft_strncmp(aux->str, "PATH", 4) == 0)
+		if (aux->str && ft_strncmp(aux->str, "PATH", 4) == 0)
 		{
 			path = ft_substr(aux->str, 5, ft_strlen(aux->str) - 5);
 			paths = ft_split(path, ':');

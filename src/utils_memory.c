@@ -6,30 +6,11 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/03 13:59:32 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 11:19:06 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	ft_free_token_list(t_shell *shell)
-{
-	t_token	*current;
-	t_token	*next;
-
-	current = shell->list;
-	while (current)
-	{
-		next = current->next;
-		free(current->str);
-		if (current->cmd)
-			ft_free_arr_strs(current->cmd);
-		free(current->cmd);
-		free(current);
-		current = next;
-	}
-	shell->list = NULL;
-}
 
 void	ft_free_arr_strs(char **str)
 {
@@ -88,4 +69,18 @@ void	ft_free_shell(t_shell *shell)
 	free(aux->list);
 	free(shell);
 	shell = NULL;
+}
+
+void	ft_free_ptrs(char *str, char *str2)
+{
+	if (str)
+	{
+		free(str);
+		str = NULL;
+	}
+	if (str2)
+	{
+		free(str2);
+		str2 = NULL;
+	}
 }
