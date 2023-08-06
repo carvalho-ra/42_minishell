@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 12:13:55 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 12:29:21 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ char	**ft_add_cmd(t_token *current, char **paths)
 	int		i;
 
 	i = 0;
+	if (current->cmd[0][0] == '/')
+		return (current->cmd);
 	slash_cmd = ft_strjoin("/", current->cmd[0]);
 	aux = NULL;
 	while (paths[i])
@@ -130,7 +132,10 @@ int	ft_execve(t_token *current)
 	int		pid;
 
 	ft_env_to_str(current->shell);
-	cmd = ft_search_cmd(ft_add_cmd(current, ft_get_all_paths(current)));
+	if(current->cmd[0][0] == '/')
+		cmd = ft_strdup(current->cmd[0]);
+	else
+		cmd = ft_search_cmd(ft_add_cmd(current, ft_get_all_paths(current)));
 	args = current->cmd;
 	if (!cmd)
 	{
