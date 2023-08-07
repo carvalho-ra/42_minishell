@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/07 11:59:49 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 12:35:14 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		ft_builtin_echo(t_token *current);
 char	*quotes_treatment(char *string);
 
 //prototyoes env.c
-int		ft_builtin_env(t_shell *shell);
+int		ft_builtin_env(t_token *current);
 
 //prototyoes exit.c
 int		ft_free_exit(t_shell *shell);
@@ -116,7 +116,7 @@ void	ft_free_env_node(t_env *env);
 //prototypes exec
 
 //prototypes execution.c
-int		ft_which_builtin(t_shell *shell, t_token *current);
+int		ft_which_builtin(t_token *current);
 int		ft_execution(t_shell *shell);
 
 //prototypes executor.c
