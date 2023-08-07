@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:41:24 by rcarvalh          #+#    #+#             */
-/*   Updated: 2022/07/01 11:55:42 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 00:03:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strdup(const char *s1)
 	char	*result;
 	size_t	count;
 
+	if (!s1)
+		return (NULL);
 	result = malloc(ft_strlen(s1) + 1 * sizeof(char));
 	if (!result)
 		return (NULL);

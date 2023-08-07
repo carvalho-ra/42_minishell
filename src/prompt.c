@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:45 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 23:39:25 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 01:28:00 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_is_history(char *str)
 	char	*tmp;
 
 	tmp = ft_strtrim(str, " ");
-	if (ft_strlen(tmp) != 0 || !tmp)
+	if (ft_strlen(tmp) != 0)
 	{
 		add_history(str);
 		free(tmp);
