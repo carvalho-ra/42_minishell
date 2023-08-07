@@ -6,13 +6,15 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 20:20:03 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:32:22 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//ASPAS DUPLAS removidas já no final do lexer??
+//remove quotes devia ir pra main
+//funtion that iterates through the list and calls expand
+//each node previously marqued as expand
 void	ft_expand_args(t_shell *shell)
 {
 	t_token	*aux;
@@ -25,7 +27,6 @@ void	ft_expand_args(t_shell *shell)
 		aux = aux->next;
 	}
 	ft_remove_quotes(shell);
-	//ft_join_from_lexer(shell);
 }
 
 char	*ft_expand_core(char *str, t_shell *shell)
@@ -85,10 +86,13 @@ void	ft_join_from_lexer(t_shell *shell)
 	{
 		if (aux->join == 1)
 		{
-			tmp = ft_strjoin(aux->str, aux->next->str);
-			ft_free_ptrs2(&aux->next->str, &aux->str);
-			aux->next->str = ft_strdup(tmp);
-			ft_free_ptrs2(&tmp, NULL);
+			if (aux && aux->next)
+			{
+				tmp = ft_strjoin(aux->str, aux->next->str);
+				ft_free_ptrs2(&aux->next->str, &aux->str);
+				aux->next->str = ft_strdup(tmp);
+				ft_free_ptrs2(&tmp, NULL);
+			}
 		}
 		aux = aux->next;
 	}

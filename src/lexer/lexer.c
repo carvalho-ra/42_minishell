@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:43 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 21:19:08 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:35:15 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_token	*ft_lexer(t_shell *shell)
 	unsigned int	i;
 	unsigned int	start;
 	unsigned int	id;
-	
+
 	i = 0;
 	start = 0;
 	id = 2;
@@ -55,8 +55,8 @@ t_token	*ft_lexer(t_shell *shell)
 			i++;
 		start = i;
 		i = ft_aux_lexer(shell->line, i);
-		//printf("shell->line[%i] = [%c]\n", i, shell->line[i]);
-		if (shell->line[i] && !(ft_is_blank(shell->line[i])) && !(ft_is_pipe_redir(shell->line[i])))
+		if (shell->line[i] && !(ft_is_blank(shell->line[i]))
+			&& !(ft_is_pipe_redir(shell->line[i])))
 			shell->aux_lexer = 1;
 		else
 			shell->aux_lexer = 0;

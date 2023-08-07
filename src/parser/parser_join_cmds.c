@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:29:17 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 21:19:33 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:35:38 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ t_token	*ft_fill_array(t_token *token)
 		aux->cmd = ft_count_args(current);
 		while (current && (current->type >= 0 && current->type <= EXPAND))
 		{
-			//printf("current->str = %s\n", current->str);
-			if (current->str)
+			if (current->str != NULL)
 				aux->cmd[i++] = ft_strdup(current->str);
 			current = current->next;
 		}

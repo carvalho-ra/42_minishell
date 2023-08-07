@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/06 20:45:51 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:38:18 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ char	*ft_prep_expand(char *data);
 void	ft_free_ptrs(char *str, char *str2);
 void	ft_remove_quotes(t_shell *shell);
 void	ft_join_from_lexer(t_shell *shell);
-
 
 //prototypes lexer
 
