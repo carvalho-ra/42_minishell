@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:36:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/21 13:08:28 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 03:24:17 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ char	*ft_norm_aux_exp_var(char *tmp, char *final, int start, int i)
 	if (start != i && tmp && final)
 	{
 		new = ft_strjoin(final, tmp);
-		ft_free_ptrs(tmp, final);
+		ft_free_ptrs(&tmp, &final);
 	}
 	else if ((start != i && tmp && !final))
 	{
 		new = tmp;
-		ft_free_ptrs(final, NULL);
+		ft_free_ptrs(&final, NULL);
 	}
 	else if (start != i && !tmp && final)
 		new = final;

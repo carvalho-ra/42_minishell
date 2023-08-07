@@ -1,9 +1,7 @@
 teste"$USER$NO$USER"teste
 teste'"$USER$NO$USER"'teste
-teste'"$USER$NO$USER"'teste
 teste'"$NO"'teste
 echo teste"$USER$NO$USER"teste
-echo teste'"$USER$NO$USER"'teste
 echo teste'"$USER$NO$USER"'teste
 echo teste'"$NO"'teste
 "$NO"$NO"$NO"'$NO'
@@ -11,5 +9,5 @@ echo "$NO"$NO"$NO"'$NO'
 "$NO" "$HOME"
 "$NO""$HOME"
 $NO$HOME
-
+"$NO"
 vazando

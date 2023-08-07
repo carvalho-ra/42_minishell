@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 19:27:29 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 23:33:04 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 02:56:46 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 // look for expand ($)
 // - function to iterate through strings
 // of each node looking for $ (ISSUE! consider $$???)
+
+int	ft_set_quote_state(char *str, int state, int i)
+{
+	if (str[i] == '\"' && !state)
+		state = 1;
+	if (str[i] == '\'' && !state)
+		state = 2;
+	return (state);
+}
 
 int	ft_confirm_expand(t_shell *shell)
 {
@@ -31,10 +40,7 @@ int	ft_confirm_expand(t_shell *shell)
 		state = 0;
 		while (aux->str[i])
 		{
-			if (aux->str[i] == '\"' && !state)
-				state = 1;
-			if (aux->str[i] == '\'' && !state)
-				state = 2;
+			state = ft_set_quote_state(aux->str, state, i);
 			if (aux->str[i] == '$' && state < 2 && aux->str[i + 1] != '\0'
 				&& aux->str[i + 1] != ' ' && aux->str[i + 1] != '\"'
 				&& aux->str[i + 1] != '\'' && aux->str[i + 1] != '$')

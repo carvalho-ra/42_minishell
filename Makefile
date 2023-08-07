@@ -14,6 +14,7 @@ SRCS = ./src/main.c \
 		./src/expand/expand_utils_var.c \
 		./src/expand/expand_utils_word.c \
 		./src/expand/expand.c \
+		./src/exec/exec_utils.c \
 		./src/exec/executor.c \
 		./src/exec/execution.c \
 		./src/lexer/lexer_utils_list.c \

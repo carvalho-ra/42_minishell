@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:11:35 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/03 21:04:08 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 03:22:17 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ int	ft_builtin_cd(t_token *current)
 		{
 			printf("minishell: cd: %s: ", current->next->str);
 			printf("Arquivo ou diretório inexistente\n");
-			ft_free_ptrs(path, NULL);
+			ft_free_ptrs(&path, NULL);
 			return (0);
 		}
 		ft_change_oldpwd(current->shell, path);
 		chdir(current->next->str);
-		ft_free_ptrs(path, NULL);
+		ft_free_ptrs(&path, NULL);
 	}
 	return (0);
 }
