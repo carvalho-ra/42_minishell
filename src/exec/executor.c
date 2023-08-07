@@ -6,39 +6,11 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 02:03:09 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 04:01:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-//escrever uma função que transforme a t_env em char **env
-//para passar para o execve
-int	ft_env_to_str(t_shell *shell)
-{
-	t_env	*aux;
-	int		i;
-
-	i = 0;
-	aux = shell->env;
-	while (aux)
-	{
-		aux = aux->next;
-		i++;
-	}
-	shell->env_strs = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!shell->env_strs)
-		return (1);
-	i = 0;
-	aux = shell->env;
-	while (aux)
-	{
-		shell->env_strs[i++] = ft_strdup(aux->str);
-		aux = aux->next;
-	}
-	shell->env_strs[i] = NULL;
-	return (0);
-}
 
 // escrever uma função que pegue o caminho completo dos PATHS
 // na nossa env e retorn um array de strings com os paths
@@ -126,12 +98,10 @@ char	*ft_search_cmd(char **paths)
 	return (NULL);
 }
 
-// função que executa o comando
-int	ft_execve(t_token *current)
+int	ft_check_cmd(t_token *current)
 {
 	char	*cmd;
 	char	**args;
-	int		pid;
 
 	cmd = NULL;
 	ft_env_to_str(current->shell);
@@ -144,27 +114,33 @@ int	ft_execve(t_token *current)
 	args = current->cmd;
 	if (!cmd)
 	{
-		free(cmd);
 		printf("%s : command not found\n", args[0]);
+		ft_free_ptrs(&cmd, NULL);
 		return (-1);
 	}
 	else
+		ft_execve(current, cmd);
+	return (0);
+}
+
+int	ft_execve(t_token *current, char *cmd)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
 	{
-		pid = fork();
-		if (pid == 0)
+		if (execve(cmd, current->cmd, current->shell->env_strs) == -1)
 		{
-			if (execve(cmd, args, current->shell->env_strs) == -1)
-			{
-				printf("execve error\n");
-				exit(1);
-			}
+			printf("execve error\n");
+			ft_free_ptrs(&cmd, NULL);
+			exit(1);
 		}
-		else
-		{
-			wait(NULL);
-			ft_free_ptrs(cmd, NULL);
-		}
+	}
+	else
+	{
+		wait(NULL);
+		ft_free_ptrs(&cmd, NULL);
 	}
 	return (0);
 }
-// perror() imprime uma mensagem de erro padrão

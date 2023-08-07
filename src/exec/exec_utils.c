@@ -1,41 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils_quotes.c                               :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 21:21:36 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 02:48:41 by rcarvalh         ###   ########.fr       */
+/*   Created: 2023/08/07 03:09:05 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/08/07 03:09:23 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_single_quote(char *str, int i)
+//escrever uma função que transforme a t_env em char **env
+//para passar para o execve
+int	ft_env_to_str(t_shell *shell)
 {
-	if (str[i] == 39)
-	{
-		i++;
-		while (str[i] && str[i] != 39)
-			i++;
-		if (str[i] == '\0')
-			return (i);
-		return (i + 1);
-	}
-	return (i);
-}
+	t_env	*aux;
+	int		i;
 
-int	ft_double_quote(char *str, int i)
-{
-	if (str[i] == 34)
+	i = 0;
+	aux = shell->env;
+	while (aux)
 	{
+		aux = aux->next;
 		i++;
-		while (str[i] != '\0' && str[i] != 34)
-			i++;
-		if (str[i] == '\0')
-			return (i);
-		return (i + 1);
 	}
-	return (i);
+	shell->env_strs = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!shell->env_strs)
+		return (1);
+	i = 0;
+	aux = shell->env;
+	while (aux)
+	{
+		shell->env_strs[i++] = ft_strdup(aux->str);
+		aux = aux->next;
+	}
+	shell->env_strs[i] = NULL;
+	return (0);
 }

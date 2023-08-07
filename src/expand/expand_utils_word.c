@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:36:05 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/05 03:09:25 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 03:24:34 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ char	*ft_aux_exp_word(char *str, char *final, int i)
 		else if (start != i && final)
 			new = ft_strjoin(final, sub);
 	}
-	ft_free_ptrs(final, sub);
+	ft_free_ptrs(&final, &sub);
 	return (new);
 }

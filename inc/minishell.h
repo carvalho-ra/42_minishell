@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/06 23:38:18 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 03:39:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ int		ft_env_to_str(t_shell *shell);
 char	**ft_get_all_paths(t_token *current);
 char	**ft_add_cmd(t_token *current, char **paths);
 char	*ft_search_cmd(char **paths);
-int		ft_execve(t_token *current);
+int		ft_check_cmd(t_token *current);
+int		ft_execve(t_token *current, char *cmd);
 
 //prototypes expand
 
@@ -150,7 +151,6 @@ int		ft_confirm_expand(t_shell *shell);
 void	ft_expand_args(t_shell *shell);
 char	*ft_expand_core(char *str, t_shell *shell);
 char	*ft_prep_expand(char *data);
-void	ft_free_ptrs(char *str, char *str2);
 void	ft_remove_quotes(t_shell *shell);
 void	ft_join_from_lexer(t_shell *shell);
 
@@ -191,6 +191,7 @@ int		ft_err_redir_in(t_shell *shell);
 int		ft_err_redir_out(t_shell *shell);
 
 //prototypes parser_utils_expand.c
+int		ft_set_quote_state(char *str, int state, int i);
 int		ft_confirm_expand(t_shell *shell);
 
 //prototypes parser_utils_redirs.c
@@ -220,8 +221,7 @@ void	ft_free_arr_strs(char **str);
 void	ft_free_env_list(t_shell *shell);
 void	ft_free_env_strs(t_shell *shell);
 void	ft_free_shell(t_shell *shell);
-
-void	ft_free_ptrs2(char **str, char **str2);
+void	ft_free_ptrs(char **str, char **str2);
 
 //prototypes utils.c
 int		ft_strcmp(char *s1, char *s2);
