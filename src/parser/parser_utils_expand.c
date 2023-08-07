@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 19:27:29 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/05 05:43:08 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 16:13:10 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ int	ft_confirm_expand(t_shell *shell)
 				state = 1;
 			if (aux->str[i] == '\'' && !state)
 				state = 2;
-			if (aux->str[i] == '$' && state < 2 && aux->str[i + 1])
+			if (aux->str[i] == '$' && state < 2 && aux->str[i + 1] != '\0'
+				&& aux->str[i + 1] != ' ' && aux->str[i + 1] != '\"'
+				&& aux->str[i + 1] != '\'' && aux->str[i + 1] != '$')
 			{
 				aux->type = EXPAND;
+				printf("token %i is expand\n", aux->index);
 				break ;
 			}
 			i++;

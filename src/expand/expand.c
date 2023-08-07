@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 11:19:57 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 20:20:03 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_expand_args(t_shell *shell)
 		aux = aux->next;
 	}
 	ft_remove_quotes(shell);
+	//ft_join_from_lexer(shell);
 }
 
 char	*ft_expand_core(char *str, t_shell *shell)
@@ -68,6 +69,26 @@ void	ft_remove_quotes(t_shell *shell)
 			ft_free_ptrs(aux->str, NULL);
 			aux->str = ft_strdup(tmp);
 			ft_free_ptrs(tmp, quotes);
+		}
+		aux = aux->next;
+	}
+}
+
+void	ft_join_from_lexer(t_shell *shell)
+{
+	t_token	*aux;
+	char	*tmp;
+
+	tmp = NULL;
+	aux = shell->list;
+	while (aux)
+	{
+		if (aux->join == 1)
+		{
+			tmp = ft_strjoin(aux->str, aux->next->str);
+			ft_free_ptrs2(&aux->next->str, &aux->str);
+			aux->next->str = ft_strdup(tmp);
+			ft_free_ptrs2(&tmp, NULL);
 		}
 		aux = aux->next;
 	}
