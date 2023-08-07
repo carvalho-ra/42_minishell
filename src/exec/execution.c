@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 03:19:58 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 10:56:55 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_which_builtin(t_shell *shell, t_token *current)
 	else if (ft_strcmp(current->cmd[0], "pwd") == 0)
 		return (ft_builtin_pwd());
 	else if (ft_strcmp(current->cmd[0], "export") == 0)
-		return (ft_builtin_export(shell));
+		return (ft_builtin_export(current));
 	else if (ft_strcmp(current->cmd[0], "unset") == 0)
 		return (ft_builtin_unset(current));
 	else if (ft_strcmp(current->cmd[0], "env") == 0)

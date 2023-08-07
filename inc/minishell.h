@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/07 03:39:13 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 10:56:18 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		ft_builtin_env(t_shell *shell);
 int		ft_builtin_exit(t_shell *shell);
 
 //prototyoes export.c
-int		ft_builtin_export(t_shell *shell);
+int		ft_builtin_export(t_token *current);
 int		ft_is_valid_key(char *name);
 int		ft_is_key_duplicate(t_env *env, char *key, int origin);
 int		ft_add_to_env_list(t_env *env_list, char *new_env, int origin);

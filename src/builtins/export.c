@@ -6,21 +6,23 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:39:40 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/05 19:49:19 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 10:58:56 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // Adds or replaces environment variables in the list.
-int	ft_builtin_export(t_shell *shell)
+int	ft_builtin_export(t_token *current)
 {
 	t_token	*aux;
 	t_env	*env_list;
 	int		env_index;
 
-	aux = shell->list->next;
-	env_list = shell->env;
+	aux = current->next;
+	if (!aux)
+		return (0);
+	env_list = current->shell->env;
 	if (ft_is_valid_key(aux->str))
 	{
 		ft_add_to_env_list(env_list, aux->str, 6);
