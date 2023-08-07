@@ -6,14 +6,15 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 04:01:13 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 11:28:11 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// escrever uma função que pegue o caminho completo dos PATHS
-// na nossa env e retorn um array de strings com os paths
+//function that gets all the paths from the env
+//and splits them into an array of strings
+//returns an array of strings with the paths
 char	**ft_get_all_paths(t_token *current)
 {
 	char	*path;
@@ -39,8 +40,8 @@ char	**ft_get_all_paths(t_token *current)
 	return (NULL);
 }
 
-// função que adiciona "/cmd" ao final de cada string
-// retornar um array de strings com os paths completos
+//function that adds "/cmd" to the end of each string
+//returns an array of strings with the full paths
 char	**ft_add_cmd(t_token *current, char **paths)
 {
 	char	*aux;
@@ -67,8 +68,8 @@ char	**ft_add_cmd(t_token *current, char **paths)
 	return (paths);
 }
 
-// função que procura pelo arquivo
-//retorna o path funcional se existir
+//function that searches for the file
+//returns the string with the full path of the file
 char	*ft_search_cmd(char **paths)
 {
 	int		i;
@@ -98,6 +99,8 @@ char	*ft_search_cmd(char **paths)
 	return (NULL);
 }
 
+// function that checks if the command is valid
+// returns 0 if it is, -1 if it isn't
 int	ft_check_cmd(t_token *current)
 {
 	char	*cmd;
@@ -123,6 +126,8 @@ int	ft_check_cmd(t_token *current)
 	return (0);
 }
 
+// function that executes the command
+// returns 0 if it is executable, -1 on execve error
 int	ft_execve(t_token *current, char *cmd)
 {
 	int	pid;

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/07 10:56:18 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 11:59:49 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ char	*quotes_treatment(char *string);
 int		ft_builtin_env(t_shell *shell);
 
 //prototyoes exit.c
-int		ft_builtin_exit(t_shell *shell);
+int		ft_free_exit(t_shell *shell);
+int		ft_free_no_exit(t_shell *shell);
+int		ft_builtin_exit(t_token *current);
 
 //prototyoes export.c
 int		ft_builtin_export(t_token *current);

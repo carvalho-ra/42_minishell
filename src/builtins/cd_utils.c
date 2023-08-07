@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 20:35:48 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 03:23:15 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 11:18:11 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_substitute_oldpwd(t_shell *shell, char *current_pwd)
 	return (0);
 }
 
-// função que troca o OLDPWD pelo diretório em que estou
+//function that changes OLDPWD for the current directory
 int	ft_change_oldpwd(t_shell *shell, char *current_pwd)
 {
 	char	*temp;
@@ -96,6 +96,7 @@ int	ft_goto_prev_pwd(t_token *current, char *current_pwd)
 	}
 }
 
+//funtion that changes directory to the one above
 int	ft_goto_above(t_token *current, char *current_pwd)
 {
 	char	*temp;

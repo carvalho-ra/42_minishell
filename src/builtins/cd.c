@@ -6,13 +6,13 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:11:35 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/07 03:22:17 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 11:18:33 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// Changes the current directory.
+// function that hanges the current directory.
 int	ft_builtin_cd(t_token *current)
 {
 	char	*path;

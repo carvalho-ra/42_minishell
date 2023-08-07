@@ -6,14 +6,15 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 03:09:05 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 03:09:23 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 11:27:03 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//escrever uma função que transforme a t_env em char **env
-//para passar para o execve
+//function that transforms the t_env into a char **env
+//to pass to execve
+//returns 0 if it works, 1 if it doesn't
 int	ft_env_to_str(t_shell *shell)
 {
 	t_env	*aux;

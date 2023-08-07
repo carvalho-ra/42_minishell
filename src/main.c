@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 02:05:31 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 11:55:28 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	ft_aux(t_shell *shell)
 	if (!shell->line)
 	{
 		write(2, "exit\n", 5);
-		ft_builtin_exit(shell);
+		ft_free_exit(shell);
 	}
 	if (ft_is_history(shell->line))
 	{

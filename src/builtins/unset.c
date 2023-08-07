@@ -6,13 +6,14 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 03:33:10 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/03 20:58:56 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 11:30:10 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // Deletes environment variables from the list.
+// Returns 0 if it works, 1 if it doesn't.
 int	ft_builtin_unset(t_token *current)
 {
 	t_token	*aux;
@@ -34,6 +35,7 @@ int	ft_builtin_unset(t_token *current)
 // Iterates through the environment list until it reaches the passed int,
 // then deletes the node, freeing its memory and replacing the previous node's
 // next pointer to the next node.
+//returns 0 if it works, 1 if it doesn't
 int	ft_delete_env(t_env *env, int index)
 {
 	t_env	*current;
@@ -63,6 +65,8 @@ int	ft_delete_env(t_env *env, int index)
 	return (0);
 }
 
+//funtion that frees the memory of an env node
+//returns nothing
 void	ft_free_env_node(t_env *env)
 {
 	free(env->str);
