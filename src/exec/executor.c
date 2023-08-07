@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 23:36:13 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 02:03:09 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ char	**ft_add_cmd(t_token *current, char **paths)
 	int		i;
 
 	i = 0;
-	if (current->cmd[0][0] == '/')
-		return (current->cmd);
+	if (!current->cmd[0][0])
+		return (NULL);
 	slash_cmd = ft_strjoin("/", current->cmd[0]);
 	aux = NULL;
 	while (paths[i])
@@ -133,7 +133,10 @@ int	ft_execve(t_token *current)
 	char	**args;
 	int		pid;
 
+	cmd = NULL;
 	ft_env_to_str(current->shell);
+	if (!current->cmd[0][0])
+		return (0);
 	if (current->cmd[0][0] == '/')
 		cmd = ft_strdup(current->cmd[0]);
 	else
@@ -141,6 +144,7 @@ int	ft_execve(t_token *current)
 	args = current->cmd;
 	if (!cmd)
 	{
+		free(cmd);
 		printf("%s : command not found\n", args[0]);
 		return (-1);
 	}
@@ -148,7 +152,13 @@ int	ft_execve(t_token *current)
 	{
 		pid = fork();
 		if (pid == 0)
-			execve(cmd, args, current->shell->env_strs);
+		{
+			if (execve(cmd, args, current->shell->env_strs) == -1)
+			{
+				printf("execve error\n");
+				exit(1);
+			}
+		}
 		else
 		{
 			wait(NULL);
