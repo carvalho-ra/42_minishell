@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/05 04:43:24 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:36:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_get_all_paths(t_token *current)
 	aux = current->shell->env;
 	while (aux)
 	{
-		if (ft_strncmp(aux->str, "PATH", 4) == 0)
+		if (aux->str && ft_strncmp(aux->str, "PATH", 4) == 0)
 		{
 			path = ft_substr(aux->str, 5, ft_strlen(aux->str) - 5);
 			paths = ft_split(path, ':');
@@ -76,6 +76,8 @@ char	**ft_add_cmd(t_token *current, char **paths)
 	int		i;
 
 	i = 0;
+	if (current->cmd[0][0] == '/')
+		return (current->cmd);
 	slash_cmd = ft_strjoin("/", current->cmd[0]);
 	aux = NULL;
 	while (paths[i])
@@ -102,7 +104,9 @@ char	*ft_search_cmd(char **paths)
 
 	ret = NULL;
 	i = 0;
-	while (paths[i])
+	if (paths == NULL)
+		return (NULL);
+	while (paths[i] != NULL)
 	{
 		if (access(paths[i], F_OK) == 0)
 		{
@@ -116,7 +120,7 @@ char	*ft_search_cmd(char **paths)
 		i++;
 	}
 	i = 0;
-	while (paths[i])
+	while (paths[i] != NULL)
 		free(paths[i++]);
 	free(paths);
 	return (NULL);
@@ -130,7 +134,10 @@ int	ft_execve(t_token *current)
 	int		pid;
 
 	ft_env_to_str(current->shell);
-	cmd = ft_search_cmd(ft_add_cmd(current, ft_get_all_paths(current)));
+	if (current->cmd[0][0] == '/')
+		cmd = ft_strdup(current->cmd[0]);
+	else
+		cmd = ft_search_cmd(ft_add_cmd(current, ft_get_all_paths(current)));
 	args = current->cmd;
 	if (!cmd)
 	{

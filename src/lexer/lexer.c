@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:43 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/05 04:48:53 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:35:15 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,16 @@ t_token	*ft_lexer(t_shell *shell)
 		return (NULL);
 	while (shell->line[i])
 	{
+		shell->aux_lexer = 0;
 		while (shell->line[i] && ft_is_blank(shell->line[i]))
 			i++;
 		start = i;
 		i = ft_aux_lexer(shell->line, i);
+		if (shell->line[i] && !(ft_is_blank(shell->line[i]))
+			&& !(ft_is_pipe_redir(shell->line[i])))
+			shell->aux_lexer = 1;
+		else
+			shell->aux_lexer = 0;
 		if (start != i)
 			ft_add_token(shell, ft_substr(shell->line, start, i - start), id);
 	}

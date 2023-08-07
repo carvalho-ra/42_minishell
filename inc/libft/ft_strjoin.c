@@ -6,34 +6,34 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:27:53 by rcarvalh          #+#    #+#             */
-/*   Updated: 2022/07/01 11:57:11 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:25:33 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char	*newstr;
-	size_t	count;
-	size_t	count2;
+	size_t	i;
+	size_t	j;
+	char	*superbonder;
 
-	newstr = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (newstr == NULL)
+	if (!s1 && !s2)
+		return (ft_strdup(""));
+	if (s1 && !s2)
+		return (ft_strdup(s1));
+	if (!s1 && s2)
+		return (ft_strdup(s2));
+	superbonder = malloc(1 * ((ft_strlen(s1) + ft_strlen(s2)) + 1));
+	if (!superbonder)
 		return (NULL);
-	count = 0;
-	count2 = 0;
-	while (count < ft_strlen(s1))
-	{
-		newstr[count] = s1[count];
-		count++;
-	}
-	while (count2 < ft_strlen(s2))
-	{
-		newstr[count] = s2[count2];
-		count++;
-		count2++;
-	}
-	newstr[count] = '\0';
-	return (newstr);
+	i = -1;
+	j = 0;
+	if (s1)
+		while (s1[++i] != '\0')
+			superbonder[i] = s1[i];
+	while (s2[j] != '\0')
+		superbonder[i++] = s2[j++];
+	superbonder[ft_strlen(s1) + ft_strlen(s2)] = '\0';
+	return (superbonder);
 }

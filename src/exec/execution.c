@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/03 11:39:07 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:05:49 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_which_builtin(t_shell *shell, t_token *current)
 {
+	if (current->cmd[0])
+		return (0);
 	if (ft_strcmp(current->cmd[0], "echo") == 0)
 		return (ft_builtin_echo(current));
 	else if (ft_strcmp(current->cmd[0], "cd") == 0)
@@ -37,6 +39,8 @@ int	ft_execution(t_shell *shell)
 	t_token	*aux;
 
 	aux = shell->list;
+	if (!aux)
+		return (0);
 	while (aux && aux->cmd[0])
 	{
 		if (!(ft_which_builtin(shell, aux)))

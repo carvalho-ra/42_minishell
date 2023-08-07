@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/05 04:54:21 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:38:18 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_token
 	int				error_code;
 	char			*str;
 	char			**cmd;
+	int				join;
 	struct s_shell	*shell;
 	struct s_token	*next;
 }	t_token;
@@ -50,6 +51,8 @@ typedef struct s_shell
 	struct s_token	*list;
 	char			**env_strs;
 	struct s_env	*env;
+	int				aux_lexer;
+	char			*temp_str;
 }	t_shell;
 
 typedef struct s_env
@@ -149,6 +152,7 @@ char	*ft_expand_core(char *str, t_shell *shell);
 char	*ft_prep_expand(char *data);
 void	ft_free_ptrs(char *str, char *str2);
 void	ft_remove_quotes(t_shell *shell);
+void	ft_join_from_lexer(t_shell *shell);
 
 //prototypes lexer
 
@@ -205,7 +209,7 @@ int		ft_confirm_pipe(t_shell *shell);
 //prototypes main.c
 
 //prototypes prompt
-void	ft_is_history(char *str);
+int		ft_is_history(char *str);
 
 //prototypes signal.c
 void	ft_handler(int signal);
@@ -216,6 +220,8 @@ void	ft_free_arr_strs(char **str);
 void	ft_free_env_list(t_shell *shell);
 void	ft_free_env_strs(t_shell *shell);
 void	ft_free_shell(t_shell *shell);
+
+void	ft_free_ptrs2(char **str, char **str2);
 
 //prototypes utils.c
 int		ft_strcmp(char *s1, char *s2);

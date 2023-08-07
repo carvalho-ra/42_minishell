@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:30:04 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/02 19:54:41 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/06 18:14:42 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ t_token	*ft_create_node(char *str, int index, t_shell *shell)
 		return (NULL);
 	new_node->index = index;
 	new_node->type = 0;
+	if (shell->aux_lexer == 1)
+		new_node->join = 1;
+	else
+		new_node->join = 0;
 	new_node->error_code = 0;
 	new_node->str = str;
 	new_node->cmd = NULL;
@@ -56,6 +60,7 @@ void	ft_print_list(t_shell *shell)
 	while (aux)
 	{
 		printf("\t\ttoken %i =  %s\n", aux->index, aux->str);
+		printf("\t\tjoin %i =  %i\n", aux->index, aux->join);
 		aux = aux->next;
 	}
 }
