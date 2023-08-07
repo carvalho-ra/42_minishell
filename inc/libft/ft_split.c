@@ -3,73 +3,111 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/28 18:21:53 by rcarvalh          #+#    #+#             */
-/*   Updated: 2022/07/01 11:58:48 by rcarvalh         ###   ########.fr       */
+/*   Created: 2022/05/13 18:07:44 by cnascime          #+#    #+#             */
+/*   Updated: 2022/12/23 00:15:03 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
 
-static char	*ft_find_start(char *s, char c)
-{
-	while (*s == c)
-		s++;
-	return (s);
-}
+static int		ft_shardcounter(char *altogether, char forbidden);
+static int		ft_isforbidden(char character, char forbidden);
+static char		*ft_superbonder(char *altogether, char forbidden);
+static int		ft_shardsize(char *altogether, char forbidden);
 
-static int	ft_find_len(char *s, char found)
-{
-	int	len;
-
-	len = 0;
-	while (s[len] != found && s[len] != 0)
-		len++;
-	return (len);
-}
-
-static int	ft_count_words(char *s, char c)
-{
-	int	words;
-	int	count;
-
-	count = 0;
-	words = 0;
-	while (count < (int)ft_strlen(s))
-	{
-		if (s[count] != c)
-		{
-			words++;
-			while (s[count] != c && s[count] != '\0')
-				count++;
-		}
-		count++;
-	}
-	return (words);
-}
-
+// Glues ~shards~ in a single ~array~ again, filtering out forbidden characters.
 char	**ft_split(char const *s, char c)
 {
-	char	*src;
-	char	**new_str;
-	int		count_str;
-	int		words;
-	int		len;
+	int		shard;
+	int		count;
+	char	**kintsugi;
 
-	count_str = 0;
-	src = (char *)s;
-	words = ft_count_words(src, c);
-	new_str = (char **)ft_calloc (words + 1, sizeof(char *));
-	if (!new_str)
+	if (!s)
 		return (NULL);
-	while (count_str < words)
+	shard = 0;
+	count = ft_shardcounter((char *)s, c);
+	kintsugi = malloc(sizeof(char *) * (count + 1));
+	if (!kintsugi)
 	{
-		src = ft_find_start(src, c);
-		len = ft_find_len(src, c);
-		new_str[count_str] = ft_substr(src, 0, len);
-		src = src + len;
-		count_str++;
+		free (kintsugi);
+		return (NULL);
 	}
-	return (new_str);
+	while (shard < count)
+	{
+		while (ft_isforbidden(*s, c))
+			s++;
+		kintsugi[shard] = ft_superbonder((char *)s, c);
+		while (!ft_isforbidden(*s, c))
+			s++;
+		shard++;
+	}
+	kintsugi[shard] = 0;
+	return (kintsugi);
+}
+
+// Counts the amount of shards to reveal the array size.
+static int	ft_shardcounter(char *altogether, char forbidden)
+{
+	int	i;
+	int	shardcount;
+
+	i = 0;
+	shardcount = 0;
+	while (altogether[i] != '\0')
+	{
+		while (*altogether && ft_isforbidden(*altogether, forbidden))
+			altogether++;
+		while (*altogether && !ft_isforbidden(*altogether, forbidden))
+			altogether++;
+		if (*altogether || !ft_isforbidden(*(altogether - 1), forbidden))
+			shardcount++;
+	}
+	return (shardcount);
+}
+
+// Checks whether the character in question is forbidden.
+// 1 (TRUE) if it's forbidden or EOL, 2 (FALSE) if it's allowed.
+static int	ft_isforbidden(char character, char forbidden)
+{
+	if (character == forbidden)
+		return (1);
+	if (character == '\0')
+		return (1);
+	return (0);
+}
+
+// Glues valid ~characters~ in a row in their own ~shard~, one by one.
+static char	*ft_superbonder(char *altogether, char forbidden)
+{
+	int		i;
+	char	*shard;
+
+	shard = malloc(sizeof(char) * (ft_shardsize(altogether, forbidden) + 1));
+	if (!shard)
+		return (NULL);
+	i = 0;
+	while (!ft_isforbidden(*altogether, forbidden))
+	{
+		shard[i] = *altogether;
+		i++;
+		altogether++;
+	}
+	shard[i] = '\0';
+	return (shard);
+}
+
+// Just measures the necessary amount of bytes for memory allocation.
+static int	ft_shardsize(char *altogether, char forbidden)
+{
+	int	size;
+
+	size = 0;
+	while (!ft_isforbidden(*altogether, forbidden))
+	{
+		size++;
+		altogether++;
+	}
+	return (size);
 }

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 23:05:49 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 00:09:59 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_which_builtin(t_shell *shell, t_token *current)
 {
-	if (current->cmd[0])
+	if (current->cmd[0] == NULL)
 		return (0);
 	if (ft_strcmp(current->cmd[0], "echo") == 0)
 		return (ft_builtin_echo(current));
