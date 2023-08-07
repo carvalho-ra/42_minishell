@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:39:40 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/04 10:53:10 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/05 19:49:19 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	ft_is_valid_key(char *name)
 	}
 	if (name[0] == '=')
 	{
-		ft_putstr_fd("minishell: export: `=': não é um identificador válido\n", 2);
+		ft_putstr_fd("minishell: export: `=': \
+				 não é um identificador válido\n", 2);
 		return (FALSE);
 	}
 	while (name[i] != '=' && name[i] != '\0')
