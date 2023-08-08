@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 11:28:11 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:24:50 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	**ft_add_cmd(t_token *current, char **paths)
 	int		i;
 
 	i = 0;
+	if (!paths)
+		return (NULL);
 	if (!current->cmd[0][0])
 		return (NULL);
 	slash_cmd = ft_strjoin("/", current->cmd[0]);
