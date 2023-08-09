@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:36:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/08 17:58:02 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:30:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_aux_exp_var_flag(char *str, int i)
 {
 	if (str[i] && str[i] == '$' && ((str[i + 1] && str[i + 1] != '$')
-			|| (str[i + 1] && str[i + 1] != '?')))
+			&& (str[i + 1] && str[i + 1] != '?')))
 	{
 		i++;
 		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
@@ -54,7 +54,7 @@ char	*ft_aux_exp_var(char *str, char *final, int i, t_shell *shell)
 	tmp = (NULL);
 	new = (NULL);
 	if (str[i] && str[i] == '$' && ((str[i + 1] && str[i + 1] != '$')
-			|| (str[i + 1] && str[i + 1] != '?')))
+			&& (str[i + 1] && str[i + 1] != '?')))
 	{
 		i++;
 		start = i;
