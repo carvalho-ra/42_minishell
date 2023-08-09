@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:03:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 12:24:35 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:18:59 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_free_exit(t_shell *shell)
 	ft_free_env_list(shell);
 	ft_free_env_strs(shell);
 	free(shell);
+	g_error_code = 0;
 	exit (0);
 }
 

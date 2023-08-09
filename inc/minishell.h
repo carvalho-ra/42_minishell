@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/08 14:21:01 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 21:24:17 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define TRUE 1
 # define FALSE 0
 # define CHILD 0
+
+extern int g_error_code;
 
 typedef struct s_token
 {
@@ -86,29 +88,36 @@ int		ft_goto_home(t_token *current, char *current_pwd);
 int		ft_goto_prev_pwd(t_token *current, char *current_pwd);
 int		ft_goto_above(t_token *current, char *current_pwd);
 
-//prototyoes echo.c
+//prototypes echo.c
 int		ft_builtin_echo(t_token *current);
 char	*quotes_treatment(char *string);
 
-//prototyoes env.c
+//prototypes env.c
 int		ft_builtin_env(t_token *current);
 
-//prototyoes exit.c
+//prototypes exit.c
 int		ft_free_exit(t_shell *shell);
 int		ft_free_no_exit(t_shell *shell);
 int		ft_builtin_exit(t_token *current);
 
-//prototyoes export.c
-int		ft_builtin_export(t_token *current);
-int		ft_is_valid_key(char *name);
-int		ft_is_key_duplicate(t_env *env, char *key, int origin);
+//prototypes export_env_utils.c
 int		ft_add_to_env_list(t_env *env_list, char *new_env, int origin);
 int		ft_replace_env(t_env *env, int index, char *new_value);
 
-//prototyoes pwd.c
+//prototypes export_utils.c
+int		ft_aux_digit(char *name);
+int		ft_aux_equal(char *name, t_token *current);
+int		ft_aux_blank(t_token *current);
+int		ft_is_valid_key(char *name, t_token *current);
+int		ft_is_key_duplicate(t_env *env, char *key, int origin);
+
+//prototypes export.c
+int		ft_builtin_export(t_token *current);
+
+//prototypes pwd.c
 int		ft_builtin_pwd(void);
 
-//prototyoes unset.c
+//prototypes unset.c
 int		ft_builtin_unset(t_token *current);
 int		ft_delete_env(t_env *env, int index);
 void	ft_free_env_node(t_env *env);
@@ -134,6 +143,10 @@ int		ft_copy_env(t_shell *shell, char **envp);
 t_env	*ft_create_env_node(char *str);
 void	ft_add_env(t_shell *shell, char *str);
 char	*ft_search_env(char *str, t_shell *shell);
+
+//prototypes expand_utils_err.c
+int		ft_aux_exp_err_flag(char *str, int i);
+char	*ft_aux_exp_err(char *str, char *final, int i);
 
 //prototypes expand_utils_pid.c
 int		ft_aux_exp_pid_flag(char *str, int i);

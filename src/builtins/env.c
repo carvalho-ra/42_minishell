@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:48 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 12:33:42 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:14:34 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	ft_builtin_env(t_token *current)
 		printf("%s\n", env->str);
 		env = env->next;
 	}
+	g_error_code = 0;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/08 14:24:50 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:09:39 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	**ft_get_all_paths(t_token *current)
 		}
 		aux = aux->next;
 	}
-	printf("no PATH found\n");
 	return (NULL);
 }
 
@@ -120,6 +119,7 @@ int	ft_check_cmd(t_token *current)
 	if (!cmd)
 	{
 		printf("%s : command not found\n", args[0]);
+		g_error_code = 127;
 		ft_free_ptrs(&cmd, NULL);
 		return (-1);
 	}
@@ -140,12 +140,14 @@ int	ft_execve(t_token *current, char *cmd)
 		if (execve(cmd, current->cmd, current->shell->env_strs) == -1)
 		{
 			printf("execve error\n");
+			g_error_code = 127;
 			ft_free_ptrs(&cmd, NULL);
 			exit(1);
 		}
 	}
 	else
 	{
+		g_error_code = 0;
 		wait(NULL);
 		ft_free_ptrs(&cmd, NULL);
 	}

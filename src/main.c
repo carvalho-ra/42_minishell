@@ -6,13 +6,15 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 11:55:28 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:41:34 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int g_error_code;
 
 static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 {

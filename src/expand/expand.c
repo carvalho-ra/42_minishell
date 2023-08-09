@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 03:27:16 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:03:54 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ char	*ft_expand_core(char *str, t_shell *shell)
 		if (i != ft_aux_exp_word_flag(str, i))
 			final = ft_aux_exp_word(str, final, i);
 		i = ft_aux_exp_word_flag(str, i);
+		if (i != ft_aux_exp_err_flag(str, i))
+			final = ft_aux_exp_err(str, final, i);
+		i = ft_aux_exp_err_flag(str, i);
 		if (i != ft_aux_exp_pid_flag(str, i))
 			final = ft_aux_exp_pid(str, final, i);
 		i = ft_aux_exp_pid_flag(str, i);

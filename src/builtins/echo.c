@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/07 12:30:34 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:59:44 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ int	ft_builtin_echo(t_token *current)
 	}
 	if (slash_n == FALSE)
 		ft_putstr_fd("\n", 1);
+	g_error_code = 0;
 	return (0);
 }
