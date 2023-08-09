@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/08 17:41:34 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 02:51:16 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,7 @@ static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 	return (shell);
 }
 
-static	void	ft_validation(t_shell *shell)
-{
-	ft_err_pipe(shell);
-	ft_err_redir_in(shell);
-	ft_err_redir_out(shell);
-	ft_confirm_pipe(shell);
-	ft_confirm_append(shell);
-	ft_confirm_heredoc(shell);
-	ft_confirm_redir_in(shell);
-	ft_confirm_redir_out(shell);
-}
-
-static void	ft_expantion(t_shell *shell)
-{
-	ft_confirm_expand(shell);
-	ft_expand_args(shell);
-}
-
-static void	ft_aux(t_shell *shell)
+void	ft_shell(t_shell *shell)
 {
 	if (!shell->line)
 	{
@@ -62,16 +44,12 @@ static void	ft_aux(t_shell *shell)
 		shell->list = ft_lexer(shell);
 		if (shell->list)
 		{
-			ft_validation(shell);
-			//ft_print_list(shell);
-			ft_expantion(shell);
-			//ft_print_list(shell);
-			ft_join_from_lexer(shell);
-			ft_parse_full_cmds(shell->list);
-			//ft_print_cmds(shell->list);
-			ft_execution(shell);
-			ft_free_token_list(shell);
-			free(shell->line);
+			if (!ft_parser(shell))
+			{
+				ft_execution(shell);
+				ft_free_token_list(shell);
+				free(shell->line);
+			}
 		}
 	}
 	else
@@ -91,7 +69,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell->line = readline("OURSHELL> ");
-		ft_aux(shell);
+		ft_shell(shell);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/09 00:54:13 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 02:40:25 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,18 +152,17 @@ char	*ft_aux_exp_pid(char *str, char *final, int i);
 
 //prototypes expand_utils_var.c
 int		ft_aux_exp_var_flag(char *str, int i);
+char	*ft_norm_aux_exp_var(char *tmp, char *final, int start, int i);
 char	*ft_aux_exp_var(char *str, char *final, int i, t_shell *shell);
 
 //prototypes expand_utils_word.c
 int		ft_aux_exp_word_flag(char *str, int i);
-char	*ft_norm_aux_exp_var(char *tmp, char *final, int start, int i);
 char	*ft_aux_exp_word(char *str, char *final, int i);
 
 //prototypes expand.c
-int		ft_confirm_expand(t_shell *shell);
+void	ft_expantion(t_shell *shell);
 void	ft_expand_args(t_shell *shell);
 char	*ft_expand_core(char *str, t_shell *shell);
-char	*ft_prep_expand(char *data);
 void	ft_remove_quotes(t_shell *shell);
 void	ft_join_from_lexer(t_shell *shell);
 
@@ -208,6 +207,7 @@ int		ft_set_quote_state(char *str, int state, int i);
 int		ft_confirm_expand(t_shell *shell);
 
 //prototypes parser_utils_redirs.c
+int		ft_confirm_pipe(t_shell *shell);
 int		ft_confirm_append(t_shell *shell);
 int		ft_confirm_heredoc(t_shell *shell);
 int		ft_confirm_redir_out(t_shell *shell);
@@ -218,9 +218,11 @@ int		ft_count_pipes(t_shell *shell);
 int		ft_count_redirs(t_shell *shell);
 
 //prototypes parser.c
-int		ft_confirm_pipe(t_shell *shell);
+int		ft_validation(t_shell *shell);
+int		ft_parser(t_shell *shell);
 
 //prototypes main.c
+void	ft_shell(t_shell *shell);
 
 //prototypes prompt
 int		ft_is_history(char *str);

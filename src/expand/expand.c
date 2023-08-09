@@ -6,11 +6,17 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/08 22:52:20 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 02:31:05 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	ft_expantion(t_shell *shell)
+{
+	ft_confirm_expand(shell);
+	ft_expand_args(shell);
+}
 
 //remove quotes devia ir pra main
 //funtion that iterates through the list and calls expand
