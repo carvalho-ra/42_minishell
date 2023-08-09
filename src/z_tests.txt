@@ -1,13 +1,112 @@
-teste"$USER$NO$USER"teste
-teste'"$USER$NO$USER"'teste
-teste'"$NO"'teste
+vazando
+
+régua:
+
+make -n
+teste relink
+/bin/ls
+how many global variables?
+why the use fells mandatory or logical?
+empty command
+spaces or tabs
+/bin/ls -la
+/bin/touch text.txt
+/bin/cat text.txt
+/bin/pwd
+...
+
+echo
+echo -n
+echo -n teste
+echo $USER
+echo "teste'testando'teste"
+echo teste'"testando"'teste
 echo teste"$USER$NO$USER"teste
 echo teste'"$USER$NO$USER"'teste
 echo teste'"$NO"'teste
-"$NO"$NO"$NO"'$NO'
 echo "$NO"$NO"$NO"'$NO'
 "$NO" "$HOME"
 "$NO""$HOME"
 $NO$HOME
 "$NO"
-vazando
+
+cd -
+/bin/ls
+pwd
+cd
+cd -
+/bin/ls
+pwd
+cd not
+/bin/ls
+pwd
+cd  src
+/bin/ls
+pwd
+cd ..
+/bin/ls
+pwd
+cd src
+/bin/ls
+pwd
+cd -
+pwd
+cd ./src
+/bin/ls
+pwd
+cd .
+/bin/ls
+pwd
+cd ./not
+/bin/ls
+pwd
+
+./src
+cd ../minishell
+~/bin/ls
+ls -la
+ls
+touch test
+cat test
+
+../../../../bin/ls
+cd ..
+../../../bin/ls
+../../../../bin/touch eval
+../../../../bin/cat regua
+
+ls
+touch file
+cat file
+env
+pwd
+
+unset PATH
+unset $PATH
+export PATH=../../../../bin:~/Desktop
+ls -la
+
+echo 123 > file
+cat file
+echo < file
+
+export USER=teste
+echo "$USER"
+echo '"$USER"'
+
+
+
+teste"$USER$NO$USER"teste
+teste'"$USER$NO$USER"'teste
+teste'"$NO"'teste
+"$NO"$NO"$NO"'$NO'
+"$NO" "$HOME"
+"$NO""$HOME"
+$NO$HOME
+"$NO"
+exit
+exit 42
+exit -42
+exit now
+ctrl+D
+

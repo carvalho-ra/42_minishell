@@ -6,11 +6,17 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:19:26 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 03:27:16 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 02:31:05 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	ft_expantion(t_shell *shell)
+{
+	ft_confirm_expand(shell);
+	ft_expand_args(shell);
+}
 
 //remove quotes devia ir pra main
 //funtion that iterates through the list and calls expand
@@ -41,6 +47,9 @@ char	*ft_expand_core(char *str, t_shell *shell)
 		if (i != ft_aux_exp_word_flag(str, i))
 			final = ft_aux_exp_word(str, final, i);
 		i = ft_aux_exp_word_flag(str, i);
+		if (i != ft_aux_exp_err_flag(str, i))
+			final = ft_aux_exp_err(str, final, i);
+		i = ft_aux_exp_err_flag(str, i);
 		if (i != ft_aux_exp_pid_flag(str, i))
 			final = ft_aux_exp_pid(str, final, i);
 		i = ft_aux_exp_pid_flag(str, i);

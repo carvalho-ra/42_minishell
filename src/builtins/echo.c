@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/05 19:46:40 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:59:44 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,43 +36,6 @@ int	ft_builtin_echo(t_token *current)
 	}
 	if (slash_n == FALSE)
 		ft_putstr_fd("\n", 1);
+	g_error_code = 0;
 	return (0);
 }
-
-// char	*quotes_treatment(char *string)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		external; //* Flag para saber se estou 
-//dentro das aspas externas, e que tipo são
-// 	char	treated[ft_strlen(string)]; //* String que vai 
-//substituir o input do usuário tirando aspas externas
-// 	i = 0;
-// 	j = 0;
-
-// 	external = FALSE;
-// 	while (string[i])
-// 	{
-// 		if (string[i] == '\'' || string[i] == '\"') //* Se encontrar aspas
-// 		{
-// 			if (string[i] == '\'' && external == FALSE)
-// 				external = 1; //* Se for aspas simples, flag 1
-// 			else if (string[i] == '\"' && external == FALSE)
-// 				external = 2; //* Se for aspas duplas, flag 2
-// 		}
-// 		if (string[i] == '\'' && external == 1) //* Ignora as aspas externas
-// 			i++;
-// 		else if (string[i] == '\"' && external == 2)
-// 			i++;
-// 		else
-// 		{
-// 			treated[j] = string[i];
-// 			i++;
-// 			j++;
-// 		}
-// 	}
-// 	treated[j] = '\0';
-// 	ft_free_ptrs(string, NULL);
-// 	string = ft_strdup(treated);
-// 	return (string);
-// }

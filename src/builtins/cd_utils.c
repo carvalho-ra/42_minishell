@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 20:35:48 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 03:23:15 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:04:14 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_substitute_oldpwd(t_shell *shell, char *current_pwd)
 	return (0);
 }
 
-// função que troca o OLDPWD pelo diretório em que estou
+//function that changes OLDPWD for the current directory
 int	ft_change_oldpwd(t_shell *shell, char *current_pwd)
 {
 	char	*temp;
@@ -69,6 +69,7 @@ int	ft_goto_home(t_token *current, char *current_pwd)
 	path = ft_search_env(temp, current->shell);
 	chdir(path);
 	ft_free_ptrs(&path, &current_pwd);
+	g_error_code = 0;
 	return (0);
 }
 
@@ -84,6 +85,7 @@ int	ft_goto_prev_pwd(t_token *current, char *current_pwd)
 	{
 		ft_putstr_fd("minishell: cd: OLDPWD não definida\n", 2);
 		ft_free_ptrs(&oldpwd, &current_pwd);
+		g_error_code = 0;
 		return (0);
 	}
 	else
@@ -92,10 +94,12 @@ int	ft_goto_prev_pwd(t_token *current, char *current_pwd)
 		printf("%s\n", oldpwd);
 		chdir(oldpwd);
 		ft_free_ptrs(&oldpwd, &current_pwd);
+		g_error_code = 0;
 		return (0);
 	}
 }
 
+//funtion that changes directory to the one above
 int	ft_goto_above(t_token *current, char *current_pwd)
 {
 	char	*temp;
@@ -111,10 +115,12 @@ int	ft_goto_above(t_token *current, char *current_pwd)
 	{
 		chdir("/home");
 		ft_free_ptrs(&current_pwd, NULL);
+		g_error_code = 0;
 		return (0);
 	}
 	temp = ft_substr(current_pwd, 0, i);
 	chdir(temp);
 	ft_free_ptrs(&temp, &current_pwd);
+	g_error_code = 0;
 	return (0);
 }
