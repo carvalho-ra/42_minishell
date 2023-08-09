@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 20:18:25 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 03:25:33 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,7 @@ void	ft_free_shell(t_shell *shell)
 	shell = NULL;
 }
 
-void	ft_free_ptrs(char *str, char *str2)
-{
-	if (str)
-	{
-		free(str);
-		str = NULL;
-	}
-	if (str2)
-	{
-		free(str2);
-		str2 = NULL;
-	}
-}
-
-void	ft_free_ptrs2(char **str, char **str2)
+void	ft_free_ptrs(char **str, char **str2)
 {
 	if (*str)
 	{

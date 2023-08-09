@@ -6,42 +6,15 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 02:03:09 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:36:10 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//escrever uma função que transforme a t_env em char **env
-//para passar para o execve
-int	ft_env_to_str(t_shell *shell)
-{
-	t_env	*aux;
-	int		i;
-
-	i = 0;
-	aux = shell->env;
-	while (aux)
-	{
-		aux = aux->next;
-		i++;
-	}
-	shell->env_strs = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!shell->env_strs)
-		return (1);
-	i = 0;
-	aux = shell->env;
-	while (aux)
-	{
-		shell->env_strs[i++] = ft_strdup(aux->str);
-		aux = aux->next;
-	}
-	shell->env_strs[i] = NULL;
-	return (0);
-}
-
-// escrever uma função que pegue o caminho completo dos PATHS
-// na nossa env e retorn um array de strings com os paths
+//function that gets all the paths from the env
+//and splits them into an array of strings
+//returns an array of strings with the paths
 char	**ft_get_all_paths(t_token *current)
 {
 	char	*path;
@@ -63,12 +36,11 @@ char	**ft_get_all_paths(t_token *current)
 		}
 		aux = aux->next;
 	}
-	printf("no PATH found\n");
 	return (NULL);
 }
 
-// função que adiciona "/cmd" ao final de cada string
-// retornar um array de strings com os paths completos
+//function that adds "/cmd" to the end of each string
+//returns an array of strings with the full paths
 char	**ft_add_cmd(t_token *current, char **paths)
 {
 	char	*aux;
@@ -76,6 +48,8 @@ char	**ft_add_cmd(t_token *current, char **paths)
 	int		i;
 
 	i = 0;
+	if (!paths)
+		return (NULL);
 	if (!current->cmd[0][0])
 		return (NULL);
 	slash_cmd = ft_strjoin("/", current->cmd[0]);
@@ -95,8 +69,8 @@ char	**ft_add_cmd(t_token *current, char **paths)
 	return (paths);
 }
 
-// função que procura pelo arquivo
-//retorna o path funcional se existir
+//function that searches for the file
+//returns the string with the full path of the file
 char	*ft_search_cmd(char **paths)
 {
 	int		i;
@@ -126,12 +100,12 @@ char	*ft_search_cmd(char **paths)
 	return (NULL);
 }
 
-// função que executa o comando
-int	ft_execve(t_token *current)
+// function that checks if the command is valid
+// returns 0 if it is, -1 if it isn't
+int	ft_check_cmd(t_token *current)
 {
 	char	*cmd;
 	char	**args;
-	int		pid;
 
 	cmd = NULL;
 	ft_env_to_str(current->shell);
@@ -144,27 +118,38 @@ int	ft_execve(t_token *current)
 	args = current->cmd;
 	if (!cmd)
 	{
-		free(cmd);
 		printf("%s : command not found\n", args[0]);
+		g_error_code = 127;
+		ft_free_ptrs(&cmd, NULL);
 		return (-1);
 	}
 	else
+		ft_execve(current, cmd);
+	return (0);
+}
+
+// function that executes the command
+// returns 0 if it is executable, -1 on execve error
+int	ft_execve(t_token *current, char *cmd)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
 	{
-		pid = fork();
-		if (pid == 0)
+		if (execve(cmd, current->cmd, current->shell->env_strs) == -1)
 		{
-			if (execve(cmd, args, current->shell->env_strs) == -1)
-			{
-				printf("execve error\n");
-				exit(1);
-			}
+			printf("execve error\n");
+			g_error_code = 127;
+			ft_free_ptrs(&cmd, NULL);
+			exit(1);
 		}
-		else
-		{
-			wait(NULL);
-			ft_free_ptrs(cmd, NULL);
-		}
+	}
+	else
+	{
+		g_error_code = 0;
+		wait(NULL);
+		ft_free_ptrs(&cmd, NULL);
 	}
 	return (0);
 }
-// perror() imprime uma mensagem de erro padrão

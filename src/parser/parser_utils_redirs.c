@@ -6,11 +6,39 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/07/26 12:42:42 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 02:07:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+//when string initiates with | (a pipe) - ERROR
+// bash: syntax error near unexpected token `|'
+// error code: 2
+
+//when string ends with | (a pipe) - ERROR
+// bash: syntax error near unexpected token `newline'
+// error code: 2
+
+// redirect + PIPE é erro? ver com mais pessoas!!!!
+
+int	ft_confirm_pipe(t_shell *shell)
+{
+	t_token	*aux;
+
+	aux = shell->list;
+	while (aux)
+	{
+		if (!ft_strcmp("|", aux->str) && aux->next
+			&& ft_strcmp("|", aux->next->str) && aux->type != ERR)
+		{
+			aux->type = PIPE;
+			printf("token %i is pipe\n", aux->index);
+		}
+		aux = aux->next;
+	}
+	return (0);
+}
 
 int	ft_confirm_append(t_shell *shell)
 {
@@ -26,7 +54,6 @@ int	ft_confirm_append(t_shell *shell)
 			&& aux->type != ERR)
 		{
 			i++;
-			aux->error_code = 0;
 			aux->type = ERR;
 			aux->next->type = APPEND;
 			aux = aux->next;
@@ -51,7 +78,6 @@ int	ft_confirm_heredoc(t_shell *shell)
 			&& aux->type != ERR)
 		{
 			i++;
-			aux->error_code = 0;
 			aux->type = ERR;
 			aux->next->type = HEREDOC;
 			aux = aux->next;
@@ -77,7 +103,6 @@ int	ft_confirm_redir_out(t_shell *shell)
 			&& aux->type != APPEND && aux->type != ERR)
 		{
 			i++;
-			aux->error_code = 0;
 			aux->type = REDIRECT_OUT;
 			printf("token %i is redirect output (>)\n", aux->index);
 		}
@@ -99,7 +124,6 @@ int	ft_confirm_redir_in(t_shell *shell)
 			&& aux->type != HEREDOC && aux->type != ERR)
 		{
 			i++;
-			aux->error_code = 0;
 			aux->type = REDIRECT_IN;
 			printf("token %i is redirect input (<)\n", aux->index);
 		}

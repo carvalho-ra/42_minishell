@@ -1,41 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 17:47:45 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/08 15:59:44 by rcarvalh         ###   ########.fr       */
+/*   Created: 2023/08/07 03:09:05 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/08/07 11:27:03 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// Prints the arguments to stdout, separated by a space.
-int	ft_builtin_echo(t_token *current)
+//function that transforms the t_env into a char **env
+//to pass to execve
+//returns 0 if it works, 1 if it doesn't
+int	ft_env_to_str(t_shell *shell)
 {
-	char	**strings;
+	t_env	*aux;
 	int		i;
-	int		slash_n;
 
-	strings = current->cmd;
-	slash_n = FALSE;
-	i = 1;
-	if (strings[i] && ft_strcmp(strings[i], "-n") == 0)
+	i = 0;
+	aux = shell->env;
+	while (aux)
 	{
-		slash_n = TRUE;
+		aux = aux->next;
 		i++;
 	}
-	while (strings[i])
+	shell->env_strs = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!shell->env_strs)
+		return (1);
+	i = 0;
+	aux = shell->env;
+	while (aux)
 	{
-		ft_putstr_fd(strings[i], 1);
-		if (strings[i + 1])
-			ft_putstr_fd(" ", 1);
-		i++;
+		shell->env_strs[i++] = ft_strdup(aux->str);
+		aux = aux->next;
 	}
-	if (slash_n == FALSE)
-		ft_putstr_fd("\n", 1);
-	g_error_code = 0;
+	shell->env_strs[i] = NULL;
 	return (0);
 }

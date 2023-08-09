@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:36:05 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/05 03:09:25 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:55:52 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	ft_aux_exp_word_flag(char *str, int i)
 {
-	if ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
+	if ((str[i] && str[i] != '$') || (str[i] && str[i] != '?')
+		|| (str[i] && str[i] == '$' && !str[i + 1]))
 	{
 		while ((str[i] && str[i] != '$')
 			|| (str[i] && str[i] == '$' && !str[i + 1]))
@@ -32,7 +33,8 @@ char	*ft_aux_exp_word(char *str, char *final, int i)
 	start = 0;
 	new = NULL;
 	sub = NULL;
-	if ((str[i] && str[i] != '$') || (str[i] && str[i] == '$' && !str[i + 1]))
+	if ((str[i] && str[i] != '$') || (str[i] && str[i] != '?')
+		|| (str[i] && str[i] == '$' && !str[i + 1]))
 	{
 		start = i;
 		while ((str[i] && str[i] != '$')
@@ -44,6 +46,6 @@ char	*ft_aux_exp_word(char *str, char *final, int i)
 		else if (start != i && final)
 			new = ft_strjoin(final, sub);
 	}
-	ft_free_ptrs(final, sub);
+	ft_free_ptrs(&final, &sub);
 	return (new);
 }

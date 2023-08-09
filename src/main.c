@@ -6,13 +6,15 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 02:05:31 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 03:56:50 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	g_error_code;
 
 static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 {
@@ -30,46 +32,25 @@ static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 	return (shell);
 }
 
-static	void	ft_validation(t_shell *shell)
-{
-	ft_err_pipe(shell);
-	ft_err_redir_in(shell);
-	ft_err_redir_out(shell);
-	ft_confirm_pipe(shell);
-	ft_confirm_append(shell);
-	ft_confirm_heredoc(shell);
-	ft_confirm_redir_in(shell);
-	ft_confirm_redir_out(shell);
-}
 
-static void	ft_expantion(t_shell *shell)
-{
-	ft_confirm_expand(shell);
-	ft_expand_args(shell);
-}
-
-static void	ft_aux(t_shell *shell)
+void	ft_shell(t_shell *shell)
 {
 	if (!shell->line)
 	{
 		write(2, "exit\n", 5);
-		ft_builtin_exit(shell);
+		ft_free_exit(shell);
 	}
 	if (ft_is_history(shell->line))
 	{
 		shell->list = ft_lexer(shell);
 		if (shell->list)
 		{
-			ft_validation(shell);
-			//ft_print_list(shell);
-			ft_expantion(shell);
-			//ft_print_list(shell);
-			ft_join_from_lexer(shell);
-			ft_parse_full_cmds(shell->list);
-			//ft_print_cmds(shell->list);
-			ft_execution(shell);
-			ft_free_token_list(shell);
-			free(shell->line);
+			if (!ft_parser(shell))
+			{
+				ft_execution(shell);
+				ft_free_token_list(shell);
+				free(shell->line);
+			}
 		}
 	}
 	else
@@ -88,8 +69,11 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, &ft_handler);
 	while (1)
 	{
-		shell->line = readline("OURSHELL> ");
-		ft_aux(shell);
+		if (g_error_code != 0)
+			shell->line = readline("🤬 miniSHELL> ");
+		else
+			shell->line = readline("😎 miniSHELL> ");
+		ft_shell(shell);
 	}
 	return (0);
 }

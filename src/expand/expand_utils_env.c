@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:39:46 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/02 19:59:16 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/07 03:23:56 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_add_env(t_shell *shell, char *str)
 		}
 		aux->next = ft_create_env_node(ft_strdup(str));
 	}
-	ft_free_ptrs(str, NULL);
+	ft_free_ptrs(&str, NULL);
 }
 
 // ler regras variaveis shell
@@ -85,6 +85,6 @@ char	*ft_search_env(char *str, t_shell *shell)
 		}
 		aux = aux->next;
 	}
-	ft_free_ptrs(str, NULL);
+	ft_free_ptrs(&str, NULL);
 	return (ret);
 }
