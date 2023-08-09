@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/09 02:40:25 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 03:04:44 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define FALSE 0
 # define CHILD 0
 
-extern int g_error_code;
+extern int	g_error_code;
 
 typedef struct s_token
 {
