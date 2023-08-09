@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/09 03:05:32 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 03:56:50 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 	ft_copy_env(shell, envp);
 	return (shell);
 }
+
 
 void	ft_shell(t_shell *shell)
 {
@@ -68,7 +69,10 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, &ft_handler);
 	while (1)
 	{
-		shell->line = readline("OURSHELL> ");
+		if (g_error_code != 0)
+			shell->line = readline("🤬 miniSHELL> ");
+		else
+			shell->line = readline("😎 miniSHELL> ");
 		ft_shell(shell);
 	}
 	return (0);

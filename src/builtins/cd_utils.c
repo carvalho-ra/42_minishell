@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 20:35:48 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/08 16:04:14 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 03:48:42 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_goto_prev_pwd(t_token *current, char *current_pwd)
 	{
 		ft_putstr_fd("minishell: cd: OLDPWD não definida\n", 2);
 		ft_free_ptrs(&oldpwd, &current_pwd);
-		g_error_code = 0;
+		g_error_code = 1;
 		return (0);
 	}
 	else
