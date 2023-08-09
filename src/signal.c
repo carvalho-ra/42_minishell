@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:52 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/03 14:04:17 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:37:50 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_handler(int signal)
 		rl_on_new_line ();
 		rl_replace_line ("", 0);
 		rl_redisplay ();
+		g_error_code = 130;
 	}
 }
 
