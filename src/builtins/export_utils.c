@@ -6,54 +6,19 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 21:35:35 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/08 21:42:16 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 01:24:48 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_aux_digit(char *name)
+//function that checks if the first character of the key is a digit
+//or an equal sign
+int	ft_aux_digit(char *key)
 {
-	if (ft_isdigit(name[0]))
+	if (ft_isdigit(key[0]) || key[0] == '=')
 	{
-		printf("minishell: export: `%s' nome inválido\n", name);
-		g_error_code = 1;
-		return (1);
-	}
-	return (0);
-}
-
-int	ft_aux_equal(char *name, t_token *current)
-{
-	char	*ret;
-	int		i;
-
-	ret = NULL;
-	i = 0;
-	while (name[i] != '=' && name[i] != '\0')
-		i++;
-	if (name[ft_strlen(name) - 1] == '=' && !name[i + 1] && !current->cmd[2])
-	{
-		g_error_code = 0;
-		return (0);
-	}
-	if (name[i] == '=' && name[i + 1] && name [i + 1] == '=')
-	{
-		ret = ft_substr(name, i + 1, ft_strlen(name) - i);
-		printf("minishell: export: `%s':", ret);
-		printf(" não é um identificador válido\n");
-		ft_free_ptrs(&ret, NULL);
-		g_error_code = 1;
-		return (1);
-	}
-	return (0);
-}
-
-int	ft_aux_blank(t_token *current)
-{
-	if (current->cmd[2])
-	{
-		printf("minishell: export: `%s':", current->cmd[2]);
+		printf("minishell: export: `%s':", key);
 		printf(" não é um identificador válido\n");
 		g_error_code = 1;
 		return (1);
@@ -61,38 +26,37 @@ int	ft_aux_blank(t_token *current)
 	return (0);
 }
 
+// Checks if the key is valid. A key is valid if it starts with a letter or an
+// underscore, and contains only alphanumeric characters or underscores.
 // If the key is not valid, prints a message and returns FALSE.
 // If it is valid, but doesn't have an equal sign, returns FALSE, but doesn't
 // print any error message. This way it is not added to the environment list.
 // If it has an equal sign, even with nothing after it, returns TRUE.
-int	ft_is_valid_key(char *name, t_token *current)
+int	ft_is_valid_key(char *key)
 {
 	int	i;
 
 	i = 0;
-	if (ft_aux_digit(name) == 1 || ft_aux_equal(name, current) == 1
-		|| ft_aux_blank(current) == 1)
+	if (ft_aux_digit(key) == 1)
 		return (FALSE);
-	while (name[i] != '=' && name[i] != '\0')
-	{
-		if (!ft_isalnum(name[i]) && name[i] != '_')
-		{
-			ft_putstr_fd("minishell: export: nome inválido\n", 2);
-			g_error_code = 1;
-			return (FALSE);
-		}
+	while (key[i] != '=' && (ft_isalnum(key[i])
+			|| key[i] == '_') && key[i] != '\0')
 		i++;
-	}
-	if (name[i] == '=')
+	if (key[i] == '\0')
+		return (FALSE);
+	if (key[i] == '=' || key[i] == '\0')
 	{
 		g_error_code = 0;
 		return (TRUE);
 	}
-	g_error_code = 0;
-	return (FALSE);
+	else
+	{
+		printf("minishell: export: `%s':", key);
+		printf(" não é um identificador válido\n");
+		g_error_code = 1;
+		return (FALSE);
+	}
 }
-// A key is not valid if it starts with a number, or if it contains any
-// character that is not alphanumeric or an underscore.
 
 // Goes through the entire list of environment variables, comparing the name of
 // each node with the name passed as argument (both up to the equal sign).

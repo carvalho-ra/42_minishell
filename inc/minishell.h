@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/08 21:24:17 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 00:54:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,8 @@ int		ft_add_to_env_list(t_env *env_list, char *new_env, int origin);
 int		ft_replace_env(t_env *env, int index, char *new_value);
 
 //prototypes export_utils.c
-int		ft_aux_digit(char *name);
-int		ft_aux_equal(char *name, t_token *current);
-int		ft_aux_blank(t_token *current);
-int		ft_is_valid_key(char *name, t_token *current);
+int		ft_aux_digit(char *key);
+int		ft_is_valid_key(char *key);
 int		ft_is_key_duplicate(t_env *env, char *key, int origin);
 
 //prototypes export.c
