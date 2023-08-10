@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/10 16:25:47 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:04:22 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,10 @@ int	ft_execution(t_shell *shell)
 	{
 		if (aux->cmd)
 		{
-			if (!(ft_which_builtin(aux)))
-				return (0);
-			else
+			if ((ft_which_builtin(aux)))
 			{
 				ft_check_cmd(aux);
 				ft_free_env_strs(shell);
-				break ;
 			}
 		}
 		aux = aux->next;
