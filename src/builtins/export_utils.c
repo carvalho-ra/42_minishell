@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 21:35:35 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/09 01:24:48 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/09 13:28:37 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ int	ft_is_valid_key(char *key)
 			|| key[i] == '_') && key[i] != '\0')
 		i++;
 	if (key[i] == '\0')
+	{
+		g_error_code = 0;
 		return (FALSE);
+	}
 	if (key[i] == '=' || key[i] == '\0')
 	{
 		g_error_code = 0;
