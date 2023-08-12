@@ -1,14 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/19 21:21:43 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/08/10 16:25:18 by rcarvalh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-static int	ft_aux_lexer(char *str, int i)
+int	ft_aux_lexer(char *str, int i)
 {
 	while (str[i] && !(ft_is_blank(str[i])))
 	{
-		i = ft_double_quote(str, i);
-		i = ft_single_quote(str, i);
-		i++;
-		if (ft_is_pipe_redir(str[i - 1]) || ft_is_pipe_redir(str[i]))
-			break ;
+		if (str[i] == 34)
+			return (ft_double_quote(str, i));
+		else if (str[i] == 39)
+			return (ft_single_quote(str, i));
+		else if (ft_is_pipe_redir(str[i]))
+			return (i + 1);
+		else
+		{
+			while (str[i] && !(ft_is_pipe_redir(str[i]))
+				&& (str[i] != 34) && (str[i] != 39))
+			{
+				if (ft_is_blank(str[i]))
+					break ;
+				i++;
+			}
+			return (i);
+		}
 	}
 	return (i);
 }
@@ -17,7 +41,7 @@ t_token	*ft_lexer(t_shell *shell)
 {
 	unsigned int	i;
 	unsigned int	start;
-	unsigned int 	id;
+	unsigned int	id;
 
 	i = 0;
 	start = 0;
@@ -26,10 +50,15 @@ t_token	*ft_lexer(t_shell *shell)
 		return (NULL);
 	while (shell->line[i])
 	{
+		shell->aux_lexer = 0;
 		while (shell->line[i] && ft_is_blank(shell->line[i]))
 			i++;
 		start = i;
 		i = ft_aux_lexer(shell->line, i);
+		if (shell->line[i] && !(ft_is_blank(shell->line[i]))
+			&& !(ft_is_pipe_redir(shell->line[i]))
+			&& !(ft_is_pipe_redir(shell->line[i - 1])))
+			shell->aux_lexer = 1;
 		if (start != i)
 			ft_add_token(shell, ft_substr(shell->line, start, i - start), id);
 	}

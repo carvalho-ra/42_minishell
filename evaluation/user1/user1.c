@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   user1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 21:20:45 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 01:28:00 by rcarvalh         ###   ########.fr       */
+/*   Created: 2023/08/10 12:23:43 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/08/10 13:19:00 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include <stdio.h>
 
-//include modifications in add_history
-//add_history cannot take "nothing", just "enter"
-//recheck with Will Branner
-int	ft_is_history(char *str)
+int	main(void)
 {
-	char	*tmp;
-
-	tmp = ft_strtrim(str, " ");
-	if (ft_strlen(tmp) != 0)
-	{
-		add_history(str);
-		free(tmp);
-		return (1);
-	}
-	free(tmp);
-	return (0);
+	printf("USER1");
 }

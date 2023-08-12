@@ -3,27 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 04:38:40 by cnascime          #+#    #+#             */
-/*   Updated: 2023/07/22 12:42:02 by cnascime         ###   ########.fr       */
+/*   Created: 2023/07/19 21:21:48 by rcarvalh          #+#    #+#             */
+/*   Updated: 2023/08/08 16:14:34 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//?Runs a program in a modified environment. Sets each name to value in the
-//?environment and runs the given command.
-// Displays the environment variables.
-int	ft_builtin_env(t_shell *shell)
+int	ft_builtin_env(t_token *current)
 {
-	t_token	*aux;
+	t_env	*env;
 
-	aux = shell->new_env;
-	while (aux)
+	env = current->shell->env;
+	while (env)
 	{
-		printf("%s\n", aux->data);
-		aux = aux->next;
+		printf("%s\n", env->str);
+		env = env->next;
 	}
-	return (1);
+	g_error_code = 0;
+	return (0);
 }
