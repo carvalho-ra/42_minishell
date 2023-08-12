@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/09 04:34:50 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/12 18:55:21 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,16 +200,16 @@ void	ft_print_cmds(t_token *list);
 void	ft_print_check(t_shell *shell);
 
 //prototypes parser_marc_cmd_args.c
-int	ft_marc_cmd(t_shell *shell);
-int	ft_marc_args(t_shell *shell);
+int		ft_mark_cmds(t_shell *shell);
+int		ft_mark_args(t_shell *shell);
 
 //prototypes parser_marc_files.c
-int	ft_marc_redir_in_file(t_shell *shell);
-int	ft_marc_redir_out_file(t_shell *shell);
-int	ft_marc_append_file(t_shell *shell);
+int		ft_mark_redir_in_file(t_shell *shell);
+int		ft_mark_redir_out_file(t_shell *shell);
+int		ft_mark_append_file(t_shell *shell);
 
 //prototypes parser_marcs.c
-int	ft_marcs(t_shell *shell);
+int		ft_marks(t_shell *shell);
 
 //prototypes parser_utils_err.c
 int		ft_err_pipe(t_shell *shell);

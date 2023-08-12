@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/12 10:58:36 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/12 18:55:38 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_parser(t_shell *shell)
 	ft_expantion(shell);
 	//ft_print_list(shell);
 	ft_join_from_lexer(shell);
-	ft_marcs(shell);
+	ft_marks(shell);
 	ft_parse_full_cmds(shell->list);
 	//ft_print_cmds(shell->list);
 	ft_print_check(shell);

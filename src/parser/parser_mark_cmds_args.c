@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-int	ft_marc_cmd(t_shell *shell)
+int	ft_mark_cmds(t_shell *shell)
 {
 	t_token	*aux;
 	int		i;
@@ -26,7 +26,7 @@ int	ft_marc_cmd(t_shell *shell)
 	return (i);
 }
 
-int	ft_marc_args(t_shell *shell)
+int	ft_mark_args(t_shell *shell)
 {
 	t_token	*aux;
 	int		i;
@@ -36,7 +36,6 @@ int	ft_marc_args(t_shell *shell)
 	i = 0;
 	while (aux)
 	{
-		
 		if (aux->type == CMD)
 			state = 0;
 		if (!(aux->type >= PIPE && aux->type <= HEREDOC) && !(aux->type == CMD)

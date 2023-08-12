@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:29:17 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 23:35:38 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/12 19:05:09 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,10 @@ void	ft_print_check(t_shell *shell)
 		i = 0;
 		printf("\n");
 		printf("token index %i type %i\n", aux->index, aux->type);
-		printf("token str %s\n", aux->str);
+		printf("str %s\n", aux->str);
 		if (aux->cmd)
 		{
-			printf("token cdm ");
+			printf("cdm ");
 			while (aux->cmd[i])
 			{
 				printf ("%s ", aux->cmd[i++]);
