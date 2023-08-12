@@ -20,11 +20,11 @@ char	**ft_count_args(t_token *token)
 	int		i;
 	t_token	*aux;
 
-	i = 0;
+	i = 1;
 	aux = token;
-	while (aux && (aux->type >= 0 && aux->type <= EXPAND))
+	while (aux)
 	{
-		if (aux->str)
+		if ((aux->type == ARG) && aux->str)
 			i++;
 		aux = aux->next;
 	}
@@ -45,15 +45,18 @@ t_token	*ft_fill_array(t_token *token)
 	int		i;
 
 	current = token;
-	if (current && (current->type >= 0 && current->type <= EXPAND))
+	if (current && (current->type == CMD))
 	{
-		i = 0;
 		aux = current;
 		aux->cmd = ft_count_args(current);
-		while (current && (current->type >= 0 && current->type <= EXPAND))
+		current->cmd[0] = ft_strdup(current->str);
+		i = 1;
+		while (current)
 		{
-			if (current->str != NULL)
+			if ((current->type == ARG) && current->str)
 				aux->cmd[i++] = ft_strdup(current->str);
+			if (current->type == PIPE)
+				break ;
 			current = current->next;
 		}
 		aux->cmd[i] = NULL;
@@ -112,18 +115,31 @@ void	ft_print_cmds(t_token *list)
 void	ft_print_check(t_shell *shell)
 {
 	t_token	*aux;
+	int		i;
 
+	i = 0;
 	aux = NULL;
 	aux = shell->list;
 	if (!aux)
 		return ;
 	while (aux)
 	{
-		if (aux->type)
+		i = 0;
+		printf("\n");
+		printf("token index %i type %i\n", aux->index, aux->type);
+		printf("token str %s\n", aux->str);
+		if (aux->cmd)
 		{
-			printf("token index %i\n", aux->index);
-			printf("token type %i\n", aux->type);
+			printf("token cdm ");
+			while (aux->cmd[i])
+			{
+				printf ("%s ", aux->cmd[i++]);
+				if (aux->cmd[i] == NULL)
+					printf("(null)");
+			}
 		}
+		printf("\n");
 		aux = aux->next;
 	}
+	printf("\n");
 }
