@@ -56,6 +56,7 @@ t_token	*ft_fill_array(t_token *token)
 				aux->cmd[i++] = ft_strdup(current->str);
 			current = current->next;
 		}
+		aux->type = CMD;
 		aux->cmd[i] = NULL;
 	}
 	return (current);
@@ -112,18 +113,31 @@ void	ft_print_cmds(t_token *list)
 void	ft_print_check(t_shell *shell)
 {
 	t_token	*aux;
+	int		i;
 
+	i = 0;
 	aux = NULL;
 	aux = shell->list;
 	if (!aux)
 		return ;
 	while (aux)
 	{
-		if (aux->type)
+		i = 0;
+		printf("\n");
+		printf("token index %i type %i\n", aux->index, aux->type);
+		printf("token str %s\n", aux->str);
+		printf("token cdm ");
+		if (aux->cmd)
 		{
-			printf("token index %i\n", aux->index);
-			printf("token type %i\n", aux->type);
+			while (aux->cmd[i])
+			{
+				printf ("%s ", aux->cmd[i++]);
+				if (aux->cmd[i] == NULL)
+					printf("(null)");
+			}
 		}
+		printf("\n");
 		aux = aux->next;
 	}
+	printf("\n");
 }

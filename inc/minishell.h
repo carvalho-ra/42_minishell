@@ -74,6 +74,7 @@ enum	e_token_class
 	HEREDOC,
 	ERR,
 	CMD,
+	FILE_NAME,
 	ARG,
 };
 
