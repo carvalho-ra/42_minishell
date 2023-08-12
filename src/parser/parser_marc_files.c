@@ -1,13 +1,5 @@
 #include "../../inc/minishell.h"
 
-int	ft_marc_files(t_shell *shell)
-{
-	ft_marc_redir_in_file(shell);
-	ft_marc_redir_out_file(shell);
-	ft_marc_append_file(shell);
-	return (0);
-}
-
 int	ft_marc_redir_in_file(t_shell *shell)
 {
 	t_token	*aux;

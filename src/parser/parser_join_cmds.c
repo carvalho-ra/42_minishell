@@ -20,11 +20,11 @@ char	**ft_count_args(t_token *token)
 	int		i;
 	t_token	*aux;
 
-	i = 0;
+	i = 1;
 	aux = token;
-	while (aux && (aux->type >= 0 && aux->type <= EXPAND))
+	while (aux)
 	{
-		if (aux->str)
+		if ((aux->type == ARG) && aux->str)
 			i++;
 		aux = aux->next;
 	}
@@ -45,19 +45,20 @@ t_token	*ft_fill_array(t_token *token)
 	int		i;
 
 	current = token;
-	if (current && (current->type >= 0 && current->type <= EXPAND)
-		&& current->str)
+	if (current && (current->type == CMD))
 	{
-		i = 0;
 		aux = current;
 		aux->cmd = ft_count_args(current);
-		while (current && (current->type >= 0 && current->type <= EXPAND))
+		current->cmd[0] = ft_strdup(current->str);
+		i = 1;
+		while (current)
 		{
-			if (current->str != NULL)
+			if ((current->type == ARG) && current->str)
 				aux->cmd[i++] = ft_strdup(current->str);
+			if (current->type == PIPE)
+				break ;
 			current = current->next;
 		}
-		aux->type = CMD;
 		aux->cmd[i] = NULL;
 	}
 	return (current);
