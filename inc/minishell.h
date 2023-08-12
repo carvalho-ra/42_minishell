@@ -199,6 +199,12 @@ void	ft_parse_full_cmds(t_token *list);
 void	ft_print_cmds(t_token *list);
 void	ft_print_check(t_shell *shell);
 
+//prototypes parser_marc_file_name.c
+int	ft_marc_files(t_shell *shell);
+int	ft_marc_redir_in_file(t_shell *shell);
+int	ft_marc_redir_out_file(t_shell *shell);
+int	ft_marc_append_file(t_shell *shell);
+
 //prototypes parser_utils_err.c
 int		ft_err_pipe(t_shell *shell);
 int		ft_err_redir_in(t_shell *shell);

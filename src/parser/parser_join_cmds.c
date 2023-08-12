@@ -45,7 +45,8 @@ t_token	*ft_fill_array(t_token *token)
 	int		i;
 
 	current = token;
-	if (current && (current->type >= 0 && current->type <= EXPAND))
+	if (current && (current->type >= 0 && current->type <= EXPAND)
+		&& current->str)
 	{
 		i = 0;
 		aux = current;
@@ -126,9 +127,9 @@ void	ft_print_check(t_shell *shell)
 		printf("\n");
 		printf("token index %i type %i\n", aux->index, aux->type);
 		printf("token str %s\n", aux->str);
-		printf("token cdm ");
 		if (aux->cmd)
 		{
+			printf("token cdm ");
 			while (aux->cmd[i])
 			{
 				printf ("%s ", aux->cmd[i++]);

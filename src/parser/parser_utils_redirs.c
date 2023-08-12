@@ -56,7 +56,6 @@ int	ft_confirm_append(t_shell *shell)
 			i++;
 			aux->type = ERR;
 			aux->next->type = APPEND;
-			aux->next->next->type = FILE_NAME;
 			aux = aux->next;
 			printf("token %i is append (>>)\n", aux->index);
 		}
@@ -104,7 +103,6 @@ int	ft_confirm_redir_out(t_shell *shell)
 			&& aux->type != APPEND && aux->type != ERR)
 		{
 			i++;
-			aux->next->type = FILE_NAME;
 			aux->type = REDIRECT_OUT;
 			printf("token %i is redirect output (>)\n", aux->index);
 		}
@@ -126,7 +124,6 @@ int	ft_confirm_redir_in(t_shell *shell)
 			&& aux->type != HEREDOC && aux->type != ERR)
 		{
 			i++;
-			aux->next->type = FILE_NAME;
 			aux->type = REDIRECT_IN;
 			printf("token %i is redirect input (<)\n", aux->index);
 		}

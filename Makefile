@@ -26,6 +26,7 @@ SRCS = ./src/main.c \
 		./src/lexer/lexer_utils.c \
 		./src/lexer/lexer.c \
 		./src/parser/parser_join_cmds.c \
+		./src/parser/parser_marc_file_name.c \
 		./src/parser/parser_utils_err.c \
 		./src/parser/parser_utils_expand.c \
 		./src/parser/parser_utils_redirs.c \
@@ -42,7 +43,7 @@ INC = -Iinc/libft -Linc/libft -lft
 
 LIBFT = inc/libft/libft.a
 
-CC = cc -g -Wall -Wextra -Werror
+CC = gcc -g -Wall -Wextra -Werror
 
 all: $(NAME)
 

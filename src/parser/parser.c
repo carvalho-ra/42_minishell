@@ -40,6 +40,7 @@ int	ft_parser(t_shell *shell)
 	ft_expantion(shell);
 	//ft_print_list(shell);
 	ft_join_from_lexer(shell);
+	ft_marc_files(shell);
 	ft_parse_full_cmds(shell->list);
 	//ft_print_cmds(shell->list);
 	ft_print_check(shell);
