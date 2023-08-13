@@ -73,4 +73,7 @@ fclean: clean
 
 re: fclean all
 
+val: re
+	valgrind --leak-check=full --track-origins=yes ./$(NAME)
+
 .PHONY: all clean fclean re
