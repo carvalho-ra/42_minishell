@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/09 05:26:20 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/12 23:20:29 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		if (g_error_code != 0)
-			shell->line = readline("🤬 miniSHELL> ");
+			shell->line = readline("🤬 miniSHELL$ ");
 		else
-			shell->line = readline("😎 miniSHELL> ");
+			shell->line = readline("😎 miniSHELL$ ");
 		ft_shell(shell);
 	}
 	return (0);
