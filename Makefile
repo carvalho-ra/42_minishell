@@ -1,3 +1,5 @@
+MAKEFLAGS	=	--silent
+
 NAME = minishell
 
 SRCS = ./src/main.c \
@@ -53,15 +55,19 @@ $(LIBFT):
 	cd inc/libft && $(MAKE)
 
 %.o: %.c
-	$(CC) -c $< -o $@
+#	$(CC) -c $< -o $@
+	@${CC} -c $< -o ${<:.c=.o}
+	@printf "\033[0;32m#\e[m"
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(OBJS) $(INC) -o $(NAME) -lreadline
+	@printf "\033[0;33m miniSHELL compilation OK\e[m\n"
 
 clean:
 	rm -f $(OBJS)
 	cd inc/libft && $(MAKE) clean
-	
+	@printf "\033[0;33m miniSHELL cleaned\e[m\n"
+
 fclean: clean
 	$(RM) $(NAME) $(LIBFT)
 
