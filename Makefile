@@ -74,6 +74,9 @@ fclean: clean
 re: fclean all
 
 val: re
+	rm -f $(OBJS)
+	cd inc/libft && $(MAKE) clean
+	@printf "\033[0;33m miniSHELL cleaned\e[m\n"
 	valgrind --leak-check=full --track-origins=yes ./$(NAME)
 
 .PHONY: all clean fclean re
