@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:29:17 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/12 19:05:09 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:01:40 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,10 @@ void	ft_print_check(t_shell *shell)
 	i = 0;
 	aux = NULL;
 	aux = shell->list;
-	if (!aux)
-		return ;
 	while (aux)
 	{
 		i = 0;
-		printf("\n");
-		printf("token index %i type %i\n", aux->index, aux->type);
+		printf("\ntoken index %i type %i\n", aux->index, aux->type);
 		printf("str %s\n", aux->str);
 		if (aux->cmd)
 		{

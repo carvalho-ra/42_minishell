@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/09 02:07:13 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:41:43 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_confirm_pipe(t_shell *shell)
 			&& ft_strcmp("|", aux->next->str) && aux->type != ERR)
 		{
 			aux->type = PIPE;
-			printf("token %i is pipe\n", aux->index);
 		}
 		aux = aux->next;
 	}
@@ -57,7 +56,6 @@ int	ft_confirm_append(t_shell *shell)
 			aux->type = ERR;
 			aux->next->type = APPEND;
 			aux = aux->next;
-			printf("token %i is append (>>)\n", aux->index);
 		}
 		aux = aux->next;
 	}
@@ -81,7 +79,6 @@ int	ft_confirm_heredoc(t_shell *shell)
 			aux->type = ERR;
 			aux->next->type = HEREDOC;
 			aux = aux->next;
-			printf("token %i is heredoc (<<)\n", aux->index);
 		}
 		aux = aux->next;
 	}
@@ -104,7 +101,6 @@ int	ft_confirm_redir_out(t_shell *shell)
 		{
 			i++;
 			aux->type = REDIRECT_OUT;
-			printf("token %i is redirect output (>)\n", aux->index);
 		}
 		aux = aux->next;
 	}
@@ -125,7 +121,6 @@ int	ft_confirm_redir_in(t_shell *shell)
 		{
 			i++;
 			aux->type = REDIRECT_IN;
-			printf("token %i is redirect input (<)\n", aux->index);
 		}
 		aux = aux->next;
 	}
