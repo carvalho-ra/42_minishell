@@ -29,7 +29,7 @@ SRCS = ./src/main.c \
 		./src/lexer/lexer.c \
 		./src/parser/parser_join_cmds.c \
 		./src/parser/parser_mark_cmds_args.c \
-		./src/parser/parser_mark_files.c \
+		./src/parser/parser_mark_files_keyword.c \
 		./src/parser/parser_marks.c \
 		./src/parser/parser_utils_err.c \
 		./src/parser/parser_utils_expand.c \

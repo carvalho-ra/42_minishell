@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 22:20:57 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/12 22:20:58 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:27:57 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	ft_mark_args(t_shell *shell)
 	{
 		if (aux->type == CMD)
 			state = 0;
-		if (!(aux->type >= PIPE && aux->type <= HEREDOC) && !(aux->type == CMD)
-			&& !(aux->type == FILE_NAME) && !(aux->type == ERR) && !(state))
+		if (!(aux->type >= PIPE && aux->type <= ERR)
+			&& !(aux->type >= CMD && aux->type <= KEYWORD) && !(state))
 		{
 			if (aux->str)
 			{

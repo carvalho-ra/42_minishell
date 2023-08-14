@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/12 18:55:21 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:04:07 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ enum	e_token_class
 	ERR,
 	CMD,
 	FILE_NAME,
+	KEYWORD,
 	ARG,
 };
 
@@ -207,6 +208,7 @@ int		ft_mark_args(t_shell *shell);
 int		ft_mark_redir_in_file(t_shell *shell);
 int		ft_mark_redir_out_file(t_shell *shell);
 int		ft_mark_append_file(t_shell *shell);
+int		ft_mark_heredoc_keyword(t_shell *shell);
 
 //prototypes parser_marcs.c
 int		ft_marks(t_shell *shell);
