@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 22:20:57 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/14 11:27:57 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:18:24 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	ft_mark_args(t_shell *shell)
 	int		i;
 	int		state;
 
+	state = 1;
 	aux = shell->list;
 	i = 0;
 	while (aux)
