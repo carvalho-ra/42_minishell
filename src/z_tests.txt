@@ -98,7 +98,6 @@ echo teste > nome do arquivo contém espaços mas não aspas
 (no bash normal, só pega o primeiro elemento, nesse caso "nome",
 mas os outros elementos são incluídos no arquivo)
 
-
 teste"$USER$NO$USER"teste
 teste'"$USER$NO$USER"'teste
 teste'"$NO"'teste

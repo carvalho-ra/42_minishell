@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/12 09:52:57 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/14 13:41:20 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int	ft_execution(t_shell *shell)
 	token = shell->list;
 	if (!token)
 		return (0);
-	redirected = ft_which_redirector(token);
 	while (token)
 	{
+		redirected = ft_which_redirector(token);
 		if (token->cmd)
 		{
 			if ((ft_which_builtin(token)))
