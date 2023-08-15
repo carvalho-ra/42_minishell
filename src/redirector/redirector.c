@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:28:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/15 04:15:35 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/15 12:10:14 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_load_input(struct s_token *token)
 		}
 		token = token->next;
 	}
-	close(token->pipe[0]);
+	//close(token->pipe[0]);
 	return (0);
 }
 //? 0644 is the permission for the file to be created (rw-r--r--)
@@ -121,7 +121,7 @@ int	ft_load_output(struct s_token *token)
 			dup2(token->pipe[1], STDOUT_FILENO);
 			token = reference;
 		}
-		close(token->pipe[1]);
+		//close(token->pipe[1]);
 		token = token->next;
 	}
 	//close(token->pipe[1]);
@@ -134,14 +134,14 @@ void	ft_reset_fds(struct s_token *token)
 {
 	if (token->pipe[0] > 2)
 	{
-		//close(token->pipe[0]);
+		close(token->pipe[0]);
 		token->pipe[0] = token->backup[0];
 		dup2(token->backup[0], STDIN_FILENO);
 		close(token->backup[0]);
 	}
 	if (token->pipe[1] > 2)
 	{
-		//close(token->pipe[1]);
+		close(token->pipe[1]);
 		token->pipe[1] = token->backup[1];
 		dup2(token->backup[1], STDOUT_FILENO);
 		close(token->backup[1]);
