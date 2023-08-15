@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/14 15:36:11 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/15 09:59:03 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	ft_which_redirector(struct s_token *token)
 	{
 		if (token->type == HEREDOC)
 		{
-			//ft_load_heredoc(token);
-			ft_load_input(token);
+			ft_load_heredoc(token->next->str);
+			//ft_load_input(token);
 			ret += HEREDOC;
 		}
 		if (token->type == REDIRECT_IN)
@@ -85,7 +85,7 @@ int	ft_execution(t_shell *shell)
 		return (0);
 	while (token)
 	{
-		if (token->cmd)
+		if (token->type == CMD)
 		{
 			redirected = ft_which_redirector(token);
 			if ((ft_which_builtin(token)))
