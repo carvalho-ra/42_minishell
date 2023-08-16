@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/16 16:13:28 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:31:28 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	ft_which_redirector(struct s_token *token)
 		if (token->type == REDIRECT_IN)
 			ret += ft_load_input(ref, ft_get_name(token)) + 3;
 		if (token->type == REDIRECT_OUT || token->type == APPEND)
-			ret += ft_load_output(ref, ft_get_name(token), token->type);
+			ret += ft_load_output(ref, ft_get_name(token), token->type) + 3;
+		printf("load_output = %i\n", ft_load_output(ref, ft_get_name(token), token->type));
 		token = token->next;
 	}
 	return (ret);
