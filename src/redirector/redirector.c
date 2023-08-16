@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirector.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:28:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/15 19:32:41 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/16 17:26:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,25 @@
 //? Reference jongoad-io.c
 int	ft_load_input(struct s_token *token, char *filename)
 {
-	printf("\t\tEntrou no token CMD\n");
 	token->backup[0] = dup(STDIN_FILENO); //Salva a entrada padrão
-	token->error_code = access(filename, F_OK);
-	if (!token->error_code) //Se arquivo existe, checa se é legível.
+	if (access(filename, F_OK))//Em caso de arquivo ou diretório inexistente
 	{
-		printf("\t\tConseguiu acessar o arquivo.\n");
-		token->error_code = access(filename, R_OK);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(filename, 2);
+		ft_putstr_fd (" : Arquivo ou diretório inexistente\n", 2);
+		g_error_code = 1;
+		return (-1);
 	}
-	printf("\t\ttoken error_code = %i\n", token->error_code);
-	if (token->error_code)//Em caso de erro
+	if (access(filename, R_OK))//Em caso de erro de permissão negada
 	{
-		if (token->error_code == 2)
-			printf("minishell: %s com erro: \
-					arquivo inexistente\n", filename);
-		else
-			printf("minishell: %s com erro: %s\n", \
-				filename, strerror(token->error_code));
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(filename, 2);
+		ft_putstr_fd(" : Permissão negada\n", 2);
+		g_error_code = 1;
 		return (-1);
 	}
 	//Se não tiver erro, abre o arquivo no modo leitura.
+	printf("\t\tEntrou no token CMD\n");
 	token->pipe[0] = open(filename, O_RDONLY);
 	printf("\t\ttoken pipe[0] = %i\n", token->pipe[0]);
 	dup2(token->pipe[0], STDIN_FILENO);

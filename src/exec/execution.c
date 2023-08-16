@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/15 19:12:20 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:13:28 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int	ft_which_redirector(struct s_token *token)
 	ret = 0;
 	//pipeno = 0;
 	ref = token;
-	while (!ref && ref->type != CMD && ref->type != PIPE) // Referencia o token que tem um comando ou pipe.
+	while (ref && ref->type != CMD && ref->type != PIPE) // Referencia o token que tem um comando ou pipe.
 		ref = ref->next;
+	if (!ref)
+		ref = token;
 	/*if (token->type == PIPE)
 	{
 		ret += ft_load_pipe(token) + PIPE;
@@ -123,14 +125,18 @@ int	ft_which_builtin(t_token *current)
 int	ft_execution(t_shell *shell)
 {
 	t_token	*token;
+	int		status_redir;
 
+	status_redir = 0;
 	token = shell->list;
 	if (!token)
 		return (0);
-	ft_which_redirector(token);
+	status_redir = ft_which_redirector(token);
 	while (token)
 	{
 		//if (token->type == CMD || (token->type >= 2 && token->type <= 6))
+		if (status_redir == 2)
+			return (-1);
 		if (token->type == CMD)
 		{
 			// redirected = ft_which_redirector(token);
