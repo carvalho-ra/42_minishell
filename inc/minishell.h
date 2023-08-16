@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/15 09:17:14 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/15 19:12:10 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,10 +242,11 @@ int		ft_parser(t_shell *shell);
 
 //prototypes redirector
 int		ft_which_redirector(struct s_token *token);
-int		ft_load_input(struct s_token *token);
-int		ft_load_output(struct s_token *token);
+int		ft_load_input(struct s_token *token, char *filename);
+int		ft_load_output(struct s_token *token, char *filename, int type);
 int		ft_load_heredoc(char *delimiter);
 void	ft_reset_fds(struct s_token *token);
+char	*ft_get_name(t_token *token);
 
 //prototypes main.c
 void	ft_shell(t_shell *shell);

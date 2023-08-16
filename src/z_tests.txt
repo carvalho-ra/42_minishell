@@ -29,6 +29,11 @@ echo "$NO"$NO"$NO"'$NO'
 "$NO""$HOME"
 $NO$HOME
 "$NO"
+echo > bla.txt orqoroqi
+echo blablabla > $NO $NO $NO sera.txt
+> pipoca
+>> $NO $NO $NO popica
+echo Beijo do gordo > Programa do Jô.txt
 
 cd -
 /bin/ls

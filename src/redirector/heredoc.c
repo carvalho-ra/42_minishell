@@ -6,7 +6,7 @@
 /*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:56:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/15 11:55:29 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/15 19:34:19 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	ft_load_heredoc(char *delimiter)
 		free(line);
 	}
 	free(line);
-	close(fd[1]);
+	//close(fd[1]);
 	//ft_reset_fds(token);
+	// executar o comando aqui?
 	return (fd[0]);
 }
