@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/17 08:49:53 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:49:03 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_shell
 	struct s_token	*list;
 	char			**env_strs;
 	struct s_env	*env;
+	int				pipe[2];
+	int				backup[2];
 	int				aux_lexer;
 	char			*temp_str;
 }	t_shell;
@@ -81,6 +83,9 @@ enum	e_token_class
 	KEYWORD,
 	ARG,
 };
+
+
+void	ft_set_fds(struct s_token *token);
 
 //prototypes builtins
 
