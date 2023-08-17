@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/17 12:49:03 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:51:29 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,6 @@ enum	e_token_class
 	KEYWORD,
 	ARG,
 };
-
-
-void	ft_set_fds(struct s_token *token);
 
 //prototypes builtins
 
@@ -246,12 +243,19 @@ int		ft_validation(t_shell *shell);
 int		ft_parser(t_shell *shell);
 
 //prototypes redirector
-int		ft_which_redirector(struct s_token *token);
+
+//prototypes handle_fds.c
+void	ft_set_fds(struct s_token *token);
+void	ft_reset_fds(struct s_token *token);
+
+//prototypes redirector.c
+int		ft_redirector(struct s_token *token);
+char	*ft_get_name(t_token *token);
 int		ft_load_input(struct s_token *token, char *filename);
 int		ft_load_output(struct s_token *token, char *filename, int type);
-int		ft_load_heredoc(char *delimiter);
-void	ft_reset_fds(struct s_token *token);
-char	*ft_get_name(t_token *token);
+
+//prototypes heredoc.c
+int		ft_load_heredoc(t_token *token, char *delimiter);
 
 //prototypes main.c
 void	ft_shell(t_shell *shell);

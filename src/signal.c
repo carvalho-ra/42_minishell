@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:52 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/15 09:19:09 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:55:59 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	ft_handler(int signal)
 		rl_on_new_line ();
 		rl_replace_line ("", 0);
 		rl_redisplay ();
-		g_error_code = 130; // Ctrl + C
+		g_error_code = 130;
 	}
 }
 
+// 130 = Ctrl + C
 //apagar historico no processo filho!!!
 //chamar função especifica da readline

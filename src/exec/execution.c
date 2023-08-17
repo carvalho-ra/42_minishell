@@ -6,58 +6,11 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/17 12:26:30 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:38:00 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// Goes through the token list looking for redirectors or pipes.
-// If it finds any, calls the respective function to load the input/output.
-// Returns the sum of the redirectors found.
-// This must be done before the execution of the command.
-// TODO Em vez de trocar no token->type REDIRECTOR, trocar no token->type CMD
-// TODO Vai precisar percorrer a lista de tokens até achar um pipe ou NULL,
-// TODO manter como referência o token-type CMD, dar open nessa referência
-// TODO token CMD; token REDIRECT e token FILENAME (pulando os que forem nulo $NO)
-//* ft_count_pipes
-int	ft_which_redirector(struct s_token *token)
-{
-	int		ret;
-	t_token	*ref; //Armazena o token que contém o comando
-
-	ref = token;
-	while (ref && ref->type != CMD)
-		ref = ref->next;
-	if (!ref)
-		ref = token;
-	ret = 0;
-	printf("ref = %i\n", ref->index);
-	while (token)
-	{
-		if (token->type == HEREDOC)
-			ret = ft_load_heredoc(ft_get_name(token));
-		if (token->type == REDIRECT_IN)
-			ret = ft_load_input(ref, ft_get_name(token));
-		if (token->type == REDIRECT_OUT || token->type == APPEND)
-			ret = ft_load_output(ref, ft_get_name(token), token->type);
-		if (ret < 0)
-			break ;
-		token = token->next;
-	}
-	return (ret);
-}
-
-char	*ft_get_name(t_token *token)
-{
-	while (token)
-	{
-		if (token->type == FILE_NAME || token->type == KEYWORD)
-			return (token->str);
-		token = token->next;
-	}
-	return (NULL);
-}
 
 // Checks if a given command is built-in.
 // Returns 0 if it's built-in, 1 if it's not.
@@ -92,7 +45,7 @@ int	ft_execution(t_shell *shell)
 	token = shell->list;
 	if (!token)
 		return (0);
-	if (ft_which_redirector(token) >= 0)
+	if (ft_redirector(token) >= 0)
 	{
 		while (token)
 		{

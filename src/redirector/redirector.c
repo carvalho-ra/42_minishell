@@ -6,40 +6,59 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:28:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/17 12:47:15 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:54:32 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//! No código implementado pelo Rodrigo, verifica-se se o token é redirecionador
-//! Se for, verifica se o próximo também é. {
-//!		Se for, o token atual vira erro, o próximo é o redirecionador correto.
-//!		Se não for, o token atual é o redirecionador correto.
-
-//! O que eu estou fazendo, ao identificar um token de input ou heredoc,
-//! verifica se o arquivo vinculado existe e é legível. Se não for, retorna erro
-//! Se for token de output ou append, verifica se o arquivo vinculado existe,
-//! se não existir, cria. Se existir, verifica se é "escrevível". Senão, erro.
-
 #include "../../inc/minishell.h"
 
-/*void	manage_pipes(t_shell *shell)
+// Goes through the token list looking for redirectors.
+// If it finds any, calls the respective function to load the input/output.
+// Returns 0 if everything went well, -1 if there was an error.
+int	ft_redirector(struct s_token *token)
 {
-	t_token	*aux;
+	int		ret;
+	t_token	*ref;
 
-	if (aux->output->name)
-}*/
+	ref = token;
+	while (ref && ref->type != CMD)
+		ref = ref->next;
+	if (!ref)
+		ref = token;
+	ret = 0;
+	while (token)
+	{
+		if (token->type == HEREDOC)
+			ret = ft_load_heredoc(token, ft_get_name(token));
+		if (token->type == REDIRECT_IN)
+			ret = ft_load_input(ref, ft_get_name(token));
+		if (token->type == REDIRECT_OUT || token->type == APPEND)
+			ret = ft_load_output(ref, ft_get_name(token), token->type);
+		if (ret < 0)
+			break ;
+		token = token->next;
+	}
+	return (ret);
+}
 
-// Checks every token that has a file descriptor, and loads the input file
+//function that returns the name of the file
+//that is being redirected
+char	*ft_get_name(t_token *token)
+{
+	while (token)
+	{
+		if (token->type == FILE_NAME || token->type == KEYWORD)
+			return (token->str);
+		token = token->next;
+	}
+	return (NULL);
+}
+
+// Checks every token that has a file descriptor, opens the input file
 // to check if they're valid and readable. If not, it returns an error.
-//! Se for input ou heredoc, verifica se arquivo existe e se é legível.
-//! Se não for, retorna o erro correspondente.
-//! Se for, abre o arquivo no modo leitura.
-//TODO Possível/melhor fazer isso com matriz?
-//? Reference jongoad-io.c
 int	ft_load_input(struct s_token *token, char *filename)
 {
-	token->backup[0] = dup(STDIN_FILENO); //Salva a entrada padrão
-	if (access(filename, F_OK))//Em caso de arquivo ou diretório inexistente
+	if (access(filename, F_OK))
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(filename, 2);
@@ -47,7 +66,7 @@ int	ft_load_input(struct s_token *token, char *filename)
 		g_error_code = 1;
 		return (-1);
 	}
-	if (access(filename, R_OK))//Em caso de erro de permissão negada
+	if (access(filename, R_OK))
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(filename, 2);
@@ -55,19 +74,12 @@ int	ft_load_input(struct s_token *token, char *filename)
 		g_error_code = 1;
 		return (-1);
 	}
-	//Se não tiver erro, abre o arquivo no modo leitura.
-	printf("token %i\n", token->index);
 	token->pipe[0] = open(filename, O_RDONLY);
-	// printf("\t\ttoken pipe[0] = %i\n", token->pipe[0]);
-	// dup2(token->pipe[0], STDIN_FILENO);
 	return (0);
 }
-//? 0644 is the permission for the file to be created (rw-r--r--)
 
-// Checks tokens that has an output file descriptor, and loads the output file,
+// Checks tokens that have an output file descriptor, and opens the output file,
 // that is, checks if they exists. If not, creates the file.
-// Instead of writing directly to the token input/output structure, it creates
-// a placeholder fd and backup that will only be ported if the token is a CMD.
 int	ft_load_output(struct s_token *token, char *filename, int type)
 {
 	if (!access(filename, F_OK))
@@ -85,7 +97,6 @@ int	ft_load_output(struct s_token *token, char *filename, int type)
 		token->pipe[1] = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == APPEND)
 		token->pipe[1] = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	printf("token %i\n", token->index);
 	if (token->pipe[1] < 0)
 	{
 		ft_putstr_fd("minishell: erro ao criar arquivo\n", 2);
@@ -93,41 +104,4 @@ int	ft_load_output(struct s_token *token, char *filename, int type)
 		return (-1);
 	}
 	return (0);
-}
-//? 0644 is the permission for the file to be created (rw-r--r--)
-
-//funcao que seta os fds na execução
-//se o fd do token for diferente do padrão
-// Set the fds to token values
-//backup fds in struct shell
-void	ft_set_fds(struct s_token *token)
-{
-	if (token->pipe[0] > 2)
-	{
-		token->shell->backup[0] = dup(STDIN_FILENO);
-		dup2(token->pipe[0], STDIN_FILENO);
-		close(token->pipe[0]);
-	}
-	if (token->pipe[1] > 2)
-	{
-		token->shell->backup[1] = dup(STDOUT_FILENO);
-		dup2(token->pipe[1], STDOUT_FILENO);
-		close(token->pipe[1]);
-	}
-}
-
-
-// Restores the fds to backup values of struct shell
-void	ft_reset_fds(struct s_token *token)
-{
-	if (token->shell->backup[0] > 2)
-	{
-		dup2(token->shell->backup[0], STDIN_FILENO);
-		close(token->shell->backup[0]);
-	}
-	if (token->shell->backup[1] > 2)
-	{
-		dup2(token->shell->backup[1], STDOUT_FILENO);
-		close(token->shell->backup[1]);
-	}
 }
