@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:28:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/16 19:26:14 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:46:55 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,19 @@ int	ft_load_output(struct s_token *token, char *filename, int type)
 	int	backup;
 
 	backup = dup(STDOUT_FILENO);
-	if (access(filename, R_OK))//Em caso de erro de permissão negada
+	/*
+	if (access(filename, F_OK))//Em caso de erro de permissão negada
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(filename, 2);
-		ft_putstr_fd(" : Permissão negada\n", 2);
-		g_error_code = 1;
-		return (-1);
+		if (access(filename, W_OK))
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(filename, 2);
+			ft_putstr_fd(" : Permissão negada\n", 2);
+			g_error_code = 1;
+			return (-1);
+		}
 	}
+	*/
 	if (type == REDIRECT_OUT)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == APPEND)
