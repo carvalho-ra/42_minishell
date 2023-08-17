@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/17 09:05:21 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:26:30 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,25 @@
 int	ft_which_redirector(struct s_token *token)
 {
 	int		ret;
-	//int		pipeno;
 	t_token	*ref; //Armazena o token que contém o comando
 
-	ret = 0;
-	//pipeno = 0;
 	ref = token;
-	while (ref && ref->type != CMD && ref->type != PIPE) // Referencia o token que tem um comando ou pipe.
+	while (ref && ref->type != CMD)
 		ref = ref->next;
 	if (!ref)
 		ref = token;
-	/*if (token->type == PIPE)
-	{
-		ret += ft_load_pipe(token) + PIPE;
-		pipeno++;
-	}*/
-	while (token && token->type != PIPE)
+	ret = 0;
+	printf("ref = %i\n", ref->index);
+	while (token)
 	{
 		if (token->type == HEREDOC)
-			ret += ft_load_heredoc(ft_get_name(token)) + HEREDOC;
+			ret = ft_load_heredoc(ft_get_name(token));
 		if (token->type == REDIRECT_IN)
-			ret += ft_load_input(ref, ft_get_name(token)) + 3;
+			ret = ft_load_input(ref, ft_get_name(token));
 		if (token->type == REDIRECT_OUT || token->type == APPEND)
-			ret += ft_load_output(ref, ft_get_name(token), token->type) + 3;
+			ret = ft_load_output(ref, ft_get_name(token), token->type);
+		if (ret < 0)
+			break ;
 		token = token->next;
 	}
 	return (ret);
@@ -62,39 +58,6 @@ char	*ft_get_name(t_token *token)
 	}
 	return (NULL);
 }
-
-/*int	ft_which_redirector(struct s_token *token)
-{
-	int	ret;
-
-	ret = 0;
-	while (token)
-	{
-		if (token->type == HEREDOC)
-		{
-			ft_load_heredoc(token->next->str);
-			//ft_load_input(token);
-			ret += HEREDOC;
-		}
-		if (token->type == REDIRECT_IN)
-		{
-			ft_load_input(token);
-			ret += REDIRECT_IN;
-		}
-		if (token->type == REDIRECT_OUT || token->type == APPEND)
-		{
-			ft_load_output(token);
-			ret += REDIRECT_OUT;
-		}
-		if (token->type == PIPE)
-		{
-			ft_load_pipe(token);
-			ret += PIPE;
-		}
-		token = token->next;
-	}
-	return (ret);
-}*/
 
 // Checks if a given command is built-in.
 // Returns 0 if it's built-in, 1 if it's not.
@@ -125,30 +88,28 @@ int	ft_which_builtin(t_token *current)
 int	ft_execution(t_shell *shell)
 {
 	t_token	*token;
-	int		status_redir;
 
-	status_redir = 0;
 	token = shell->list;
 	if (!token)
 		return (0);
-	status_redir = ft_which_redirector(token);
-	while (token)
+	if (ft_which_redirector(token) >= 0)
 	{
-		//if (token->type == CMD || (token->type >= 2 && token->type <= 6))
-		if (status_redir == 2)
-			return (-1);
-		if (token->type == CMD)
+		while (token)
 		{
-			// redirected = ft_which_redirector(token);
-			if ((ft_which_builtin(token)))
+			ft_set_fds(token);
+			if (token->type == CMD)
 			{
-				ft_check_cmd(token);
-				ft_free_env_strs(shell);
+				if ((ft_which_builtin(token)))
+				{
+					ft_check_cmd(token);
+					ft_free_env_strs(shell);
+				}
+				ft_reset_fds(token);
 			}
-			ft_reset_fds(token);
+			if (!token->next && token->type != CMD)
+				ft_reset_fds(token);
+			token = token->next;
 		}
-		ft_reset_fds(token);
-		token = token->next;
 	}
 	return (0);
 }

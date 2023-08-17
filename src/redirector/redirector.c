@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:28:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/16 19:46:55 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:47:15 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int	ft_load_input(struct s_token *token, char *filename)
 		return (-1);
 	}
 	//Se não tiver erro, abre o arquivo no modo leitura.
-	printf("\t\tEntrou no token CMD\n");
+	printf("token %i\n", token->index);
 	token->pipe[0] = open(filename, O_RDONLY);
-	printf("\t\ttoken pipe[0] = %i\n", token->pipe[0]);
-	dup2(token->pipe[0], STDIN_FILENO);
+	// printf("\t\ttoken pipe[0] = %i\n", token->pipe[0]);
+	// dup2(token->pipe[0], STDIN_FILENO);
 	return (0);
 }
 //? 0644 is the permission for the file to be created (rw-r--r--)
@@ -70,12 +70,7 @@ int	ft_load_input(struct s_token *token, char *filename)
 // a placeholder fd and backup that will only be ported if the token is a CMD.
 int	ft_load_output(struct s_token *token, char *filename, int type)
 {
-	int	fd;
-	int	backup;
-
-	backup = dup(STDOUT_FILENO);
-	/*
-	if (access(filename, F_OK))//Em caso de erro de permissão negada
+	if (!access(filename, F_OK))
 	{
 		if (access(filename, W_OK))
 		{
@@ -86,41 +81,53 @@ int	ft_load_output(struct s_token *token, char *filename, int type)
 			return (-1);
 		}
 	}
-	*/
 	if (type == REDIRECT_OUT)
-		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		token->pipe[1] = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == APPEND)
-		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
+		token->pipe[1] = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	printf("token %i\n", token->index);
+	if (token->pipe[1] < 0)
 	{
-		//token->error_code = errno; //printf("minishell: %s com erro: %s\n",	//token->output->name, strerror(2));
-		return (fd);
+		ft_putstr_fd("minishell: erro ao criar arquivo\n", 2);
+		g_error_code = 1;
+		return (-1);
 	}
-	if (token && token->type == CMD)
-	{
-		token->backup[1] = backup;
-		token->pipe[1] = fd;
-		dup2(token->pipe[1], STDOUT_FILENO);
-	}
-	close(fd);
 	return (0);
 }
 //? 0644 is the permission for the file to be created (rw-r--r--)
 
-// Restores the fds to the default values (0, 1, 2)
-void	ft_reset_fds(struct s_token *token)
+//funcao que seta os fds na execução
+//se o fd do token for diferente do padrão
+// Set the fds to token values
+//backup fds in struct shell
+void	ft_set_fds(struct s_token *token)
 {
 	if (token->pipe[0] > 2)
 	{
+		token->shell->backup[0] = dup(STDIN_FILENO);
+		dup2(token->pipe[0], STDIN_FILENO);
 		close(token->pipe[0]);
-		token->pipe[0] = token->backup[0];
-		dup2(token->backup[0], STDIN_FILENO);
-		close(token->backup[0]);
 	}
 	if (token->pipe[1] > 2)
 	{
-		token->pipe[1] = token->backup[1];
-		dup2(token->backup[1], STDOUT_FILENO);
-		close(token->backup[1]);
+		token->shell->backup[1] = dup(STDOUT_FILENO);
+		dup2(token->pipe[1], STDOUT_FILENO);
+		close(token->pipe[1]);
+	}
+}
+
+
+// Restores the fds to backup values of struct shell
+void	ft_reset_fds(struct s_token *token)
+{
+	if (token->shell->backup[0] > 2)
+	{
+		dup2(token->shell->backup[0], STDIN_FILENO);
+		close(token->shell->backup[0]);
+	}
+	if (token->shell->backup[1] > 2)
+	{
+		dup2(token->shell->backup[1], STDOUT_FILENO);
+		close(token->shell->backup[1]);
 	}
 }
