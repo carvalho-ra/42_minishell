@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:28:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/17 13:54:32 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:57:33 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	ft_load_input(struct s_token *token, char *filename)
 		g_error_code = 1;
 		return (-1);
 	}
+	g_error_code = 0;
 	token->pipe[0] = open(filename, O_RDONLY);
 	return (0);
 }
@@ -103,5 +104,6 @@ int	ft_load_output(struct s_token *token, char *filename, int type)
 		g_error_code = 1;
 		return (-1);
 	}
+	g_error_code = 0;
 	return (0);
 }
