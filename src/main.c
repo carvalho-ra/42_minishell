@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/17 11:34:46 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:01:22 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 	shell->env_strs = NULL;
 	shell->env = NULL;
 	shell->pipe[0] = 0;
-	shell->pipe[1] = 0;
+	shell->pipe[1] = 1;
 	shell->backup[0] = 0;
-	shell->backup[1] = 0;
+	shell->backup[1] = 1;
 	shell->aux_lexer = 0;
 	shell->temp_str = NULL;
 	ft_copy_env(shell, envp);
