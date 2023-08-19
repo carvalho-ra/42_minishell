@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/17 13:51:29 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/19 16:50:30 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,13 +234,16 @@ int		ft_confirm_heredoc(t_shell *shell);
 int		ft_confirm_redir_out(t_shell *shell);
 int		ft_confirm_redir_in(t_shell *shell);
 
-//prototypes parser_utils.c
-int		ft_count_pipes(t_shell *shell);
-int		ft_count_redirs(t_shell *shell);
-
 //prototypes parser.c
 int		ft_validation(t_shell *shell);
 int		ft_parser(t_shell *shell);
+
+//prototypes pipes
+
+//prototypes pipes_utils.c
+int		ft_count_pipes(t_shell *shell);
+int		ft_count_redirs_in(t_shell *shell);
+int		ft_count_cmds(t_shell *shell);
 
 //prototypes redirector
 
