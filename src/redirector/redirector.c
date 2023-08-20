@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:28:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/19 17:31:15 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/20 12:41:23 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,13 @@ int	ft_redirector(struct s_token *token)
 	ref = token;
 	while (ref && ref->type != CMD)
 		ref = ref->next;
-	if (!ref && token->type == ERR)
-		ref = token->next;
-	else if (!ref)
+	if (!ref)
 		ref = token;
 	ret = 0;
-	while (token)
+	while (token && token->type != PIPE)
 	{
 		if (token->type == HEREDOC)
-			ret = ft_load_heredoc(token, ft_get_name(token));
+			token->fd_in = ft_load_heredoc(token, ft_get_name(token));
 		if (token->type == REDIRECT_IN)
 			ret = ft_load_input(ref, ft_get_name(token));
 		if (token->type == REDIRECT_OUT || token->type == APPEND)
