@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/20 10:32:18 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/20 10:38:02 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,7 @@ int	ft_execution(t_shell *shell)
 			}
 			ft_reset_fds(token);
 		}
-		else if ((token->type >= REDIRECT_IN && token->type <= APPEND)
-				|| !(token->next && (token->type == KEYWORD
-				|| token->type == FILE_NAME)))
+		else if (token->type >= REDIRECT_IN && token->type <= APPEND)
 			ft_reset_fds(token);
 		token = token->next;
 	}
