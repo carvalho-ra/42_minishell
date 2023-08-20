@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/19 19:19:13 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/20 14:23:24 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_shell(t_shell *shell)
 	}
 	else
 	{
-		rl_clear_history();
+		//rl_clear_history();
 		free(shell->line);
 	}
 }
