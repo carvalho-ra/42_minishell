@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:41:18 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/20 10:43:19 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/20 10:52:38 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 void	ft_set_fds(struct s_token *token)
 {
 	printf("set token %i\n", token->index);
-	if (token->pipe[0] != STDIN_FILENO)
+	if (token->pipe[0] > 2)
 	{
 		printf("set_in\n");
 		token->shell->backup[0] = dup(STDIN_FILENO);
 		dup2(token->pipe[0], STDIN_FILENO);
 		close(token->pipe[0]);
 	}
-	if (token->pipe[1] != STDOUT_FILENO)
+	if (token->pipe[1] > 2)
 	{
 		printf("set_out\n");
 		token->shell->backup[1] = dup(STDOUT_FILENO);
