@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/20 11:05:15 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/20 11:15:59 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ int	ft_execution(t_shell *shell)
 			}
 			ft_reset_fds(token);
 		}
-		else if (token->type == REDIRECT_IN || token->type == REDIRECT_OUT
-			|| token->type == APPEND)
+		else if (token->type >= REDIRECT_IN && token->type <= HEREDOC)
 			ft_reset_fds(token);
 		token = token->next;
 	}
