@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:56:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/17 13:55:41 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/19 22:25:05 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_load_heredoc(t_token *token, char *delimiter)
 	int		fd[2];
 	char	*line;
 
+	token = token;
 	if (pipe(fd) == -1)
 		return (-1);
 	while (1)
@@ -32,6 +33,6 @@ int	ft_load_heredoc(t_token *token, char *delimiter)
 	}
 	free(line);
 	close(fd[1]);
-	ft_reset_fds(token);
+	//dup2(fd[0], STDIN_FILENO);
 	return (fd[0]);
 }

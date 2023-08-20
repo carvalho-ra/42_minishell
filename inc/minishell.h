@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/19 17:54:26 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/19 22:23:50 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_token
 {
 	int				index;
 	int				type;
+	int				fd_in;
+	int				fd_out;
 	int				pipe[2];
 	int				backup[2];
 	int				error_code;
@@ -234,10 +236,10 @@ int		ft_confirm_heredoc(t_shell *shell);
 int		ft_confirm_redir_out(t_shell *shell);
 int		ft_confirm_redir_in(t_shell *shell);
 
-
 //prototypes parser.c
 int		ft_validation(t_shell *shell);
 int		ft_parser(t_shell *shell);
+int		ft_final_list(t_shell *shell);
 
 //prototypes pipes
 

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/16 15:50:07 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/19 20:24:03 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ int	ft_execve(t_token *current, char *cmd)
 	else if (pid == 0)
 	{
 		execve(cmd, current->cmd, current->shell->env_strs);
+		printf("alguma coisa\n");
 		exit(errno);
 	}
 	else
