@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/14 11:04:07 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:51:29 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include <errno.h>
 # include "libft/libft.h"
 
@@ -40,6 +41,8 @@ typedef struct s_token
 {
 	int				index;
 	int				type;
+	int				pipe[2];
+	int				backup[2];
 	int				error_code;
 	char			*str;
 	char			**cmd;
@@ -54,6 +57,8 @@ typedef struct s_shell
 	struct s_token	*list;
 	char			**env_strs;
 	struct s_env	*env;
+	int				pipe[2];
+	int				backup[2];
 	int				aux_lexer;
 	char			*temp_str;
 }	t_shell;
@@ -163,7 +168,7 @@ int		ft_aux_exp_word_flag(char *str, int i);
 char	*ft_aux_exp_word(char *str, char *final, int i);
 
 //prototypes expand.c
-void	ft_expantion(t_shell *shell);
+void	ft_expansion(t_shell *shell);
 void	ft_expand_args(t_shell *shell);
 char	*ft_expand_core(char *str, t_shell *shell);
 void	ft_remove_quotes(t_shell *shell);
@@ -236,6 +241,21 @@ int		ft_count_redirs(t_shell *shell);
 //prototypes parser.c
 int		ft_validation(t_shell *shell);
 int		ft_parser(t_shell *shell);
+
+//prototypes redirector
+
+//prototypes handle_fds.c
+void	ft_set_fds(struct s_token *token);
+void	ft_reset_fds(struct s_token *token);
+
+//prototypes redirector.c
+int		ft_redirector(struct s_token *token);
+char	*ft_get_name(t_token *token);
+int		ft_load_input(struct s_token *token, char *filename);
+int		ft_load_output(struct s_token *token, char *filename, int type);
+
+//prototypes heredoc.c
+int		ft_load_heredoc(t_token *token, char *delimiter);
 
 //prototypes main.c
 void	ft_shell(t_shell *shell);

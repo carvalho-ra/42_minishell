@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:52 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/08 22:37:50 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:55:59 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ void	ft_handler(int signal)
 	}
 }
 
+// 130 = Ctrl + C
 //apagar historico no processo filho!!!
 //chamar função especifica da readline

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/09 04:51:59 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:50:07 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ int	ft_check_cmd(t_token *current)
 	args = current->cmd;
 	if (!cmd)
 	{
-		printf("%s : command not found\n", args[0]);
+		ft_putstr_fd(args[0], STDERR_FILENO);
+		ft_putstr_fd(" : command not found\n", STDERR_FILENO);
 		g_error_code = 127;
 		ft_free_ptrs(&cmd, NULL);
 		return (-1);

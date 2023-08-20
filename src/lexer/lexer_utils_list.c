@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:30:04 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/06 18:14:42 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:51:24 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ t_token	*ft_create_node(char *str, int index, t_shell *shell)
 	new_node->cmd = NULL;
 	new_node->shell = shell;
 	new_node->next = NULL;
+	new_node->pipe[0] = 0;
+	new_node->pipe[1] = 1;
+	new_node->backup[0] = 0;
+	new_node->backup[1] = 1;
 	return (new_node);
 }
 

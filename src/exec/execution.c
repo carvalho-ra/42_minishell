@@ -6,14 +6,14 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/10 17:04:22 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:32:24 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//function that checks if the command is a builtin
-//returns 0 if it's a builtin, 1 if it's not
+// Checks if a given command is built-in.
+// Returns 0 if it's built-in, 1 if it's not.
 int	ft_which_builtin(t_token *current)
 {
 	if (current->cmd[0] == NULL)
@@ -40,22 +40,30 @@ int	ft_which_builtin(t_token *current)
 //returns 0 if it works, 1 if it doesn't
 int	ft_execution(t_shell *shell)
 {
-	t_token	*aux;
+	t_token	*token;
 
-	aux = shell->list;
-	if (!aux)
+	token = shell->list;
+	if (!token)
 		return (0);
-	while (aux)
+	if (ft_redirector(token) >= 0)
 	{
-		if (aux->cmd)
+		while (token)
 		{
-			if ((ft_which_builtin(aux)))
+			ft_set_fds(token);
+			if (token->type == CMD)
 			{
-				ft_check_cmd(aux);
-				ft_free_env_strs(shell);
+				if ((ft_which_builtin(token)))
+				{
+					ft_check_cmd(token);
+					ft_free_env_strs(shell);
+				}
+				ft_reset_fds(token);
 			}
+			else if (token->type >= REDIRECT_IN || token->type == REDIRECT_OUT
+				|| token->type == APPEND)
+				ft_reset_fds(token);
+			token = token->next;
 		}
-		aux = aux->next;
 	}
 	return (0);
 }

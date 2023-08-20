@@ -29,6 +29,11 @@ echo "$NO"$NO"$NO"'$NO'
 "$NO""$HOME"
 $NO$HOME
 "$NO"
+echo > bla.txt orqoroqi
+echo blablabla > $NO $NO $NO sera.txt
+> pipoca
+>> $NO $NO $NO popica
+echo Beijo do gordo > Programa do Jô.txt
 
 cd -
 /bin/ls
@@ -94,7 +99,9 @@ export USER=teste
 echo "$USER"
 echo '"$USER"'
 
-
+echo teste > nome do arquivo contém espaços mas não aspas
+(no bash normal, só pega o primeiro elemento, nesse caso "nome",
+mas os outros elementos são incluídos no arquivo)
 
 teste"$USER$NO$USER"teste
 teste'"$USER$NO$USER"'teste

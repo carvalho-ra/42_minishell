@@ -6,10 +6,8 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/12 23:20:29 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:33:56 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
@@ -26,6 +24,10 @@ static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 	shell->list = NULL;
 	shell->env_strs = NULL;
 	shell->env = NULL;
+	shell->pipe[0] = STDIN_FILENO;
+	shell->pipe[1] = STDOUT_FILENO;
+	shell->backup[0] = STDIN_FILENO;
+	shell->backup[1] = STDOUT_FILENO;
 	shell->aux_lexer = 0;
 	shell->temp_str = NULL;
 	ft_copy_env(shell, envp);
@@ -53,7 +55,10 @@ void	ft_shell(t_shell *shell)
 		}
 	}
 	else
+	{
+		rl_clear_history();
 		free(shell->line);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
