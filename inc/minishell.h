@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/19 22:23:50 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/20 12:28:53 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,9 @@ int		ft_final_list(t_shell *shell);
 int		ft_count_pipes(t_shell *shell);
 int		ft_count_redir_in(t_shell *shell);
 int		ft_count_cmds(t_shell *shell);
+
+//prototypes pipes.c
+int		ft_load_pipes(t_token *list);
 
 //prototypes redirector
 

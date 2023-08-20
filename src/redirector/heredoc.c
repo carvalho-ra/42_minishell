@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:56:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/19 22:25:05 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/20 11:52:52 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	ft_load_heredoc(t_token *token, char *delimiter)
 	}
 	free(line);
 	close(fd[1]);
-	//dup2(fd[0], STDIN_FILENO);
 	return (fd[0]);
 }
+
+	//dup2(fd[0], STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:11:35 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/20 10:03:45 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/20 11:52:29 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_builtin_cd(t_token *current)
 
 	path = getcwd(NULL, 0);
 	if (!current->cmd[1] || (current->cmd[1][0] == '~'
-			&& current->cmd[2] == NULL))
+		&& current->cmd[2] == NULL))
 		return (ft_goto_home(current, path));
 	else if (current->cmd[1][0] == '-' && current->cmd[2] == NULL)
 		return (ft_goto_prev_pwd(current, path));
