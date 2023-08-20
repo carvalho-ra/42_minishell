@@ -1,3 +1,5 @@
+MAKEFLAGS	=	--silent
+
 SRCS 	=	ft_isalpha.c\
 			ft_isdigit.c\
 			ft_isalnum.c\
@@ -39,16 +41,20 @@ CC 		= 	cc
 RM		=	rm -f
 CFLAGS 	= 	-Wall -Wextra -Werror
 
-.c.o:
-			@$(CC) -c $(CFLAGS) $(SRCS)
+.c.o:		
+			# @$(CC) -c $(CFLAGS) $(SRCS)
+			@$(CC) -c $(CFLAGS) $< -o ${<:.c=.o}
+			@printf "\033[0;32m#\e[m"
 
 $(NAME):	$(OBJS)
-			@ar rcs libft.a $(OBJS)
+			@ar rcs libft.a $(OBJS) 
+			@printf "\033[0;33m libft compilation OK\e[m\n"
 
 all:		$(NAME)
 
 clean:
 			@$(RM) $(OBJS)
+			@printf "\033[0;33m libft cleaned\e[m\n"
 
 fclean: 	clean
 			@$(RM) $(NAME)
