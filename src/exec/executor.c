@@ -3,14 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/20 12:45:29 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:39:01 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	ft_is_dir(char *path)
+{
+	DIR	*dir;
+
+	printf("\t\tChecando se %s é um diretório.\n", path);
+	if (!path)
+	{
+		printf("\t\tPath = NULL.\n");
+		return (-1);
+	}
+	dir = opendir(path);
+	if (dir)
+	{
+		printf("\t\t%s é um diretório. Fechando e retornando.\n", path);
+		closedir(dir);
+		return (1);
+	}
+	printf("\t\t%s não é um diretório.\n", path);
+	return (0);
+}
+
+//verifica se existe e se é executável
+int	ft_is_executable(char *str)
+{
+	printf("\t\tstr: %s\n", str);
+	if (!str)
+		return (-1);
+	if (access(str, F_OK) != -1) // se o arquivo existir
+	{
+		printf("\t\tArquivo existe\n");
+		if (ft_is_dir(str) == 0 && access(str, X_OK) == 0) // se não for um diretório
+			return (2); // siga em frente, continue a checagem fora daqui
+		else // se for um diretório
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(str, 2);
+			if (access(str, X_OK) == -1) // mas não tiver executável
+				ft_putstr_fd(": permissão negada\n", 2);
+			else
+				ft_putstr_fd(" é um diretório\n", 2);
+			g_error_code = 126;
+			return (-1);
+		}
+	}
+	else
+		printf("\t\tArquivo não existe!\n");
+	return (1);
+}
+
+// se for diretório mensagem de erro de diretorio
+
+//montagem e verificação
+
 
 //function that gets all the paths from the env
 //and splits them into an array of strings
@@ -99,6 +153,11 @@ char	*ft_search_cmd(char **paths)
 	free(paths);
 	return (NULL);
 }
+//verificar de novo ao sair dessa funcao
+
+//126 permissão
+//127 
+
 
 // function that checks if the command is valid
 // returns 0 if it is, -1 if it isn't
@@ -108,18 +167,22 @@ int	ft_check_cmd(t_token *current)
 	char	**args;
 
 	cmd = NULL;
-	ft_env_to_str(current->shell);
-	if (!current->cmd[0][0])
-		return (0);
-	if (current->cmd[0][0] == '/')
+	if (ft_is_executable(current->cmd[0]) == -1)
+		return (1);
+	else if (current->cmd[0][0] == '.' || current->cmd[0][0] == '/')
 		cmd = ft_strdup(current->cmd[0]);
-	else
+	ft_env_to_str(current->shell);
+	if (cmd)
+		printf("\t\tcmd1: %s\n", cmd);
+	if (!cmd)
 		cmd = ft_search_cmd(ft_add_cmd(current, ft_get_all_paths(current)));
+	if (cmd)
+		printf("\t\tcmd2: %s\n", cmd);
 	args = current->cmd;
 	if (!cmd)
 	{
 		ft_putstr_fd(args[0], STDERR_FILENO);
-		ft_putstr_fd(" : command not found\n", STDERR_FILENO);
+		ft_putstr_fd(": comando não encontrado\n", STDERR_FILENO);
 		g_error_code = 127;
 		ft_free_ptrs(&cmd, NULL);
 		return (-1);
@@ -145,8 +208,17 @@ int	ft_execve(t_token *current, char *cmd)
 	}
 	else if (pid == 0)
 	{
-		execve(cmd, current->cmd, current->shell->env_strs);
-		exit(errno);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		if (execve(cmd, current->cmd, current->shell->env_strs) == -1)
+		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(cmd, STDERR_FILENO);
+			ft_putstr_fd(": Arquivo ou diretório inexistente\n", STDERR_FILENO);
+			//ft_putstr_fd(strerror(errno), STDERR_FILENO);
+			g_error_code = 127;
+			exit(errno);
+		}
 	}
 	else
 	{
@@ -154,6 +226,11 @@ int	ft_execve(t_token *current, char *cmd)
 		if (WIFEXITED(child_exit_code))
 		{
 			g_error_code = WEXITSTATUS(child_exit_code);
+			ft_free_ptrs(&cmd, NULL);
+		}
+		if (WIFSIGNALED(child_exit_code))
+		{
+			g_error_code = 128 + WTERMSIG(child_exit_code);
 			ft_free_ptrs(&cmd, NULL);
 		}
 	}
