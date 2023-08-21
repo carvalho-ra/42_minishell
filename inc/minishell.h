@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/21 01:50:17 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:24:34 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int		ft_execution(t_shell *shell);
 //prototypes executor.c
 int		ft_check_cmd(t_token *current);
 int		ft_execve(t_token *current, char *cmd);
+int		ft_execve_core(t_token *current, char *cmd);
 
 //prototypes mount_cmd.c
 char	**ft_get_all_paths(t_token *current);

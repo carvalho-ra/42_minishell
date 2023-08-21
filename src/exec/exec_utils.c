@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 03:09:05 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/21 02:41:13 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/21 15:25:44 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,15 @@ int	ft_is_executable(char *str)
 		return (-1);
 	if (access(str, F_OK) != -1)
 	{
-		if (ft_is_dir(str) == 0 && access(str, X_OK) == 0)
+		if ((ft_is_dir(str) == 0 && access(str, X_OK) == 0)
+			|| (ft_is_dir(str) == 1 && str[0] != '/'))
 			return (2);
 		else
 		{
-			if (access(str, X_OK) == -1)
-				ft_print_error_msg(str, "permissão negada", 126);
+			if (access(str, X_OK) == -1 && str[0] == '.')
+				ft_print_error_msg(str, "Permissão negada", 126);
+			else if (access(str, X_OK) == -1 && str[0] != '.')
+				ft_print_error_msg(str, "comando não encontrado", 127);
 			else
 				ft_print_error_msg(str, "é um diretório", 126);
 			return (-1);
@@ -92,3 +95,5 @@ int	ft_is_executable(char *str)
 	}
 	return (1);
 }
+
+//teste2 tá dando é um diretório e deveria dar comando não encontrado
