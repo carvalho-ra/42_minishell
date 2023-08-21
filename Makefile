@@ -22,6 +22,7 @@ SRCS = ./src/main.c \
 		./src/exec/exec_utils.c \
 		./src/exec/executor.c \
 		./src/exec/execution.c \
+		./src/exec/mount_cmd.c \
 		./src/lexer/lexer_utils_list.c \
 		./src/lexer/lexer_utils_memory.c \
 		./src/lexer/lexer_utils_quotes.c \
