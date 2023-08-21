@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 03:09:05 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/21 01:39:35 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/21 02:41:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,10 @@ int	ft_is_executable(char *str)
 			return (2);
 		else
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(str, 2);
 			if (access(str, X_OK) == -1)
-				ft_putstr_fd(": permissão negada\n", 2);
+				ft_print_error_msg(str, "permissão negada", 126);
 			else
-				ft_putstr_fd(" é um diretório\n", 2);
-			g_error_code = 126;
+				ft_print_error_msg(str, "é um diretório", 126);
 			return (-1);
 		}
 	}
