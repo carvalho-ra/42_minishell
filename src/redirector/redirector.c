@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirector.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:28:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/20 12:41:23 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/22 16:21:27 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int	ft_redirector(struct s_token *token)
 	while (token && token->type != PIPE)
 	{
 		if (token->type == HEREDOC)
-			token->fd_in = ft_load_heredoc(token, ft_get_name(token));
+			ret += ft_load_heredoc(token, ft_get_name(token)) + HEREDOC;
 		if (token->type == REDIRECT_IN)
-			ret = ft_load_input(ref, ft_get_name(token));
+			ret += ft_load_input(ref, ft_get_name(token)) + REDIRECT_IN;
 		if (token->type == REDIRECT_OUT || token->type == APPEND)
-			ret = ft_load_output(ref, ft_get_name(token), token->type);
+			ret += ft_load_output(ref, ft_get_name(token), token->type) + 4;
 		if (ret < 0)
 			break ;
 		token = token->next;
@@ -58,7 +58,7 @@ char	*ft_get_name(t_token *token)
 // to check if they're valid and readable. If not, it returns an error.
 int	ft_load_input(struct s_token *token, char *filename)
 {
-	if (access(filename, F_OK))
+	if (access(filename, F_OK) == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(filename, 2);
@@ -66,7 +66,7 @@ int	ft_load_input(struct s_token *token, char *filename)
 		g_error_code = 1;
 		return (-1);
 	}
-	if (access(filename, R_OK))
+	if (access(filename, R_OK) == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(filename, 2);
@@ -85,7 +85,7 @@ int	ft_load_output(struct s_token *token, char *filename, int type)
 {
 	if (!access(filename, F_OK))
 	{
-		if (access(filename, W_OK))
+		if (access(filename, W_OK) == -1)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(filename, 2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/21 01:58:05 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/21 16:42:18 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
 	shell->env = NULL;
 	shell->pipe[0] = STDIN_FILENO;
 	shell->pipe[1] = STDOUT_FILENO;
-	shell->backup[0] = STDIN_FILENO;
-	shell->backup[1] = STDOUT_FILENO;
+	shell->backup[0] = dup(STDIN_FILENO);
+	shell->backup[1] = dup(STDOUT_FILENO);
 	shell->aux_lexer = 0;
 	shell->temp_str = NULL;
 	ft_copy_env(shell, envp);

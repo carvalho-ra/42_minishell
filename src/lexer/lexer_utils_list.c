@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
+/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:30:04 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/20 10:57:43 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/21 16:41:32 by cnascime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_token	*ft_create_node(char *str, int index, t_shell *shell)
 	new_node->fd_out = STDOUT_FILENO;
 	new_node->pipe[0] = 0;
 	new_node->pipe[1] = 1;
-	new_node->backup[0] = 0;
-	new_node->backup[1] = 1;
+	new_node->backup[0] = dup(STDIN_FILENO);
+	new_node->backup[1] = dup(STDOUT_FILENO);
 	return (new_node);
 }
 
