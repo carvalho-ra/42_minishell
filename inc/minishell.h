@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/22 12:45:44 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:25:13 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ typedef struct s_token
 {
 	int				index;
 	int				type;
-	int				fd_in;
-	int				fd_out;
 	int				pipe[2];
 	int				backup[2];
 	int				error_code;
@@ -60,6 +58,8 @@ typedef struct s_shell
 	struct s_token	*list;
 	char			**env_strs;
 	struct s_env	*env;
+	int				fd_in;
+	int				fd_out;
 	int				pipe[2];
 	int				backup[2];
 	int				aux_lexer;

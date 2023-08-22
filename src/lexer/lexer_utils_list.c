@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:30:04 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/21 21:47:52 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:29:05 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ t_token	*ft_create_node(char *str, int index, t_shell *shell)
 	new_node->cmd = NULL;
 	new_node->shell = shell;
 	new_node->next = NULL;
-	new_node->fd_in = STDIN_FILENO;
-	new_node->fd_out = STDOUT_FILENO;
 	new_node->pipe[0] = -1;
 	new_node->pipe[1] = -1;
 	new_node->backup[0] = -1;

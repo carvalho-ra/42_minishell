@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:39:06 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/22 16:23:58 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/22 18:54:53 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	ft_set_pipe_fds(t_token *current)
 		current = current->next;
 	if (current)
 	{
-		printf("SET pipe on token %d\n", current->index);
-		printf("fechando extremidade de leitura do pipe fd: %d\n", current->pipe[0]);
+		//printf("SET pipe on token %d\n", current->index);
+		//printf("fechando extremidade de leitura do pipe fd: %d\n", current->pipe[0]);
 		close (current->pipe[0]);
-		printf("redirecionando saída padrão para o pipe fd: %d\n", current->pipe[1]);
+		//printf("redirecionando saída padrão para o pipe fd: %d\n", current->pipe[1]);
 		dup2(current->pipe[1], STDOUT_FILENO);
 		close(current->pipe[1]);
 	}
@@ -52,18 +52,18 @@ void	ft_reset_pipe_fds(t_token *current)
 		current = current->next;
 	if (current)
 	{
-		printf("RESET pipe on token %d\n", current->index);
-		printf("fechando extremidade escrita do pipe fd: %d\n", current->pipe[1]);
+		//printf("RESET pipe on token %d\n", current->index);
+		//printf("fechando extremidade escrita do pipe fd: %d\n", current->pipe[1]);
 		close(current->pipe[1]);
-		printf("redirecionando entrada padrão para o pipe fd: %d\n", current->pipe[0]);
+		//printf("redirecionando entrada padrão para o pipe fd: %d\n", current->pipe[0]);
 		dup2(current->pipe[0], STDIN_FILENO);
 		close(current->pipe[0]);
 	}
 	else
 	{
-		printf("redirecionando entrada padrão para o fd: %d\n", aux->fd_in);
-		dup2(aux->fd_in, STDIN_FILENO);
-		printf("redirecionando saída padrão para o fd: %d\n", aux->fd_out);
-		dup2(aux->fd_out, STDOUT_FILENO);
+		//printf("redirecionando entrada padrão para o fd: %d\n", aux->shell->fd_in);
+		dup2(aux->shell->fd_in, STDIN_FILENO);
+		//printf("redirecionando saída padrão para o fd: %d\n", aux->shell->fd_out);
+		dup2(aux->shell->fd_out, STDOUT_FILENO);
 	}
 }
