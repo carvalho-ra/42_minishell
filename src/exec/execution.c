@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/21 00:30:22 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/21 22:37:41 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,62 +36,80 @@ int	ft_which_builtin(t_token *current)
 		return (1);
 }
 
-//function that sends command to execution if it's not a builtin
-//returns 0 if it works, 1 if it doesn't
-// int	ft_execution(t_shell *shell)
-// {
-// 	t_token	*token;
+//validacao da string caso tenha entre
+// pipes sem comando 
 
-// 	token = shell->list;
-// 	if (!token)
-// 		return (0);
-// 	if (ft_redirector(token) >= 0)
-// 	{
-// 		while (token)
-// 		{
-// 			ft_set_fds(token);
-// 			if (token->type == CMD)
-// 			{
-// 				if ((ft_which_builtin(token)))
-// 				{
-// 					ft_check_cmd(token);
-// 					ft_free_env_strs(shell);
-// 				}
-// 				ft_reset_fds(token);
-// 			}
-// 			else if (token->type >= REDIRECT_IN || token->type == REDIRECT_OUT
-// 				|| token->type == APPEND)
-// 				ft_reset_fds(token);
-// 			token = token->next;
-// 		}
-// 	}
-// 	return (0);
-// }
-
-int	ft_execution(t_shell *shell)
+int	ft_master_exec(t_shell *shell)
 {
-	t_token	*token;
+	int		pid;
+	t_token	*current;
+	t_token	*cmd;
 
-	token = shell->list;
-	if (!token)
-		return (0);
-	if (ft_redirector(token) < 0)
-		return (0);
-	while (token && token->type != PIPE)
+	current = shell->list;
+	cmd = NULL;
+	if (!ft_count_pipes(shell))
 	{
-		ft_set_fds(token);
-		if (token->type == CMD)
+		ft_execution(current);
+		return (0);
+	}
+	else
+	{
+		ft_load_pipes(shell->list);
+		while (current)
 		{
-			if ((ft_which_builtin(token)))
+			if (current->type == CMD)
 			{
-				ft_check_cmd(token);
-				ft_free_env_strs(shell);
+				cmd = current;
+				while (current && current->type != PIPE)
+					current = current->next;
+				if (current)
+					ft_set_pipe_fds(cmd, current);
+				pid = fork();
+				if (pid == -1)
+					return (-1);
+				else if (pid == 0)
+				{
+					ft_signal_reset();
+					current = ft_execution(cmd);
+				}
+				else
+				{
+					waitpid(pid, &g_error_code, 0);
+					ft_reset_pipe_fds(cmd);
+					if (WIFSIGNALED(g_error_code))
+						g_error_code = 128 + WTERMSIG(g_error_code);
+					if (WIFEXITED(g_error_code))
+						g_error_code = WEXITSTATUS(g_error_code);
+				}
 			}
-			ft_reset_fds(token);
+			if (current)
+				current = current->next;
 		}
-		else if (token->type >= REDIRECT_IN && token->type <= HEREDOC)
-			ft_reset_fds(token);
-		token = token->next;
+	}
+	return (0);
+}
+
+t_token	*ft_execution(t_token *current)
+{
+	if (!current)
+		return (0);
+	if (ft_redirector(current) < 0)
+		return (0);
+	while (current)
+	{
+		ft_set_fds(current);
+		if (current->type == CMD)
+		{
+			if ((ft_which_builtin(current)))
+			{
+				ft_check_cmd(current);
+				ft_free_env_strs(current->shell);
+			}
+			ft_reset_fds(current);
+		}
+		else if (current->type >= REDIRECT_IN && current->type <= HEREDOC)
+			ft_reset_fds(current);
+		current = current->next;
 	}
 	return (0);
 }

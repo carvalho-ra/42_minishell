@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnascime <cnascime@student.42.rio>         +#+  +:+       +#+        */
+/*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:38:12 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/18 19:44:28 by cnascime         ###   ########.fr       */
+/*   Updated: 2023/08/21 19:25:46 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,11 @@ void	ft_load_pipes(t_token *token, t_token *next_valid)
 {
 	if (!token)
 		return ;
-	/*if (!next_valid)
-	{
-		next_valid = token;
-		ft_close_pipes(token); // Se não houver próximo válido, fecha os pipes
-	}*/
-	if (token->shell->pipes > 0) // Se tiver um pipe, 
+
+	if (ft_count_pipes(token->shell) > 0) // Se tiver um pipe, 
 	{
 		close(token->pipe[0]);
 		pipe(token->pipe);
-		//printf("\t\tquantidade de pipes: %i\n", token->shell->pipes);
-		//token->shell->pipes--;
 	}
 	if (token->pipe[0] != -1)
 	{

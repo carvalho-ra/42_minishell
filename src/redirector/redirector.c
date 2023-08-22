@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:28:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/20 12:41:23 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/21 21:45:01 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_load_input(struct s_token *token, char *filename)
 		return (-1);
 	}
 	g_error_code = 0;
-	token->pipe[0] = open(filename, O_RDONLY);
+	token->backup[0] = open(filename, O_RDONLY);
 	return (0);
 }
 
@@ -95,10 +95,10 @@ int	ft_load_output(struct s_token *token, char *filename, int type)
 		}
 	}
 	if (type == REDIRECT_OUT)
-		token->pipe[1] = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		token->backup[1] = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == APPEND)
-		token->pipe[1] = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (token->pipe[1] < 0)
+		token->backup[1] = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (token->backup[1] < 0)
 	{
 		ft_putstr_fd("minishell: erro ao criar arquivo\n", 2);
 		g_error_code = 1;

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 03:09:05 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/21 15:25:44 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/21 19:01:48 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,3 @@ int	ft_is_executable(char *str)
 	}
 	return (1);
 }
-
-//teste2 tá dando é um diretório e deveria dar comando não encontrado
