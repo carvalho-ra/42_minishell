@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/21 22:37:41 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/22 16:21:20 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,10 @@ int	ft_master_exec(t_shell *shell)
 {
 	int		pid;
 	t_token	*current;
-	t_token	*cmd;
 
 	current = shell->list;
-	cmd = NULL;
 	if (!ft_count_pipes(shell))
-	{
 		ft_execution(current);
-		return (0);
-	}
 	else
 	{
 		ft_load_pipes(shell->list);
@@ -59,27 +54,23 @@ int	ft_master_exec(t_shell *shell)
 		{
 			if (current->type == CMD)
 			{
-				cmd = current;
-				while (current && current->type != PIPE)
-					current = current->next;
-				if (current)
-					ft_set_pipe_fds(cmd, current);
 				pid = fork();
 				if (pid == -1)
 					return (-1);
 				else if (pid == 0)
 				{
+					ft_set_pipe_fds(current);
 					ft_signal_reset();
-					current = ft_execution(cmd);
+					current = ft_execution(current);
 				}
 				else
 				{
 					waitpid(pid, &g_error_code, 0);
-					ft_reset_pipe_fds(cmd);
 					if (WIFSIGNALED(g_error_code))
 						g_error_code = 128 + WTERMSIG(g_error_code);
 					if (WIFEXITED(g_error_code))
 						g_error_code = WEXITSTATUS(g_error_code);
+					ft_reset_pipe_fds(current);
 				}
 			}
 			if (current)
@@ -105,6 +96,8 @@ t_token	*ft_execution(t_token *current)
 				ft_check_cmd(current);
 				ft_free_env_strs(current->shell);
 			}
+			else if (ft_count_pipes(current->shell) > 0)
+				exit (0);
 			ft_reset_fds(current);
 		}
 		else if (current->type >= REDIRECT_IN && current->type <= HEREDOC)

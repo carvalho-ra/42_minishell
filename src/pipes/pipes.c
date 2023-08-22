@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:39:06 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/21 22:42:03 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/22 16:23:58 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,54 +20,50 @@ int	ft_load_pipes(t_token *list)
 	while (aux)
 	{
 		if (aux->type == PIPE)
-		{
 			pipe(aux->pipe);
-			printf("token %i\n", aux->index);
-			printf("type %i\n", aux->type);
-			printf("pipe[0] = %i\n", aux->pipe[0]);
-			printf("pipe[1] = %i\n", aux->pipe[1]);
-		}
 		aux = aux->next;
 	}
 	return (0);
 }
 
 // Set the fds to token values during execution
-void	ft_set_pipe_fds(t_token *token_cmd, t_token *token_pipe)
+void	ft_set_pipe_fds(t_token *current)
 {
-	printf("set pipe token %i\n", token_cmd->index);
-	printf("type %i\n", token_cmd->type);
-	printf("pipe[0] = %i\n", token_cmd->pipe[0]);
-	if (token_pipe->pipe[0] != -1)
+	while (current && current->type != PIPE)
+		current = current->next;
+	if (current)
 	{
-		printf("set_in\n");
-		token_cmd->shell->pipe[0] = dup(STDOUT_FILENO);
-		dup2(token_pipe->pipe[0], STDOUT_FILENO);
-		close(token_pipe->pipe[0]);
-	}
-	if (token_pipe->pipe[1] != -1)
-	{
-		printf("set_out\n");
-		token_cmd->shell->pipe[1] = dup(STDOUT_FILENO);
-		dup2(token_pipe->pipe[1], STDOUT_FILENO);
-		close(token_pipe->pipe[1]);
+		printf("SET pipe on token %d\n", current->index);
+		printf("fechando extremidade de leitura do pipe fd: %d\n", current->pipe[0]);
+		close (current->pipe[0]);
+		printf("redirecionando saída padrão para o pipe fd: %d\n", current->pipe[1]);
+		dup2(current->pipe[1], STDOUT_FILENO);
+		close(current->pipe[1]);
 	}
 }
 
 // Restores the fds to backup values of struct shell
-void	ft_reset_pipe_fds(t_token *token_cmd)
+void	ft_reset_pipe_fds(t_token *current)
 {
-	printf("reset pipe token %i\n", token_cmd->index);
-	if (token_cmd->pipe[0] != -1)
+	t_token	*aux;
+
+	aux = current;
+	while (current && current->type != PIPE)
+		current = current->next;
+	if (current)
 	{
-		printf("reset_in\n");
-		dup2(token_cmd->shell->pipe[0], STDIN_FILENO);
-		close(token_cmd->shell->pipe[0]);
+		printf("RESET pipe on token %d\n", current->index);
+		printf("fechando extremidade escrita do pipe fd: %d\n", current->pipe[1]);
+		close(current->pipe[1]);
+		printf("redirecionando entrada padrão para o pipe fd: %d\n", current->pipe[0]);
+		dup2(current->pipe[0], STDIN_FILENO);
+		close(current->pipe[0]);
 	}
-	if (token_cmd->pipe[1] != -1)
+	else
 	{
-		printf("reset_out\n");
-		dup2(token_cmd->shell->pipe[1], STDOUT_FILENO);
-		close(token_cmd->shell->pipe[1]);
+		printf("redirecionando entrada padrão para o fd: %d\n", aux->fd_in);
+		dup2(aux->fd_in, STDIN_FILENO);
+		printf("redirecionando saída padrão para o fd: %d\n", aux->fd_out);
+		dup2(aux->fd_out, STDOUT_FILENO);
 	}
 }
