@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/21 15:52:58 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 01:04:14 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ int	ft_execve(t_token *current, char *cmd)
 		else
 		{
 			waitpid(pid, &g_error_code, 0);
-			if (WIFEXITED(g_error_code))
-				g_error_code = WEXITSTATUS(g_error_code);
 			if (WIFSIGNALED(g_error_code))
 				g_error_code = 128 + WTERMSIG(g_error_code);
+			if (WIFEXITED(g_error_code))
+				g_error_code = WEXITSTATUS(g_error_code);
 			ft_free_ptrs(&cmd, NULL);
 		}
 	}

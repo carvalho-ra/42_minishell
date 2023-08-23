@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:25 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/19 17:53:15 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 00:43:32 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ int	ft_count_pipes(t_shell *shell)
 	return (i);
 }
 
-int	ft_count_redir_in(t_shell *shell)
+int	ft_count_redirs(t_token *current)
 {
 	t_token	*aux;
 	int		i;
 
-	aux = shell->list;
+	aux = current;
 	i = 0;
-	while (aux)
+	while (aux && aux->type != PIPE)
 	{
-		if (aux->type == REDIRECT_IN)
+		if (aux->type >= REDIRECT_IN && aux->type <= HEREDOC)
 			i++;
 		aux = aux->next;
 	}
@@ -57,5 +57,35 @@ int	ft_count_cmds(t_shell *shell)
 			i++;
 		aux = aux->next;
 	}
+	return (i);
+}
+
+int	ft_any_more_pipes(t_token *current)
+{
+	int		i;
+
+	i = 0;
+	while (current)
+	{
+		if (current->type == PIPE)
+			i++;
+		current = current->next;
+	}
+	return (i);
+}
+
+int	ft_valid_sentence(t_token *current)
+{
+	int		i;
+
+	i = 0;
+	while (current && current->type != PIPE)
+	{
+		if (current->type == CMD)
+			i++;
+		current = current->next;
+	}
+	if (i == 0 && (!current || current->type == PIPE))
+		return (0);
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/22 16:21:20 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 01:03:31 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	ft_master_exec(t_shell *shell)
 		ft_load_pipes(shell->list);
 		while (current)
 		{
+			if (ft_redirector(current) < 0)
+				return (0);
 			if (current->type == CMD)
 			{
 				pid = fork();
