@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/23 14:01:55 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:45:50 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ int		ft_is_executable(char *str);
 //prototypes execution.c
 int		ft_which_builtin(t_token *current);
 int		ft_master_exec(t_shell *shell);
+t_token	*ft_forked_exec(t_token *current);
 t_token	*ft_execution(t_token *current);
 
 //prototypes executor.c

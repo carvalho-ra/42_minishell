@@ -36,6 +36,7 @@ SRCS = ./src/main.c \
 		./src/parser/parser_utils_expand.c \
 		./src/parser/parser_utils_redirs.c \
 		./src/parser/parser.c \
+		./src/pipes/pipes_utils_redirs.c \
 		./src/pipes/pipes_utils.c \
 		./src/pipes/pipes.c \
 		./src/redirector/handle_fds.c \

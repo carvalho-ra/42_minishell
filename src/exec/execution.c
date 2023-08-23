@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/23 14:52:40 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:46:24 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,8 @@ int	ft_which_builtin(t_token *current)
 
 int	ft_master_exec(t_shell *shell)
 {
-	int		pid;
 	t_token	*current;
-	// int		redirected;
 
-	// redirected = 0;
 	current = shell->list;
 	if (!ft_count_pipes(shell))
 		ft_execution(current);
@@ -55,33 +52,37 @@ int	ft_master_exec(t_shell *shell)
 		while (current)
 		{
 			if (current->type == CMD)
-			{
-				pid = fork();
-				if (pid == -1)
-					return (-1);
-				else if (pid == 0)
-				{
-					ft_set_pipe_fds(current);
-					// if (ft_redirector(current) < 0)
-					// 	return (0);
-					ft_signal_reset();
-					current = ft_execution(current);
-				}
-				else
-				{
-					waitpid(pid, &g_error_code, 0);
-					if (WIFSIGNALED(g_error_code))
-						g_error_code = 128 + WTERMSIG(g_error_code);
-					if (WIFEXITED(g_error_code))
-						g_error_code = WEXITSTATUS(g_error_code);
-					ft_reset_pipe_fds(current);
-				}
-			}
+				ft_forked_exec(current);
 			if (current)
 				current = current->next;
 		}
 	}
 	return (0);
+}
+
+t_token	*ft_forked_exec(t_token *current)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+		return (0);
+	else if (pid == 0)
+	{
+		ft_set_pipe_fds(current);
+		ft_signal_reset();
+		current = ft_execution(current);
+	}
+	else
+	{
+		waitpid(pid, &g_error_code, 0);
+		if (WIFSIGNALED(g_error_code))
+			g_error_code = 128 + WTERMSIG(g_error_code);
+		if (WIFEXITED(g_error_code))
+			g_error_code = WEXITSTATUS(g_error_code);
+		ft_reset_pipe_fds(current);
+	}
+	return (current);
 }
 
 t_token	*ft_execution(t_token *current)
