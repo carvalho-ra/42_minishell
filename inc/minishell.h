@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/23 00:29:47 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 14:01:55 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,17 +260,18 @@ int		ft_count_redirs(t_token *current);
 int		ft_count_cmds(t_shell *shell);
 int		ft_any_more_pipes(t_token *current);
 int		ft_valid_sentence(t_token *current);
+t_token	*ft_begin_sentence(t_token *token);
 
 //prototypes pipes.c
 int		ft_load_pipes(t_token *list);
 void	ft_set_pipe_fds(t_token *current);
 void	ft_reset_pipe_fds(t_token *token_cmd);
 
-//prototypes redirector
-
 //prototypes handle_fds.c
 void	ft_set_fds(struct s_token *token);
 void	ft_reset_fds(struct s_token *token);
+
+//prototypes redirector
 
 //prototypes redirector.c
 int		ft_redirector(struct s_token *token);

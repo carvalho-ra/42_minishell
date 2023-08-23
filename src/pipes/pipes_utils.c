@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:25 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/23 00:43:32 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:08:58 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,22 @@ int	ft_valid_sentence(t_token *current)
 	if (i == 0 && (!current || current->type == PIPE))
 		return (0);
 	return (i);
+}
+
+t_token	*ft_begin_sentence(t_token *token)
+{
+	t_token	*aux;
+	t_token	*ref;
+
+	aux = token->shell->list;
+	ref = token->shell->list;
+	while (aux && aux != token)
+	{
+		if (aux->type == PIPE)
+		{
+			ref = aux->next;
+		}
+		aux = aux->next;
+	}
+	return (ref);
 }

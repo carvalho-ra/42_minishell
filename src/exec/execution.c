@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/23 01:03:31 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 14:52:40 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int	ft_master_exec(t_shell *shell)
 {
 	int		pid;
 	t_token	*current;
+	// int		redirected;
 
+	// redirected = 0;
 	current = shell->list;
 	if (!ft_count_pipes(shell))
 		ft_execution(current);
@@ -52,8 +54,6 @@ int	ft_master_exec(t_shell *shell)
 		ft_load_pipes(shell->list);
 		while (current)
 		{
-			if (ft_redirector(current) < 0)
-				return (0);
 			if (current->type == CMD)
 			{
 				pid = fork();
@@ -62,6 +62,8 @@ int	ft_master_exec(t_shell *shell)
 				else if (pid == 0)
 				{
 					ft_set_pipe_fds(current);
+					// if (ft_redirector(current) < 0)
+					// 	return (0);
 					ft_signal_reset();
 					current = ft_execution(current);
 				}
@@ -90,9 +92,9 @@ t_token	*ft_execution(t_token *current)
 		return (0);
 	while (current)
 	{
-		ft_set_fds(current);
 		if (current->type == CMD)
 		{
+			ft_set_fds(current);
 			if ((ft_which_builtin(current)))
 			{
 				ft_check_cmd(current);
