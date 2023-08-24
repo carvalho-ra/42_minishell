@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:11:35 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/21 16:04:05 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:45:23 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 //function aux no dir
 int	ft_aux_no_dir(t_token *current, char *path)
 {
-	printf("minishell: cd: %s: ", current->cmd[1]);
-	printf("Arquivo ou diretório inexistente\n");
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(current->cmd[1], 2);
+	ft_putstr_fd(": Arquivo ou diretório inexistente\n", 2);
 	ft_free_ptrs(&path, NULL);
 	g_error_code = 1;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:39:06 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/24 10:51:46 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:07:39 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,21 @@ void	ft_reset_pipe_fds(t_token *current)
 	{
 		dup2(aux->shell->fd_in, STDIN_FILENO);
 		dup2(aux->shell->fd_out, STDOUT_FILENO);
+	}
+}
+
+void	ft_wait_childs(t_token *current)
+{
+	int		i;
+
+	i = 0;
+	while (i < ft_count_all_cmds(current->shell))
+	{
+		waitpid(-1, &g_error_code, 0);
+		if (WIFSIGNALED(g_error_code))
+			g_error_code = 128 + WTERMSIG(g_error_code);
+		if (WIFEXITED(g_error_code))
+			g_error_code = WEXITSTATUS(g_error_code);
+		i++;
 	}
 }
