@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/23 15:46:24 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:15:52 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,20 @@ int	ft_which_builtin(t_token *current)
 
 //validacao da string caso tenha entre
 // pipes sem comando 
+int	ft_sentence_no_cmd(t_token *current)
+{
+	if ((current->type >= REDIRECT_IN && current->type <= HEREDOC)
+		&& !ft_count_cmds(current))
+	{
+		if (ft_redirector(current) < 0)
+		{
+			ft_reset_pipe_fds(current);
+			return (0);
+		}
+		ft_reset_pipe_fds(current);
+	}
+	return (0);
+}
 
 int	ft_master_exec(t_shell *shell)
 {
@@ -51,6 +65,7 @@ int	ft_master_exec(t_shell *shell)
 		ft_load_pipes(shell->list);
 		while (current)
 		{
+			ft_sentence_no_cmd(current);
 			if (current->type == CMD)
 				ft_forked_exec(current);
 			if (current)
@@ -93,9 +108,9 @@ t_token	*ft_execution(t_token *current)
 		return (0);
 	while (current)
 	{
+		ft_set_fds(current);
 		if (current->type == CMD)
 		{
-			ft_set_fds(current);
 			if ((ft_which_builtin(current)))
 			{
 				ft_check_cmd(current);
@@ -105,7 +120,7 @@ t_token	*ft_execution(t_token *current)
 				exit (0);
 			ft_reset_fds(current);
 		}
-		else if (current->type >= REDIRECT_IN && current->type <= HEREDOC)
+		else
 			ft_reset_fds(current);
 		current = current->next;
 	}

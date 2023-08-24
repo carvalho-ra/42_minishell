@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/23 15:45:50 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:15:16 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int		ft_is_executable(char *str);
 
 //prototypes execution.c
 int		ft_which_builtin(t_token *current);
+int		ft_sentence_no_cmd(t_token *current);
 int		ft_master_exec(t_shell *shell);
 t_token	*ft_forked_exec(t_token *current);
 t_token	*ft_execution(t_token *current);
@@ -258,7 +259,7 @@ int		ft_final_list(t_shell *shell);
 //prototypes pipes_utils.c
 int		ft_count_pipes(t_shell *shell);
 int		ft_count_redirs(t_token *current);
-int		ft_count_cmds(t_shell *shell);
+int		ft_count_cmds(t_token *token);
 int		ft_any_more_pipes(t_token *current);
 int		ft_valid_sentence(t_token *current);
 t_token	*ft_begin_sentence(t_token *token);
