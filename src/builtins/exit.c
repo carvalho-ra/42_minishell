@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:03:21 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/08 17:18:59 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/20 14:33:12 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_free_exit(t_shell *shell)
 	ft_free_env_list(shell);
 	ft_free_env_strs(shell);
 	free(shell);
+	rl_clear_history();
 	g_error_code = 0;
 	exit (0);
 }
@@ -35,6 +36,7 @@ int	ft_free_no_exit(t_shell *shell)
 	ft_free_env_list(shell);
 	ft_free_env_strs(shell);
 	free(shell);
+	rl_clear_history();
 	return (0);
 }
 
@@ -48,11 +50,11 @@ int	ft_builtin_exit(t_token *current)
 	int	i;
 
 	i = 0;
-	if (current->next)
+	if (current->cmd[1])
 	{
-		if (ft_isdigit(current->next->str[0]) || current->next->str[0] == '-')
+		if (ft_isdigit(current->cmd[1][0]) || current->cmd[1][0] == '-')
 		{
-			i = ft_atoi(current->next->str);
+			i = ft_atoi(current->cmd[1]);
 			if (i < 0)
 				i = 256 + i;
 			ft_free_no_exit(current->shell);
@@ -61,7 +63,7 @@ int	ft_builtin_exit(t_token *current)
 		else
 		{
 			ft_putstr_fd("exit\nminishell: exit: ", 2);
-			ft_putstr_fd(current->next->str, 1);
+			ft_putstr_fd(current->cmd[1], 1);
 			ft_putstr_fd(": numeric argument required\n", 2);
 			ft_free_no_exit(current->shell);
 			exit (2);

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:12 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/19 17:32:24 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/24 15:03:42 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,94 @@ int	ft_which_builtin(t_token *current)
 		return (1);
 }
 
-//function that sends command to execution if it's not a builtin
-//returns 0 if it works, 1 if it doesn't
-int	ft_execution(t_shell *shell)
+//validacao da string caso tenha entre
+// pipes sem comando 
+int	ft_sentence_no_cmd(t_token *current)
 {
-	t_token	*token;
-
-	token = shell->list;
-	if (!token)
-		return (0);
-	if (ft_redirector(token) >= 0)
+	if ((current->type >= REDIRECT_IN && current->type <= HEREDOC)
+		&& !ft_count_cmds(current))
 	{
-		while (token)
+		if (ft_redirector(current) < 0)
 		{
-			ft_set_fds(token);
-			if (token->type == CMD)
-			{
-				if ((ft_which_builtin(token)))
-				{
-					ft_check_cmd(token);
-					ft_free_env_strs(shell);
-				}
-				ft_reset_fds(token);
-			}
-			else if (token->type >= REDIRECT_IN || token->type == REDIRECT_OUT
-				|| token->type == APPEND)
-				ft_reset_fds(token);
-			token = token->next;
+			ft_reset_pipe_fds(current);
+			return (0);
 		}
+		ft_reset_pipe_fds(current);
+	}
+	return (0);
+}
+
+int	ft_master_exec(t_shell *shell)
+{
+	t_token	*current;
+
+	current = shell->list;
+	if (!ft_count_pipes(shell))
+		ft_execution(current);
+	else
+	{
+		ft_load_pipes(shell->list);
+		while (current)
+		{
+			ft_sentence_no_cmd(current);
+			if (current->type == CMD)
+				ft_forked_exec(current);
+			if (current)
+				current = current->next;
+		}
+		ft_wait_childs(shell->list);
+	}
+	return (0);
+}
+
+t_token	*ft_forked_exec(t_token *current)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+		return (0);
+	else if (pid == 0)
+	{
+		ft_set_pipe_fds(current);
+		ft_signal_reset();
+		current = ft_execution(current);
+	}
+	else
+	{
+		// waitpid(pid, &g_error_code, 0);
+		// if (WIFSIGNALED(g_error_code))
+		// 	g_error_code = 128 + WTERMSIG(g_error_code);
+		// if (WIFEXITED(g_error_code))
+		// 	g_error_code = WEXITSTATUS(g_error_code);
+		ft_reset_pipe_fds(current);
+	}
+	return (current);
+}
+
+t_token	*ft_execution(t_token *current)
+{
+	if (!current)
+		return (0);
+	if (ft_redirector(current) < 0)
+		return (0);
+	while (current)
+	{
+		ft_set_fds(current);
+		if (current->type == CMD)
+		{
+			if ((ft_which_builtin(current)))
+			{
+				ft_check_cmd(current);
+				ft_free_env_strs(current->shell);
+			}
+			else if (ft_count_pipes(current->shell) > 0)
+				exit (g_error_code);
+			ft_reset_fds(current);
+		}
+		else
+			ft_reset_fds(current);
+		current = current->next;
 	}
 	return (0);
 }

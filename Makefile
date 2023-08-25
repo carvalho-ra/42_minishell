@@ -22,6 +22,7 @@ SRCS = ./src/main.c \
 		./src/exec/exec_utils.c \
 		./src/exec/executor.c \
 		./src/exec/execution.c \
+		./src/exec/mount_cmd.c \
 		./src/lexer/lexer_utils_list.c \
 		./src/lexer/lexer_utils_memory.c \
 		./src/lexer/lexer_utils_quotes.c \
@@ -34,8 +35,10 @@ SRCS = ./src/main.c \
 		./src/parser/parser_utils_err.c \
 		./src/parser/parser_utils_expand.c \
 		./src/parser/parser_utils_redirs.c \
-		./src/parser/parser_utils.c \
 		./src/parser/parser.c \
+		./src/pipes/pipes_utils_redirs.c \
+		./src/pipes/pipes_utils.c \
+		./src/pipes/pipes.c \
 		./src/redirector/handle_fds.c \
 		./src/redirector/redirector.c \
 		./src/redirector/heredoc.c \

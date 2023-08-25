@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:21:30 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/17 16:49:39 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:48:24 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,39 @@ int	ft_parser(t_shell *shell)
 	ft_join_from_lexer(shell);
 	ft_marks(shell);
 	ft_parse_full_cmds(shell->list);
-	//ft_print_check(shell);
+	ft_final_list(shell);
 	return (0);
 }
 
-	//ft_print_list(shell);
+	//ft_print_check(shell);
 	//ft_print_list(shell);
 	//ft_print_cmds(shell->list);
+
+int	ft_final_list(t_shell *shell)
+{
+	t_token	*token;
+	t_token	*prev;
+	t_token	*next;
+
+	token = shell->list;
+	prev = NULL;
+	next = NULL;
+	while (token)
+	{
+		next = token->next;
+		if (!(token->type >= CMD && token->type <= KEYWORD)
+			&& !(token->type >= PIPE && token->type <= HEREDOC))
+		{
+			if (prev)
+				prev->next = next;
+			else
+				shell->list = next;
+			ft_free_ptrs(&token->str, NULL);
+			free(token);
+		}
+		else
+			prev = token;
+		token = next;
+	}
+	return (0);
+}

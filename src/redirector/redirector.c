@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:28:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/19 17:31:15 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:09:59 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@ int	ft_redirector(struct s_token *token)
 	int		ret;
 	t_token	*ref;
 
-	ref = token;
+	ref = ft_begin_sentence(token);
 	while (ref && ref->type != CMD)
 		ref = ref->next;
-	if (!ref && token->type == ERR)
-		ref = token->next;
-	else if (!ref)
+	if (!ref)
 		ref = token;
 	ret = 0;
-	while (token)
+	token = ft_begin_sentence(token);
+	while (token && token->type != PIPE)
 	{
 		if (token->type == HEREDOC)
 			ret = ft_load_heredoc(token, ft_get_name(token));
@@ -77,7 +76,7 @@ int	ft_load_input(struct s_token *token, char *filename)
 		return (-1);
 	}
 	g_error_code = 0;
-	token->pipe[0] = open(filename, O_RDONLY);
+	token->backup[0] = open(filename, O_RDONLY);
 	return (0);
 }
 
@@ -97,10 +96,10 @@ int	ft_load_output(struct s_token *token, char *filename, int type)
 		}
 	}
 	if (type == REDIRECT_OUT)
-		token->pipe[1] = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		token->backup[1] = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == APPEND)
-		token->pipe[1] = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (token->pipe[1] < 0)
+		token->backup[1] = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (token->backup[1] < 0)
 	{
 		ft_putstr_fd("minishell: erro ao criar arquivo\n", 2);
 		g_error_code = 1;

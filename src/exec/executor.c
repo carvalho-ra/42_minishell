@@ -6,99 +6,11 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:36:15 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/16 15:50:07 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 01:04:14 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-//function that gets all the paths from the env
-//and splits them into an array of strings
-//returns an array of strings with the paths
-char	**ft_get_all_paths(t_token *current)
-{
-	char	*path;
-	char	**paths;
-	t_env	*aux;
-
-	path = NULL;
-	paths = NULL;
-	aux = current->shell->env;
-	while (aux)
-	{
-		if (aux->str && ft_strncmp(aux->str, "PATH", 4) == 0)
-		{
-			path = ft_substr(aux->str, 5, ft_strlen(aux->str) - 5);
-			paths = ft_split(path, ':');
-			free(path);
-			path = NULL;
-			return (paths);
-		}
-		aux = aux->next;
-	}
-	return (NULL);
-}
-
-//function that adds "/cmd" to the end of each string
-//returns an array of strings with the full paths
-char	**ft_add_cmd(t_token *current, char **paths)
-{
-	char	*aux;
-	char	*slash_cmd;
-	int		i;
-
-	i = 0;
-	if (!paths)
-		return (NULL);
-	if (!current->cmd[0][0])
-		return (NULL);
-	slash_cmd = ft_strjoin("/", current->cmd[0]);
-	aux = NULL;
-	while (paths[i])
-	{
-		aux = ft_strjoin(paths[i], slash_cmd);
-		free(paths[i]);
-		paths[i] = NULL;
-		paths[i] = ft_strdup(aux);
-		free(aux);
-		aux = NULL;
-		i++;
-	}
-	free(slash_cmd);
-	slash_cmd = NULL;
-	return (paths);
-}
-
-//function that searches for the file
-//returns the string with the full path of the file
-char	*ft_search_cmd(char **paths)
-{
-	int		i;
-	char	*ret;
-
-	ret = NULL;
-	i = 0;
-	if (paths == NULL)
-		return (NULL);
-	while (paths[i] != NULL)
-	{
-		if (access(paths[i], F_OK) == 0)
-		{
-			ret = ft_strdup(paths[i]);
-			i = 0;
-			while (paths[i])
-				free(paths[i++]);
-			free(paths);
-			return (ret);
-		}
-		i++;
-	}
-	i = 0;
-	while (paths[i] != NULL)
-		free(paths[i++]);
-	free(paths);
-	return (NULL);
-}
 
 // function that checks if the command is valid
 // returns 0 if it is, -1 if it isn't
@@ -108,19 +20,19 @@ int	ft_check_cmd(t_token *current)
 	char	**args;
 
 	cmd = NULL;
-	ft_env_to_str(current->shell);
-	if (!current->cmd[0][0])
-		return (0);
-	if (current->cmd[0][0] == '/')
+	if (ft_is_executable(current->cmd[0]) == -1)
+		return (1);
+	else if ((current->cmd[0][0] == '.' && current->cmd[0][1] == '/')
+			|| current->cmd[0][0] == '/' || (current->cmd[0][0] == '.'
+			&& current->cmd[0][1] == '.' && current->cmd[0][2] == '/'))
 		cmd = ft_strdup(current->cmd[0]);
-	else
+	ft_env_to_str(current->shell);
+	if (!cmd)
 		cmd = ft_search_cmd(ft_add_cmd(current, ft_get_all_paths(current)));
 	args = current->cmd;
 	if (!cmd)
 	{
-		ft_putstr_fd(args[0], STDERR_FILENO);
-		ft_putstr_fd(" : command not found\n", STDERR_FILENO);
-		g_error_code = 127;
+		ft_print_error_msg(args[0], "comando não encontrado", 127);
 		ft_free_ptrs(&cmd, NULL);
 		return (-1);
 	}
@@ -134,28 +46,39 @@ int	ft_check_cmd(t_token *current)
 int	ft_execve(t_token *current, char *cmd)
 {
 	pid_t	pid;
-	int		child_exit_code;
 
-	pid = fork();
-	child_exit_code = 0;
-	if (pid == -1)
-	{
-		printf("fork error\n");
-		return (-1);
-	}
-	else if (pid == 0)
-	{
-		execve(cmd, current->cmd, current->shell->env_strs);
-		exit(errno);
-	}
+	if (ft_count_pipes(current->shell) > 0)
+		ft_execve_core(current, cmd);
 	else
 	{
-		waitpid(pid, &child_exit_code, 0);
-		if (WIFEXITED(child_exit_code))
+		pid = fork();
+		if (pid == -1)
+			return (-1);
+		else if (pid == 0)
 		{
-			g_error_code = WEXITSTATUS(child_exit_code);
+			ft_signal_reset();
+			ft_execve_core(current, cmd);
+		}
+		else
+		{
+			waitpid(pid, &g_error_code, 0);
+			if (WIFSIGNALED(g_error_code))
+				g_error_code = 128 + WTERMSIG(g_error_code);
+			if (WIFEXITED(g_error_code))
+				g_error_code = WEXITSTATUS(g_error_code);
 			ft_free_ptrs(&cmd, NULL);
 		}
+	}
+	return (0);
+}
+
+// function that executes the command
+int	ft_execve_core(t_token *current, char *cmd)
+{
+	if (execve(cmd, current->cmd, current->shell->env_strs) == -1)
+	{
+		ft_print_error_msg(cmd, "Arquivo ou diretório inexistente", 127);
+		exit(g_error_code);
 	}
 	return (0);
 }

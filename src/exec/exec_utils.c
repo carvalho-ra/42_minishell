@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 03:09:05 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/07 11:27:03 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/23 16:03:22 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,59 @@ int	ft_env_to_str(t_shell *shell)
 	}
 	shell->env_strs[i] = NULL;
 	return (0);
+}
+
+void	ft_print_error_msg(char *str, char *msg, int error_code)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	g_error_code = error_code;
+}
+
+void	ft_signal_reset(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+int	ft_is_dir(char *path)
+{
+	DIR	*dir;
+
+	if (!path)
+		return (-1);
+	dir = opendir(path);
+	if (dir)
+	{
+		closedir(dir);
+		return (1);
+	}
+	return (0);
+}
+
+//verifica se existe e se é executável
+int	ft_is_executable(char *str)
+{
+	if (!str)
+		return (-1);
+	if (access(str, F_OK) != -1)
+	{
+		if ((ft_is_dir(str) == 0 && access(str, X_OK) == 0)
+			|| (ft_is_dir(str) == 1 && str[0] != '/'))
+			return (2);
+		else
+		{
+			if (access(str, X_OK) == -1 && str[0] == '.' && str[1] == '/')
+				ft_print_error_msg(str, "Permissão negada", 126);
+			else if (access(str, X_OK) == -1 && str[0] != '.')
+				ft_print_error_msg(str, "comando não encontrado", 127);
+			else
+				ft_print_error_msg(str, "é um diretório", 126);
+			return (-1);
+		}
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:18:39 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/17 13:51:29 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/24 13:36:57 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <dirent.h>
 # include <fcntl.h>
 # include <errno.h>
 # include "libft/libft.h"
@@ -57,6 +58,8 @@ typedef struct s_shell
 	struct s_token	*list;
 	char			**env_strs;
 	struct s_env	*env;
+	int				fd_in;
+	int				fd_out;
 	int				pipe[2];
 	int				backup[2];
 	int				aux_lexer;
@@ -130,17 +133,29 @@ void	ft_free_env_node(t_env *env);
 
 //prototypes exec
 
+//prototypes exec_utils.c
+int		ft_env_to_str(t_shell *shell);
+void	ft_print_error_msg(char *str, char *msg, int error_code);
+void	ft_signal_reset(void);
+int		ft_is_dir(char *path);
+int		ft_is_executable(char *str);
+
 //prototypes execution.c
 int		ft_which_builtin(t_token *current);
-int		ft_execution(t_shell *shell);
+int		ft_sentence_no_cmd(t_token *current);
+int		ft_master_exec(t_shell *shell);
+t_token	*ft_forked_exec(t_token *current);
+t_token	*ft_execution(t_token *current);
 
 //prototypes executor.c
-int		ft_env_to_str(t_shell *shell);
+int		ft_check_cmd(t_token *current);
+int		ft_execve(t_token *current, char *cmd);
+int		ft_execve_core(t_token *current, char *cmd);
+
+//prototypes mount_cmd.c
 char	**ft_get_all_paths(t_token *current);
 char	**ft_add_cmd(t_token *current, char **paths);
 char	*ft_search_cmd(char **paths);
-int		ft_check_cmd(t_token *current);
-int		ft_execve(t_token *current, char *cmd);
 
 //prototypes expand
 
@@ -234,19 +249,35 @@ int		ft_confirm_heredoc(t_shell *shell);
 int		ft_confirm_redir_out(t_shell *shell);
 int		ft_confirm_redir_in(t_shell *shell);
 
-//prototypes parser_utils.c
-int		ft_count_pipes(t_shell *shell);
-int		ft_count_redirs(t_shell *shell);
-
 //prototypes parser.c
 int		ft_validation(t_shell *shell);
 int		ft_parser(t_shell *shell);
+int		ft_final_list(t_shell *shell);
 
-//prototypes redirector
+//prototypes pipes
+
+//prototypes pipes_utils.c
+int		ft_count_pipes(t_shell *shell);
+int		ft_count_redirs(t_token *current);
+int		ft_count_cmds(t_token *token);
+int		ft_count_all_cmds(t_shell *shell);
+void	ft_wait_childs(t_token *current);
+
+//prototypes pipes_utils_redirs.c
+int		ft_any_more_pipes(t_token *current);
+int		ft_valid_sentence(t_token *current);
+t_token	*ft_begin_sentence(t_token *token);
+
+//prototypes pipes.c
+int		ft_load_pipes(t_token *list);
+void	ft_set_pipe_fds(t_token *current);
+void	ft_reset_pipe_fds(t_token *token_cmd);
 
 //prototypes handle_fds.c
 void	ft_set_fds(struct s_token *token);
 void	ft_reset_fds(struct s_token *token);
+
+//prototypes redirector
 
 //prototypes redirector.c
 int		ft_redirector(struct s_token *token);
