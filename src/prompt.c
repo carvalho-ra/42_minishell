@@ -13,8 +13,6 @@
 #include "../inc/minishell.h"
 
 //include modifications in add_history
-//add_history cannot take "nothing", just "enter"
-//recheck with Will Branner
 int	ft_is_history(char *str)
 {
 	char	*tmp;

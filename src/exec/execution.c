@@ -36,8 +36,7 @@ int	ft_which_builtin(t_token *current)
 		return (1);
 }
 
-//validacao da string caso tenha entre
-// pipes sem comando 
+//funtion that validates sentence with no command
 int	ft_sentence_no_cmd(t_token *current)
 {
 	if ((current->type >= REDIRECT_IN && current->type <= HEREDOC)
@@ -53,6 +52,7 @@ int	ft_sentence_no_cmd(t_token *current)
 	return (0);
 }
 
+//function that organizes execution
 int	ft_master_exec(t_shell *shell)
 {
 	t_token	*current;
@@ -62,9 +62,9 @@ int	ft_master_exec(t_shell *shell)
 		ft_execution(current);
 	else
 	{
-		ft_load_pipes(shell->list);
 		while (current)
 		{
+			ft_load_pipes(shell->list);
 			ft_sentence_no_cmd(current);
 			if (current->type == CMD)
 				ft_forked_exec(current);
@@ -76,6 +76,7 @@ int	ft_master_exec(t_shell *shell)
 	return (0);
 }
 
+//function that performs foked executions
 t_token	*ft_forked_exec(t_token *current)
 {
 	int	pid;
@@ -90,21 +91,13 @@ t_token	*ft_forked_exec(t_token *current)
 		current = ft_execution(current);
 	}
 	else
-	{
-		// waitpid(pid, &g_error_code, 0);
-		// if (WIFSIGNALED(g_error_code))
-		// 	g_error_code = 128 + WTERMSIG(g_error_code);
-		// if (WIFEXITED(g_error_code))
-		// 	g_error_code = WEXITSTATUS(g_error_code);
 		ft_reset_pipe_fds(current);
-	}
 	return (current);
 }
 
+//function that execute the commands
 t_token	*ft_execution(t_token *current)
 {
-	if (!current)
-		return (0);
 	if (ft_redirector(current) < 0)
 		return (0);
 	while (current)
@@ -118,7 +111,10 @@ t_token	*ft_execution(t_token *current)
 				ft_free_env_strs(current->shell);
 			}
 			else if (ft_count_pipes(current->shell) > 0)
+			{
+				ft_reset_fds(current);
 				exit (g_error_code);
+			}
 			ft_reset_fds(current);
 		}
 		else

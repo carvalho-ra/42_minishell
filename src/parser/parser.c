@@ -44,10 +44,6 @@ int	ft_parser(t_shell *shell)
 	return (0);
 }
 
-	//ft_print_check(shell);
-	//ft_print_list(shell);
-	//ft_print_cmds(shell->list);
-
 int	ft_final_list(t_shell *shell)
 {
 	t_token	*token;

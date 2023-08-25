@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+//function that flags word in expansion 
 int	ft_aux_exp_word_flag(char *str, int i)
 {
 	if ((str[i] && str[i] != '$') || (str[i] && str[i] != '?')
@@ -24,6 +25,7 @@ int	ft_aux_exp_word_flag(char *str, int i)
 	return (i);
 }
 
+//function that handles word in expansion
 char	*ft_aux_exp_word(char *str, char *final, int i)
 {
 	int		start;

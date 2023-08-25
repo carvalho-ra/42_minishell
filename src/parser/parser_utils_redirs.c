@@ -12,19 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-//when string initiates with | (a pipe) - ERROR
-// bash: syntax error near unexpected token `|'
-// error code: 2
-
-//when string ends with | (a pipe) - ERROR
-// bash: syntax error near unexpected token `newline'
-// error code: 2
-
-// redirect + PIPE é erro? ver com mais pessoas!!!!
-
-// O que vem do lado de um pipe é um comando.
-// O que vem do lado de um redirect é o nome do arquivo.
-
 int	ft_confirm_pipe(t_shell *shell)
 {
 	t_token	*aux;

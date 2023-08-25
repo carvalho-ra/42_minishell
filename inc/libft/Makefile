@@ -1,4 +1,4 @@
-MAKEFLAGS	=	--silent
+MAKEFLAGS	+=	--silent
 
 SRCS 	=	ft_isalpha.c\
 			ft_isdigit.c\
@@ -33,17 +33,17 @@ SRCS 	=	ft_isalpha.c\
 			ft_strtrim.c\
 			ft_strmapi.c\
 			ft_striteri.c\
-			ft_split.c\
+			ft_split.c
 
 OBJS 	= 	$(SRCS:.c=.o)
 NAME 	= 	libft.a
 CC 		= 	cc
 RM		=	rm -f
-CFLAGS 	= 	-Wall -Wextra -Werror
+CFLAGS 	= 	-Wall -Wextra -Werror -g
 
 .c.o:		
 			# @$(CC) -c $(CFLAGS) $(SRCS)
-			@$(CC) -c $(CFLAGS) $< -o ${<:.c=.o}
+			@$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
 			@printf "\033[0;32m#\e[m"
 
 $(NAME):	$(OBJS)

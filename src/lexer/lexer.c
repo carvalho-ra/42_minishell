@@ -37,6 +37,7 @@ int	ft_aux_lexer(char *str, int i)
 	return (i);
 }
 
+//function that breaks down words in tokens
 t_token	*ft_lexer(t_shell *shell)
 {
 	unsigned int	i;

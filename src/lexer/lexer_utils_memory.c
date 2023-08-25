@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+//function that frees list of tokens
 void	ft_free_token_list(t_shell *shell)
 {
 	t_token	*current;
