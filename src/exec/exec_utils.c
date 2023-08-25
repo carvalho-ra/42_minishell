@@ -41,6 +41,8 @@ int	ft_env_to_str(t_shell *shell)
 	return (0);
 }
 
+//funtion that prists error message
+//in standard output and sets global_variable to respective error 
 void	ft_print_error_msg(char *str, char *msg, int error_code)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
@@ -51,12 +53,14 @@ void	ft_print_error_msg(char *str, char *msg, int error_code)
 	g_error_code = error_code;
 }
 
+//function that resets signal in child processes
 void	ft_signal_reset(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 }
 
+//function that verifies if is a directory
 int	ft_is_dir(char *path)
 {
 	DIR	*dir;
@@ -72,7 +76,7 @@ int	ft_is_dir(char *path)
 	return (0);
 }
 
-//verifica se existe e se é executável
+//function thet verifies if comand exists and if it is executable
 int	ft_is_executable(char *str)
 {
 	if (!str)

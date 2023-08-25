@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+//function thar create tokens nodes
 t_token	*ft_create_node(char *str, int index, t_shell *shell)
 {
 	t_token	*new_node;
@@ -37,6 +38,7 @@ t_token	*ft_create_node(char *str, int index, t_shell *shell)
 	return (new_node);
 }
 
+//function that adds tokens to the list
 void	ft_add_token(t_shell *shell, char *str, int index)
 {
 	t_token	*aux;
@@ -53,18 +55,5 @@ void	ft_add_token(t_shell *shell, char *str, int index)
 			aux = aux->next;
 		}
 		aux->next = ft_create_node(str, index, shell);
-	}
-}
-
-void	ft_print_list(t_shell *shell)
-{
-	t_token	*aux;
-
-	aux = shell->list;
-	while (aux)
-	{
-		printf("\t\ttoken %i =  %s\n", aux->index, aux->str);
-		printf("\t\tjoin %i =  %i\n", aux->index, aux->join);
-		aux = aux->next;
 	}
 }

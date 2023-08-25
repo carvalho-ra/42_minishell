@@ -15,7 +15,6 @@ SRCS = ./src/main.c \
 		./src/builtins/unset.c \
 		./src/expand/expand_utils_env.c \
 		./src/expand/expand_utils_err.c \
-		./src/expand/expand_utils_pid.c \
 		./src/expand/expand_utils_var.c \
 		./src/expand/expand_utils_word.c \
 		./src/expand/expand.c \
@@ -53,7 +52,7 @@ INC = -Iinc/libft -Linc/libft -lft
 
 LIBFT = inc/libft/libft.a
 
-CC = gcc -g -Wall -Wextra -Werror
+CC = cc -g -Wall -Wextra -Werror
 
 all: $(NAME)
 

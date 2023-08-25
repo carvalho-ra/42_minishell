@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:56:38 by cnascime          #+#    #+#             */
-/*   Updated: 2023/08/20 11:52:52 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/25 14:13:43 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_load_heredoc(t_token *token, char *delimiter)
 	int		fd[2];
 	char	*line;
 
-	token = token;
+	ft_signal_reset2();
 	if (pipe(fd) == -1)
 		return (-1);
 	while (1)
@@ -33,7 +33,12 @@ int	ft_load_heredoc(t_token *token, char *delimiter)
 	}
 	free(line);
 	close(fd[1]);
+	token->backup[0] = dup(fd[0]);
 	return (fd[0]);
 }
 
-	//dup2(fd[0], STDIN_FILENO);
+//function that resets signal in child process
+void	ft_signal_reset2(void)
+{
+	signal(SIGINT, SIG_DFL);
+}

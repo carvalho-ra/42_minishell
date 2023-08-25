@@ -12,6 +12,21 @@
 
 #include "../../inc/minishell.h"
 
+//function that copies env list from envp
+int	ft_copy_env(t_shell *shell, char **envp)
+{
+	int		i;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		ft_add_env(shell, ft_strdup((const char *)envp[i]));
+		i++;
+	}
+	return (0);
+}
+
+//function thar creates a struct s_env type node
 t_env	*ft_create_env_node(char *str)
 {
 	t_env	*new_env_node;
@@ -24,6 +39,7 @@ t_env	*ft_create_env_node(char *str)
 	return (new_env_node);
 }
 
+//function that ad env nodes to the env list
 void	ft_add_env(t_shell *shell, char *str)
 {
 	t_env	*aux;
@@ -42,31 +58,8 @@ void	ft_add_env(t_shell *shell, char *str)
 	ft_free_ptrs(&str, NULL);
 }
 
-// ler regras variaveis shell
-//unset em variavel inexistente é igual ao comportamento normal, não dá erro
-
-int	ft_copy_env(t_shell *shell, char **envp)
-{
-	int		i;
-
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		ft_add_env(shell, ft_strdup((const char *)envp[i]));
-		i++;
-	}
-	return (0);
-}
-
-//procurar com ft_strcmp(env);
-
-//colocar em um loop para pagar string previa concatenar 
-//com a parte do ENV, e continuar
-
-// strdup do strlen + 1 pra pular o igual da variavel;
-
-//retorna string expandida
-
+//function that searches in env for word passed on input
+//returns expanded string
 char	*ft_search_env(char *str, t_shell *shell)
 {
 	t_env	*aux;

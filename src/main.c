@@ -6,7 +6,7 @@
 /*   By: rcarvalh <rcarvalh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:20:37 by rcarvalh          #+#    #+#             */
-/*   Updated: 2023/08/24 12:15:33 by rcarvalh         ###   ########.fr       */
+/*   Updated: 2023/08/25 14:19:02 by rcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_error_code;
 
-static	t_shell	*ft_shell_init(t_shell *shell, char **envp)
+t_shell	*ft_shell_init(t_shell *shell, char **envp)
 {
 	shell = NULL;
 	shell = malloc(sizeof(t_shell));
@@ -66,18 +66,19 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
 
+	if (argc != 1)
+		return (0);
 	shell = NULL;
 	shell = ft_shell_init(shell, envp);
 	(void)argv;
-	(void)argc;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &ft_handler);
 	while (1)
 	{
 		if (g_error_code != 0)
-			shell->line = readline("🤬 miniSHELL$ ");
+			shell->line = readline("🤬 miniS\e[31mHELL\e[0m$ ");
 		else
-			shell->line = readline("😎 miniSHELL$ ");
+			shell->line = readline("😎 miniS\e[31mHELL\e[0m$ ");
 		ft_shell(shell);
 	}
 	return (0);

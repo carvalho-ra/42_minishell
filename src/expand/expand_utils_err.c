@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+//fucntion that flags expansion of error code
 int	ft_aux_exp_err_flag(char *str, int i)
 {
 	if (str[i] && str[i] == '$' && str[i + 1] && str[i + 1] == '?')
@@ -22,6 +23,7 @@ int	ft_aux_exp_err_flag(char *str, int i)
 	return (i);
 }
 
+//fucntion that gets expansion of error code and joins with the rest
 char	*ft_aux_exp_err(char *str, char *final, int i)
 {
 	char	*ret;

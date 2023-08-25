@@ -99,7 +99,3 @@ char	*ft_search_cmd(char **paths)
 	free(paths);
 	return (NULL);
 }
-//verificar de novo ao sair dessa funcao
-
-//126 permissão
-//127 

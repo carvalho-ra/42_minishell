@@ -14,7 +14,6 @@
 
 // funçao ft_count_args conta o número de argumentos, builtin ou não
 // recebe o token de um comando e retorna o array de strings já mallocado;
-
 char	**ft_count_args(t_token *token)
 {
 	int		i;
@@ -37,7 +36,6 @@ char	**ft_count_args(t_token *token)
 
 // ft_fill_array recebe o token da lista e preenche
 //o array de strings com as strings dos demais tokens
-
 t_token	*ft_fill_array(t_token *token)
 {
 	t_token	*current;
@@ -65,7 +63,6 @@ t_token	*ft_fill_array(t_token *token)
 }
 
 // ft_parse_full_cmds recebe a lista de tokens e separa em arrays de strings
-
 void	ft_parse_full_cmds(t_token *list)
 {
 	t_token	*current;

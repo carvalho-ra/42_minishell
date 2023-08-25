@@ -12,13 +12,13 @@
 
 #include "../../inc/minishell.h"
 
+//funtion thar calls expansion
 void	ft_expansion(t_shell *shell)
 {
 	ft_confirm_expand(shell);
 	ft_expand_args(shell);
 }
 
-//remove quotes devia ir pra main
 //funtion that iterates through the list and calls expand
 //each node previously marqued as expand
 void	ft_expand_args(t_shell *shell)
@@ -35,6 +35,7 @@ void	ft_expand_args(t_shell *shell)
 	ft_remove_quotes(shell);
 }
 
+//core of expansion
 char	*ft_expand_core(char *str, t_shell *shell)
 {
 	char	*final;
@@ -50,9 +51,6 @@ char	*ft_expand_core(char *str, t_shell *shell)
 		if (i != ft_aux_exp_err_flag(str, i))
 			final = ft_aux_exp_err(str, final, i);
 		i = ft_aux_exp_err_flag(str, i);
-		if (i != ft_aux_exp_pid_flag(str, i))
-			final = ft_aux_exp_pid(str, final, i);
-		i = ft_aux_exp_pid_flag(str, i);
 		if (i != ft_aux_exp_var_flag(str, i))
 			final = ft_aux_exp_var(str, final, i, shell);
 		i = ft_aux_exp_var_flag(str, i);
@@ -61,6 +59,7 @@ char	*ft_expand_core(char *str, t_shell *shell)
 	return (final);
 }
 
+//function that remove quotes - last step of expansion
 void	ft_remove_quotes(t_shell *shell)
 {
 	t_token	*aux;
@@ -84,6 +83,7 @@ void	ft_remove_quotes(t_shell *shell)
 	}
 }
 
+//function that joins strings marked as join previously in lexer
 void	ft_join_from_lexer(t_shell *shell)
 {
 	t_token	*aux;

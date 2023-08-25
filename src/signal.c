@@ -23,7 +23,3 @@ void	ft_handler(int signal)
 		g_error_code = 130;
 	}
 }
-
-// 130 = Ctrl + C
-//apagar historico no processo filho!!!
-//chamar função especifica da readline

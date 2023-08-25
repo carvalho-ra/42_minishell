@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+//function that flags variable to expand
 int	ft_aux_exp_var_flag(char *str, int i)
 {
 	if (str[i] && str[i] == '$' && ((str[i + 1] && str[i + 1] != '$')
@@ -24,6 +25,7 @@ int	ft_aux_exp_var_flag(char *str, int i)
 	return (i);
 }
 
+// auxiliar function to expand variables
 char	*ft_norm_aux_exp_var(char *tmp, char *final, int start, int i)
 {
 	char	*new;
@@ -44,6 +46,7 @@ char	*ft_norm_aux_exp_var(char *tmp, char *final, int start, int i)
 	return (new);
 }
 
+//function that expands variable and joins with the rest
 char	*ft_aux_exp_var(char *str, char *final, int i, t_shell *shell)
 {
 	char	*new;
