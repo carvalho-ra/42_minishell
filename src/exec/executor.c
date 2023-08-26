@@ -17,7 +17,6 @@
 int	ft_check_cmd(t_token *current)
 {
 	char	*cmd;
-	char	**args;
 
 	cmd = NULL;
 	if (ft_is_executable(current->cmd[0]) == -1)
@@ -29,11 +28,13 @@ int	ft_check_cmd(t_token *current)
 	ft_env_to_str(current->shell);
 	if (!cmd)
 		cmd = ft_search_cmd(ft_add_cmd(current, ft_get_all_paths(current)));
-	args = current->cmd;
 	if (!cmd)
 	{
-		ft_print_error_msg(args[0], "comando não encontrado", 127);
+		ft_reset_fds(current);
+		ft_print_error_msg(current->cmd[0], "comando não encontrado", 127);
 		ft_free_ptrs(&cmd, NULL);
+		if (ft_count_pipes(current->shell) > 0)
+			exit (g_error_code);
 		return (-1);
 	}
 	else
@@ -72,7 +73,7 @@ int	ft_execve(t_token *current, char *cmd)
 	return (0);
 }
 
-// function that executes the command
+// function core to command execution
 int	ft_execve_core(t_token *current, char *cmd)
 {
 	if (execve(cmd, current->cmd, current->shell->env_strs) == -1)

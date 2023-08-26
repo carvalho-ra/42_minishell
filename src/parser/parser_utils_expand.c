@@ -12,12 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// pseudocode
-
-// look for expand ($)
-// - function to iterate through strings
-// of each node looking for $ (ISSUE! consider $$???)
-
 int	ft_set_quote_state(char *str, int state, int i)
 {
 	if (str[i] == '\"' && !state)

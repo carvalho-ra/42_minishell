@@ -30,7 +30,7 @@ int	ft_redirector(struct s_token *token)
 	while (token && token->type != PIPE)
 	{
 		if (token->type == HEREDOC)
-			ret = ft_load_heredoc(token, ft_get_name(token));
+			ret = ft_load_heredoc(ref, ft_get_name(token));
 		if (token->type == REDIRECT_IN)
 			ret = ft_load_input(ref, ft_get_name(token));
 		if (token->type == REDIRECT_OUT || token->type == APPEND)
