@@ -6,12 +6,12 @@ This project aims to develop a basic shell, similar to a customized version of b
 
 ### 🛠️ Usage
 
-Compile the project using the provided Makefile: make
+Compile the project using the provided Makefile: ```make```
 
 Run binary: ```./minishell```
 
 ![minishell.gif](minishell.gif)
 
-📋 Results
+### 📋 Results
 
 ![minishell_img.png](minishell_img.png)
